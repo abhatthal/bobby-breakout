@@ -4,8 +4,8 @@ CMPT 276 group project
 ## How to Collaborate: Git Flow
 
 <ol>
-<li>Check the Discord Group for anyone working on a new or existing feature</li>
-<li>Let people know in the Discord Group what feature you wish to work on</li>
+<li>Check Trello for anyone working on a new or existing feature</li>
+<li>Let people know in Trello what feature you wish to work on</li>
 <li>Add a feature using the <a href=https://git-scm.com/book/en/v2/Git-Branching-Branching-Workflows>Git Flow</a>:
     <ul>
     <li>Create a topic branch on the develop branch of an appropriate name</li>
@@ -15,6 +15,7 @@ CMPT 276 group project
     <li>Push changes to your topic branch</li>
     <li>Start a pull request to have topic merged with develop and notify the Discord group</li>
     <li>After a 3/5 supermajority agreement, the pull request will be approved</li>
+    </li>Update Trello to indicate that the feature is completed and the branch is merged</li>
     </ul>
 </li>
 <li>Ready to add features to our stable master branch?
@@ -23,8 +24,25 @@ CMPT 276 group project
     <li></li>
     </ul>
 </li>
+<li>Has a critical bug been found in master that must be dealt with immediately?
+
+</li>
 </ol>
 
-Once a stable, well-tested project has been developed, 
-
 [![Workflow Strategies](http://img.youtube.com/vi/aJnFGMclhU8/0.jpg)](https://youtu.be/aJnFGMclhU8?t=194)
+
+## Branch Overview
+<table>
+    <tr>
+        <th>master</th>
+        <td>where stable release code lives</td>
+    </tr>
+    <tr>
+        <th>master -> develop</th>
+        <td>where unstable code is tested</td>
+    </tr>
+    <tr>
+        <th>master -> develop -> aNewFeature</th>
+        <td>where a new feature is developed by ONE collaborator</td>
+    </tr>
+</table>
