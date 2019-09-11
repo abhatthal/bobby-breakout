@@ -14,7 +14,7 @@ CMPT 276 group project
     <li>Make and test your feature (with sensible commit messages along the way)</li>
     <li>Push changes to your topic branch</li>
     <li>Start a pull request to have topic merged with develop and notify the Discord group</li>
-    <li>After a 3/5 supermajority agreement, the pull request will be approved</li>
+    <li>After group approval, merge into develop</li>
     <li>Close topic branch</li>
     <li>Update Trello to indicate that the feature is completed and the branch is merged</li>
     </ul>
