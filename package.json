@@ -1,0 +1,29 @@
+{
+  "name": "cmpt276",
+  "description": "A sample Node.js app using Express 4",
+  "engines": {
+    "node": "10.x"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "nodemon test.js"
+  },
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.2"
+  },
+  "devDependencies": {
+    "request": "^2.81.0",
+    "tape": "^4.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abhatthal/CMPT276.git"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ]
+}

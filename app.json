@@ -1,0 +1,8 @@
+{
+  "name": "CMPT 276 App",
+  "description": "",
+  "repository": "https://github.com/abhatthal/CMPT276.git",
+  "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/master/public/node.svg",
+  "keywords": ["node", "express", "heroku"],
+  "image": "heroku/nodejs"
+}

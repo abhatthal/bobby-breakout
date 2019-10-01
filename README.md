@@ -1,60 +1,39 @@
-# CMPT276
-CMPT 276 group project
+# node-js-getting-started
 
-## How to Collaborate: Git Flow
+A barebones Node.js app using [Express 4](http://expressjs.com/).
 
-<ol>
-<li>Check GitHub Projects for anyone working on a new or existing feature ("In progress")</li>
-<li>Let people know in GitHub Projects what feature you wish to work on (Update "In progress")</li>
-<li>Add a feature using the <a href=https://git-scm.com/book/en/v2/Git-Branching-Branching-Workflows>Git Flow</a>:
-    <ul>
-    <li>Create a topic branch on the develop branch of an appropriate name</li>
-    <li>git pull</li>
-    <li>git checkout [topicBranchName]</li>
-    <li>Make and test your feature (with sensible commit messages along the way)</li>
-    <li>Push changes to your topic branch</li>
-    <li>Start a pull request to have topic merged with develop and notify the Discord group</li>
-    <li>After group approval, merge into develop</li>
-    <li>Close topic branch</li>
-    <li>Update GitHub Projects to indicate that the feature is completed and the branch is merged</li>
-    </ul>
-</li>
-<li>Ready to add features to our stable master branch?
-    <ul>
-    <li><a href =https://stackoverflow.com/questions/14168677/merge-development-branch-with-master>Merge master into develop.</a> It's better to resolve conflicts in develop.</li>
-    <li>Start a pull request to merge develop into master (do not delete the develop branch)</li>
-    </ul>
-</li>
-<li>Has a critical bug been found in master that must be dealt with immediately?
-    <ul>
-        <li>Update "In Progress" with [URGENT]</li>
-        <li>Notify Discord group (@everyone)</li>
-        <li>Create a hotfix branch off master to fix bug</li>
-        <li>Start a pull request to merge into master</li>
-        <li>merge hotfix branch into develop</li>
-        <li>close hotfix branch</li>
-    </ul>
-</li>
-</ol>
+This application supports the [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
 
-[![Workflow Strategies](http://img.youtube.com/vi/aJnFGMclhU8/0.jpg)](https://youtu.be/aJnFGMclhU8?t=194)
+## Running Locally
 
-## Branch Overview
-<table>
-    <tr>
-        <th>master</th>
-        <td>where stable release code lives</td>
-    </tr>
-    <tr>
-        <th>master -> hotfix</th>
-        <td>where critical bugs are immediately dealt with</td>
-    </tr>
-    <tr>
-        <th>master -> develop</th>
-        <td>where unstable code is tested</td>
-    </tr>
-    <tr>
-        <th>master -> develop -> aNewFeature</th>
-        <td>where a new feature is developed by ONE collaborator</td>
-    </tr>
-</table>
+Make sure you have [Node.js](http://nodejs.org/) and the [Heroku CLI](https://cli.heroku.com/) installed.
+
+```sh
+$ git clone https://github.com/heroku/node-js-getting-started.git # or clone your own fork
+$ cd node-js-getting-started
+$ npm install
+$ npm start
+```
+
+Your app should now be running on [localhost:5000](http://localhost:5000/).
+
+## Deploying to Heroku
+
+```
+$ heroku create
+$ git push heroku master
+$ heroku open
+```
+or
+
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+## Documentation
+
+For more information about using Node.js on Heroku, see these Dev Center articles:
+
+- [Getting Started with Node.js on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
+- [Heroku Node.js Support](https://devcenter.heroku.com/articles/nodejs-support)
+- [Node.js on Heroku](https://devcenter.heroku.com/categories/nodejs)
+- [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
+- [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
