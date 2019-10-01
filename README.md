@@ -4,8 +4,8 @@ CMPT 276 group project
 ## How to Collaborate: Git Flow
 
 <ol>
-<li>Check Trello for anyone working on a new or existing feature</li>
-<li>Let people know in Trello what feature you wish to work on</li>
+<li>Check GitHub Projects for anyone working on a new or existing feature ("In progress")</li>
+<li>Let people know in GitHub Projects what feature you wish to work on (Update "In progress")</li>
 <li>Add a feature using the <a href=https://git-scm.com/book/en/v2/Git-Branching-Branching-Workflows>Git Flow</a>:
     <ul>
     <li>Create a topic branch on the develop branch of an appropriate name</li>
@@ -16,18 +16,19 @@ CMPT 276 group project
     <li>Start a pull request to have topic merged with develop and notify the Discord group</li>
     <li>After group approval, merge into develop</li>
     <li>Close topic branch</li>
-    <li>Update Trello to indicate that the feature is completed and the branch is merged</li>
+    <li>Update GitHub Projects to indicate that the feature is completed and the branch is merged</li>
     </ul>
 </li>
 <li>Ready to add features to our stable master branch?
     <ul>
     <li><a href =https://stackoverflow.com/questions/14168677/merge-development-branch-with-master>Merge master into develop.</a> It's better to resolve conflicts in develop.</li>
     <li>Start a pull request to merge develop into master (do not delete the develop branch)</li>
-    <li>Note: All changes to master should be tagged with a version</li>
     </ul>
 </li>
 <li>Has a critical bug been found in master that must be dealt with immediately?
     <ul>
+        <li>Update "In Progress" with [URGENT]</li>
+        <li>Notify Discord group (@everyone)</li>
         <li>Create a hotfix branch off master to fix bug</li>
         <li>Start a pull request to merge into master</li>
         <li>merge hotfix branch into develop</li>
