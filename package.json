@@ -1,6 +1,6 @@
 {
   "name": "cmpt276",
-  "description": "A sample Node.js app using Express 4",
+  "description": "",
   "engines": {
     "node": "10.x"
   },
@@ -19,11 +19,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/abhatthal/CMPT276.git"
+    "url": "git+https://github.com/abhatthal/CMPT276.git"
   },
   "keywords": [
     "node",
     "heroku",
     "express"
-  ]
+  ],
+  "bugs": {
+    "url": "https://github.com/abhatthal/CMPT276/issues"
+  },
+  "homepage": "https://github.com/abhatthal/CMPT276#readme",
+  "version": "1.0.0",
+  "author": "",
+  "license": "ISC"
 }
