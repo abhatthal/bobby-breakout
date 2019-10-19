@@ -1,70 +1,59 @@
-# CMPT276
-CMPT 276 group project
+# Bobby's Breakout
 
-## Heroku
-⬢ gentle-savannah-07254
 
-https://gentle-savannah-07254.herokuapp.com/ | https://git.heroku.com/gentle-savannah-07254.git
+## Table of Contents
+[Target Audience](#target-audience)\
+[Synopsis](#synopsis)\
+[Game Features](#features)\
+[User Stories](#user-stories)\
+[About Us](#about-us)
 
-* Make sure to add the Heroku Git URL to your git remote.
-```
-git remote add [name_of_your_remote] [name_of_your_new_branch]
-```
+---
 
-## How to Collaborate: Git Flow
+<a name="target-audience">
 
-<ol>
-<li>Check GitHub Projects for anyone working on a new or existing feature ("In progress")</li>
-<li>Let people know in GitHub Projects what feature you wish to work on (Update "In progress")</li>
-<li>Add a feature using the <a href=https://git-scm.com/book/en/v2/Git-Branching-Branching-Workflows>Git Flow</a>:
-    <ul>
-    <li>Create a topic branch on the develop branch of an appropriate name</li>
-    <li>git pull</li>
-    <li>git checkout [topicBranchName]</li>
-    <li>Make and test your feature (with sensible commit messages along the way)</li>
-    <li>Push changes to your topic branch</li>
-    <li>Start a pull request to have topic merged with develop and notify the Discord group</li>
-    <li>After group approval, merge into develop</li>
-    <li>Close topic branch</li>
-    <li>Update GitHub Projects to indicate that the feature is completed and the branch is merged</li>
-    </ul>
-</li>
-<li>Ready to add features to our stable master branch?
-    <ul>
-    <li><a href =https://stackoverflow.com/questions/14168677/merge-development-branch-with-master>Merge master into develop.</a> It's better to resolve conflicts in develop.</li>
-    <li>Start a pull request to merge develop into master (do not delete the develop branch)</li>
-    </ul>
-</li>
-<li>Has a critical bug been found in master that must be dealt with immediately?
-    <ul>
-        <li>Update "In Progress" with [URGENT]</li>
-        <li>Notify Discord group (@everyone)</li>
-        <li>Create a hotfix branch off master to fix bug</li>
-        <li>Start a pull request to merge into master</li>
-        <li>merge hotfix branch into develop</li>
-        <li>close hotfix branch</li>
-    </ul>
-</li>
-</ol>
+## Target Audience
+Our game's target audience are students and young adults who are curious of what it's like to be popular professor.
 
-[![Workflow Strategies](http://img.youtube.com/vi/aJnFGMclhU8/0.jpg)](https://youtu.be/aJnFGMclhU8?t=194)
+---
 
-## Branch Overview
-<table>
-    <tr>
-        <th>master</th>
-        <td>where stable release code lives</td>
-    </tr>
-    <tr>
-        <th>master -> hotfix</th>
-        <td>where critical bugs are immediately dealt with</td>
-    </tr>
-    <tr>
-        <th>master -> develop</th>
-        <td>where unstable code is tested</td>
-    </tr>
-    <tr>
-        <th>master -> develop -> aNewFeature</th>
-        <td>where a new feature is developed by ONE collaborator</td>
-    </tr>
-</table>
+
+<a name="synopsis">
+
+## Synopsis
+
+**Bobby’s Breakout**​ is a single-player 2D top-down open-world adventure game set at SFU where the player takes a peek into the life of Dr. Bobby Chan. They will experience Bobby’s acute stress response to being swarmed by an apocalyptic hoard of students seeking help / advice, complaints, or just to be a nuisance. Bobby will have to make his way through the maze of antagonistic students, professors, and environmental obstructions to leave campus (the winning condition) and safely return home to his family… only to do this again the next day. 
+
+---
+
+<a name="features">
+
+## Game Features
+
+Our application will utilize the Google Identity Platform where users can securely register for our game. It will feature an open-world map that is dynamically loaded when the player reaches a certain threshold in their locally rendered screen. Loading of the map is further optimized through a novel machine learning algorithm that will predict and pre-fetch the appropriate map regions to render. To add interaction with the environment, we will be integrating interactive components such as walls and locked doors that will require certain item drops in order to proceed. Thus, a simple inventory system will be implemented to handle this. There will be a turn-based combat system similar to Pokemon that is triggered on contact with an enemy. An achievement system will also be integrated to all the activities the user does - whether that be staying inactive for a set amount of time, killing all enemies, playing passively, etc.
+
+---
+
+<a name="user-stories">
+
+## User Stories
+
+**User Story 1**\
+The user gets to choose one of two possible approaches to gameplay: a passive stealth route or an aggressive “beat-em-up” or “kill-em-all” route. The scenario depends on the choices the player makes during interactions with other entities within the game. The passive route is takes more time and requires the player to be more meticulous and complete more side quests, while the aggressive route is faster but also comes with a higher risk. If the player engages in combat with other entities too much, more difficult enemies are spawned and the chance of getting an “instant defeat” through being too violent increases. However if the player is too passive, enemies will increase their surveillance area to track the player down.
+
+
+**User Story 2**\
+The user gets to modify the possible attacking moves of Bobby Chan by changing equipped items through an inventory menu. The menu can be reached by pressing a hotkey.  
+
+**User Story 3**\
+The user must interact with the environment and other entities of the game to proceed to certain locked or initially blocked off areas. 
+
+
+---
+
+
+## About Us
+
+Coming soon!
+
+---
