@@ -8,7 +8,7 @@ https://gentle-savannah-07254.herokuapp.com/ | https://git.heroku.com/gentle-sav
 
 * Make sure to add the Heroku Git URL to your git remote.
 ```
-git remote add [name_of_your_remote] [name_of_your_new_branch]
+git remote add heroku https://git.heroku.com/gentle-savannah-07254.git
 ```
 
 ## How to Collaborate: Git Flow
