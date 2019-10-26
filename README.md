@@ -1,5 +1,6 @@
 # Bobby's Breakout
 
+<a href="https://gentle-savannah-07254.herokuapp.com/"><b>Play Now!</b></a>
 
 ## Table of Contents
 [Target Audience](#target-audience)\
