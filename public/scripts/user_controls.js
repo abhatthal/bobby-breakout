@@ -37,7 +37,7 @@ function keyDownHandler(event) {
 }
 
 // Handles keys being released
-function keyDownHandler(event) {
+function keyUpHandler(event) {
     // Down arrow or S for moving sprite down 
     if (event.keyCode == 40 || event.keyCode == 83) {
         moveDown = false
