@@ -1,4 +1,5 @@
 import { Wall } from './Wall.js'
+import { Character, Player, NPC } from './Character.js'
 
 var stage = new Konva.Stage({
 	container: 'container',
@@ -10,12 +11,12 @@ var layer = new Konva.Layer();
 stage.add(layer);
 
 
-var player = new Wall({
-	x: Math.random() * window.innerWidth/4,
-	y: Math.random() * window.innerHeight/4,
+var player = new Player({
+	x: Math.random() * window.innerWidth/2,
+	y: Math.random() * window.innerHeight/2,
 	width: 40,
 	height: 40, 
-	colour: 'grey'
+	image: 'assets/bobby.jpg',
 });
 layer.add(player.render);
 
@@ -39,6 +40,16 @@ var block2 = new Wall({
 	name: 'wall'
 });
 layer.add(block2.render);
+
+var npc = new NPC({
+	x: Math.random() * window.innerWidth/2,
+	y: Math.random() * window.innerHeight/2,
+	width: 40,
+	height: 40, 
+	colour: 'yellow'
+})
+
+layer.add(npc.render);
 
 var blockArray = [];
 blockArray.push(block);
@@ -92,17 +103,17 @@ container.addEventListener('keydown', function(event) {
 	}
 	
 
-	blockArray.forEach((node) => {
-		if(player.isColliding(node)){
-			//trigger some interaction, for now, change colour
-			player.shape.attrs.fill = 'red';
-			console.log("i am touching", node);
-		} 
-		else{
-			player.shape.attrs.fill = 'grey';
-		}
+	// blockArray.forEach((node) => {
+	// 	if(player.isColliding(node)){
+	// 		//trigger some interaction, for now, change colour
+	// 		player.shape.attrs.fill = 'red';
+	// 		console.log("i am touching", node);
+	// 	} 
+	// 	else{
+	// 		player.shape.attrs.fill = 'grey';
+	// 	}
 		
-	});
+	// });
 
 
   event.preventDefault();

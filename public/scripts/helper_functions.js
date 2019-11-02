@@ -7,3 +7,15 @@ export function genID(){
 	}
 	return id;
 }
+
+export async function loadImage(imageUrl) {
+	let img;
+    const imageLoadPromise = new Promise(resolve => {
+        img = new Image();
+        img.onload = resolve;
+        img.src = imageUrl;
+    });
+
+    await imageLoadPromise;
+    return img;
+}
