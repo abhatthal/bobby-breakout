@@ -10,26 +10,106 @@ var layer = new Konva.Layer();
 stage.add(layer);
 
 
+var player = new Wall({
+	x: Math.random() * window.innerWidth/4,
+	y: Math.random() * window.innerHeight/4,
+	width: 40,
+	height: 40, 
+	colour: 'grey'
+});
+layer.add(player.render);
+
+
 var block = new Wall({
 	x: Math.random() * window.innerWidth/2,
 	y: Math.random() * window.innerHeight/2,
 	width: 100,
 	height: 100, 
-	colour: 'blue'
+	colour: 'blue',
+	name: 'wall'
 });
-block.something();
-block.noYou();
-block.whatAmI();
-
 layer.add(block.render);
 
-var rect = new Konva.Rect({
-	x: 20,
-  y: 20,
-  width: 100,
-  height: 100,
-  fill: 'red'
-})
+var block2 = new Wall({
+	x: Math.random() * window.innerWidth/2,
+	y: Math.random() * window.innerHeight/2,
+	width: 50,
+	height: 100, 
+	colour: 'green',
+	name: 'wall'
+});
+layer.add(block2.render);
 
-layer.add(rect);
+var blockArray = [];
+blockArray.push(block);
+blockArray.push(block2);
+console.log(blockArray);
+
 layer.draw();
+
+
+var container = stage.container();
+container.tabIndex = 1;
+container.focus();
+
+const DELTA = 5;
+
+var keys = [];
+
+// Handles keys being pressed down
+container.addEventListener('keydown', function(event) {
+	keys[event.keyCode] = true;
+
+    // Down arrow or S for moving sprite down 
+    if (keys[40] || keys[83]) {
+				player.y = player.y + DELTA;
+				player.group.y(player.y);
+	}
+	// Up arrow or W to move sprite up
+	else if (keys[38] || keys[87]) {
+				player.y = player.y - DELTA;
+				player.group.y(player.y);
+	}
+	
+    // Left arrow or A for moving sprite left
+    if (keys[37] || keys[65]) {
+				player.x = player.x - DELTA;
+				player.group.x(player.x);
+    }
+    // Right arrow or D to move sprite right
+    else if (keys[39] || keys[68]) {
+				player.x = player.x + DELTA;
+				player.group.x(player.x);
+	}
+	
+    // Space or E for interaction 
+    if (keys[32] || keys[69]) {
+        interactDown = true;
+    }
+    // Escape or P for pausing (to menu)
+    if (keys[27] || keys[80]) {
+        pauseGame = !pauseGame;
+	}
+	
+
+	blockArray.forEach((node) => {
+		if(player.isColliding(node)){
+			//trigger some interaction, for now, change colour
+			player.shape.attrs.fill = 'red';
+			console.log("i am touching", node);
+		} 
+		else{
+			player.shape.attrs.fill = 'grey';
+		}
+		
+	});
+
+
+  event.preventDefault();
+  layer.batchDraw();
+});
+
+// Handles when a key is released
+container.addEventListener('keyup', function(event) {
+	keys[event.keyCode] = false;
+});

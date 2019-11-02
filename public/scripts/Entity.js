@@ -33,15 +33,10 @@ export class Entity{
 	 }
    
 	 isColliding(obj){
-	 	console.log(obj);
-		console.log(this.id, this.width, this.height, this.x, this.y, this.group.x(), this.group.y());
-		var yes = !(obj.x > this.x + this.width ||
-          obj.x + obj.width < this.x ||
-          obj.y > this.y + this.height ||
-          obj.y + obj.height < this.y);
-					
-		console.log(yes);
-		return yes;
+		return !(obj.x > this.x + this.width ||
+			obj.x + obj.width < this.x ||
+			obj.y > this.y + this.height ||
+			obj.y + obj.height < this.y);
 	 }
 	 
    something(){
