@@ -17,6 +17,8 @@
     "pg": "^7.12.1"
   },
   "devDependencies": {
+    "eslint": "^6.6.0",
+    "eslint-config-google": "^0.14.0",
     "request": "^2.81.0",
     "tape": "^4.7.0"
   },
