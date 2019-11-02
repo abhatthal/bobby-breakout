@@ -51,6 +51,9 @@ var npc = new NPC({
 
 layer.add(npc.render);
 
+var npcArray = []
+npcArray.push(npc)
+
 var blockArray = [];
 blockArray.push(block);
 blockArray.push(block2);
@@ -103,17 +106,25 @@ container.addEventListener('keydown', function(event) {
 	}
 	
 
-	// blockArray.forEach((node) => {
-	// 	if(player.isColliding(node)){
-	// 		//trigger some interaction, for now, change colour
-	// 		player.shape.attrs.fill = 'red';
-	// 		console.log("i am touching", node);
-	// 	} 
-	// 	else{
-	// 		player.shape.attrs.fill = 'grey';
-	// 	}
+	blockArray.forEach((node) => {
+		if(player.isColliding(node)){
+			//trigger some interaction, for now, change colour
+			player.shape.attrs.fill = 'red';
+			console.log("i am touching", node);
+		} 
+		else{
+			player.shape.attrs.fill = 'grey';
+		}
 		
-	// });
+	});
+
+	npcArray.forEach((node) => {
+		if(node.isSeen(player)){
+			//trigger some interaction, for now, change colour
+			console.log("i am touching", node);
+		} 
+		
+	});
 
 
   event.preventDefault();
