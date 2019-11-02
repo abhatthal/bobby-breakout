@@ -5,6 +5,5 @@ export function genID(){
 	for(let i = 0; i < 16; i++){
 		id += chars.charAt(Math.round(Math.random() * chars.length));
 	}
-	//console.log(id);	
 	return id;
 }
