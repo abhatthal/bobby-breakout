@@ -11,11 +11,14 @@
   },
   "dependencies": {
     "ejs": "^2.5.6",
-    "express": "^4.17.1",
+    "express": "^4.15.2",
+    "konva": "^4.0.16",
     "nodemon": "^1.19.3",
     "pg": "^7.12.1"
   },
   "devDependencies": {
+    "eslint": "^6.6.0",
+    "eslint-config-google": "^0.14.0",
     "request": "^2.81.0",
     "tape": "^4.7.0"
   },
