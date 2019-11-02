@@ -1,28 +1,49 @@
 import { BoundingBox } from './BoundingBox.js'
+import { genID } from './helper_functions.js'
 
 export class Entity{
 	constructor(data){
 	  this.width = data.width;
-	  this.height = data.height;
+		this.height = data.height;
+		this.x = data.x;
+		this.y = data.y;
+		
 		this.group = new Konva.Group({
-			x: data.x,
-	      y: data.y
+			x: this.x,
+	    y: this.y,
+			id: genID(),
+			draggable: true
 		});
 	  this.shape = new Konva.Rect({
 	    width: data.width,
 	    height: data.height,
-	    fill: data.colour
+	    fill: data.colour,
+			name: data.name
 	  });
-		//console.log(Konva.Rect(this.shape));
-		//console.log(this.shape.getClientRect({ relativeTo: this.group }));
 		
-		var box = new BoundingBox(this.group, this.shape, true);
-		this.bbox = box.boundingBox;
+		// this.x = this.group.attrs.x;
+		// this.y = this.group.attrs.y;
+		this.id = this.group.attrs.id;
+		
+		this.bbox = new BoundingBox(this.group, this.shape, true);
+		this.bboxArea = this.bbox.boundingBox;
 		
 		this.group.add(this.shape);
-		this.group.add(this.bbox);
+		this.group.add(this.bboxArea);
 	 }
    
+	 isColliding(obj){
+	 	console.log(obj);
+		console.log(this.id, this.width, this.height, this.x, this.y, this.group.x(), this.group.y());
+		var yes = !(obj.x > this.x + this.width ||
+          obj.x + obj.width < this.x ||
+          obj.y > this.y + this.height ||
+          obj.y + obj.height < this.y);
+					
+		console.log(yes);
+		return yes;
+	 }
+	 
    something(){
    	console.log("something");
    }
@@ -35,12 +56,32 @@ export class Entity{
 	 	return this.group;
 	 }
 	 
+	 get x(){
+	 	return this._x;
+	 }
+	 
+	 get y(){
+	 	return this._y;
+	 }
+	 
 	 get width(){
-	 	return this.width;
+	 	return this._width;
 	 }
 	 
 	 get height(){
-	 	return this.height;
+	 	return this._height;
+	 }
+	 
+	 get bboxArea(){
+	 	return this._bboxArea;
+	 }
+	 
+	 set x(val){
+		 this._x = val;
+	 }
+	 
+	 set y(val){
+		 this._y = val;
 	 }
 	 
 	 set height(height){
@@ -51,4 +92,7 @@ export class Entity{
 	 	this._width = width;
 	 }
 	 
+	 set bboxArea(area){
+	 	this._bboxArea = area;
+	 }
 }
