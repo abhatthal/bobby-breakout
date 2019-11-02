@@ -5,8 +5,4 @@ export class Wall extends Environment{
   	super(data);
   }
 	
-	//override
-	whatAmI(){
-		console.log("i am a wall")
-	}
 }
