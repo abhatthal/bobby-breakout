@@ -1,15 +1,16 @@
-import Entity from './entity.js'
+import {Entity} from './Entity.js'
 
-class Environment extends Entity{
+export class Environment extends Entity{
 	constructor(data){
   	super(data);
   }
-}
-
-class Wall extends Environment{
-	constructor(data){	
-  	super(data);
+  
+  noYou(){
+  	console.log("no u");
   }
+	
+	//override
+	whatAmI(){
+		console.log("i am an environment")
+	}
 }
-
-export default Wall;
