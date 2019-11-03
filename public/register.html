@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Prepare to game with Bobby</title>
+  <script src="scripts/login.js" defer type="module"></script>
+</head>
+<body>
+  <h2>Welcome To Bobby Breakout</h2>
+  <img src="bobby.png" alt="Dear Bobby Photograph">
+  <br><br><br>
+  <div id="loginbox" class="modal">
+    <form class="logininfo" action="/bb-test.html" method="post">
+      <div class="container">
+        <p><b>Username</b></p>
+        <input type="text" placeholder="Enter Username" name="uname" required>
+
+        <p><b>Password</b></p>
+        <input type="password" placeholder="Enter Password" name="psw" required>
+
+        <p><b>Magic</b></p>
+        <input type="text" placeholder="Enter Magicword" name="mgw" required>
+
+        <button type="submit">Login</button>
+
+        <p><b>Have login?</b></p>
+        <button type="submit" name = "gologinbtn">Go Login</button>
+
+      </div>
+    </form>
+  </div>
+
+
+
+</body>
+</html>

@@ -3,25 +3,29 @@
 <head>
   <meta charset="utf-8">
   <title>Prepare to game with Bobby</title>
-
+  <script src="scripts/login.js" defer type="module"></script>
 </head>
 <body>
   <h2>Welcome To Bobby Breakout</h2>
   <img src="bobby.png" alt="Dear Bobby Photograph">
   <br><br><br>
-  <div id="loginbox" class="modal">
-    <form class="logininfo" action="/bb-test.html" method="post">
-      <div class="container">
+  <div class="loginbox">
+    <form id="logininfo" action="/bb-test.html" method="post">
+      <div>
         <p><b>Username</b></p>
-        <input type="text" placeholder="Enter Username" name="uname" required>
+        <input type="text" placeholder="Enter Username" name="loginuname" required>
 
         <p><b>Password</b></p>
-        <input type="password" placeholder="Enter Password" name="psw" required>
-        
-        <button type="submit">Login</button>
+        <input type="password" placeholder="Enter Password" name="loginpsw" required>
+
+        <button type="submit" name = "loginbtn">Login</button>
+
+
 
       </div>
     </form>
+    <p><b>Don't have a account yet?</b></p>
+    <button type="submit" name = "goregisterbtn">Go Register</button>
   </div>
 
 
