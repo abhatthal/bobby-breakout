@@ -2,37 +2,39 @@
 
 console.log('test');
 
-
-var logininfo = document.getElementById('logininfo');
-
+var checklogin = document.getElementById('loginbtn');
 var goreg = document.getElementById('goregisterbtn');
-var golog = document.getElementById('gologinbtn');
-
-
-
 
 
 //console.log(logininfo.elements(1).value);
 
 
-function login (logininfo){
+checklogin.onclick = function(){
   console.log('login?');
-  if(logininfo.loginuname === "zxc" && logininfo.loginpsw === "zxc"){
+  //var logininfo = document.getElementById('logininfo');
+  //var logname = document.forms["loginform"]["loginuname"].value;
+  //var logpsw = document.forms["loginform"]["loginpsw"].value;
+  var logname = document.getElementById('loginuname').value;
+  var logpsw = document.getElementById('loginpsw').value;
+  if(logname === "zxc" && logpsw === "zxc"){
     console.log('login DONE');
-    //window.location.href='bb-test.html';
+    window.location.href='bb-test.html';
   }else{
     alert("You are not bobby")
+    window.location.href='login.html';
   }
 }
-
-
+/*
+function validateForm() {
+  var x = document.forms["myForm"]["fname"].value;
+  if (x == "") {
+    alert("Name must be filled out");
+    return false;
+  }
+}
+*/
 
 
 goreg.onclick = function(){
   window.location.href='register.html';
-};
-
-
-golog.onclick = function(){
-  window.location.href='login.html';
 };
