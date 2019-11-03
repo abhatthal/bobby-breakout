@@ -8,7 +8,7 @@ var goreg = document.getElementById('goregisterbtn');
 
 //console.log(logininfo.elements(1).value);
 
-
+/*
 checklogin.onclick = function(){
   console.log('login?');
   //var logininfo = document.getElementById('logininfo');
@@ -24,7 +24,7 @@ checklogin.onclick = function(){
     window.location.href='login.html';
   }
 }
-
+*/
 goreg.onclick = function(){
   window.location.href='register.html';
 };
