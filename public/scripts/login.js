@@ -5,6 +5,14 @@ console.log('test');
 
 var logininfo = document.getElementById('logininfo');
 
+var goreg = document.getElementById('goregisterbtn');
+var golog = document.getElementById('gologinbtn');
+
+
+
+
+
+//console.log(logininfo.elements(1).value);
 
 
 function login (logininfo){
@@ -16,3 +24,15 @@ function login (logininfo){
     alert("You are not bobby")
   }
 }
+
+
+
+
+goreg.onclick = function(){
+  window.location.href='register.html';
+};
+
+
+golog.onclick = function(){
+  window.location.href='login.html';
+};
