@@ -24,16 +24,6 @@ checklogin.onclick = function(){
     window.location.href='login.html';
   }
 }
-/*
-function validateForm() {
-  var x = document.forms["myForm"]["fname"].value;
-  if (x == "") {
-    alert("Name must be filled out");
-    return false;
-  }
-}
-*/
-
 
 goreg.onclick = function(){
   window.location.href='register.html';
