@@ -3,15 +3,14 @@
 <head>
   <meta charset="utf-8">
   <title>Prepare to game with Bobby</title>
-  <script src="scripts/login.js" defer type="module"></script>
+  <script src="scripts/register.js" defer type="module"></script>
 </head>
 <body>
   <h2>Welcome To Bobby Breakout</h2>
   <img src="../img/bobby.png" alt="Bobby Photograph">
   <br><br><br>
-  <div >
-    <form class="logininfo"  method="post">
-      <div class="container">
+  <div class="loginbox">
+    <form  method="post">
         <p><b>Username</b></p>
         <input type="text" placeholder="Enter Username" name="uname" required>
 
@@ -22,10 +21,6 @@
         <input type="text" placeholder="Enter Magicword" name="mgw" required>
 
         <button type="submit">Login</button>
-
-
-
-      </div>
     </form>
     <p><b>Have login?</b></p>
     <button id ="gologinbtn">Go Login</button>
