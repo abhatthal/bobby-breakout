@@ -8,6 +8,17 @@ export function genID(){
 	return id;
 }
 
+export const DIRECTION = {
+    LEFT: 'LEFT',
+    RIGHT: 'RIGHT',
+    UP: 'UP',
+    DOWN: 'DOWN',
+    UNIT_LEFT: -1,
+    UNIT_RIGHT: 1,
+    UNIT_UP: 1,
+    UNIT_DOWN: -1,
+};
+
 export async function loadImage(imageUrl) {
 	let img;
     const imageLoadPromise = new Promise(resolve => {

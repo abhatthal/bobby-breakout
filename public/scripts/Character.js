@@ -1,8 +1,39 @@
-import { Entity } from './entity.js'
+import { Entity } from './Entity.js';
+import { DIRECTION } from './helper_functions.js';
 
 export class Character extends Entity {
     constructor(data) {
         super(data);
+        this.speed = 5; //movement speed
+    }
+
+    move(dir){ 
+        // console.log(dir);
+        if(dir === DIRECTION.LEFT){
+            this.x += this.speed * DIRECTION.UNIT_LEFT;
+            this.group.x(this.x);
+        }
+        else if(dir === DIRECTION.RIGHT){
+            this.x += this.speed * DIRECTION.UNIT_RIGHT;
+            this.group.x(this.x);
+        }
+
+        if(dir === DIRECTION.UP){
+            this.y += this.speed * DIRECTION.UNIT_UP;
+            this.group.y(this.y);
+        }
+        else if(dir === DIRECTION.DOWN){
+            this.y += this.speed * DIRECTION.UNIT_DOWN;
+            this.group.y(this.y);
+        }
+    }
+
+    get speed(){
+        return this._speed;
+    }
+
+    set speed(val){
+        this._speed = val;
     }
 }
 

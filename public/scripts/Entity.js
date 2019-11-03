@@ -3,7 +3,7 @@ import { genID, loadImage } from './helper_functions.js'
 
 export class Entity{
 	constructor(data){
-	  	this.width = data.width;
+	  this.width = data.width;
 		this.height = data.height;
 		this.x = data.x;
 		this.y = data.y;
@@ -23,20 +23,20 @@ export class Entity{
 			id: this.id,
 			draggable: true
 		});
-	  	this.shape = new Konva.Rect({
+	  this.shape = new Konva.Rect({
 			width: data.width,
 			height: data.height,
 			fill: (data.colour) ? data.colour : null,
 			fillPatternImage: (data.image) ? imageObj : null,
 			name: data.name
-	  	});
+	  });
 		
 		this.bbox = new BoundingBox(this.group, this.shape, true);
 		this.bboxArea = this.bbox.boundingBox;
 		
 		this.group.add(this.shape);
 		this.group.add(this.bboxArea);
-	}
+	} //end constructor
    
 	isColliding(obj){
 		return !(obj.x > this.x + this.width ||

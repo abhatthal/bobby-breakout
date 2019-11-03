@@ -1,5 +1,6 @@
 import { Wall } from './Wall.js'
-import { Character, Player, NPC } from './Character.js'
+import { Player, NPC } from './Character.js'
+import { DIRECTION } from './helper_functions.js';
 
 var stage = new Konva.Stage({
 	container: 'container',
@@ -57,6 +58,7 @@ npcArray.push(npc)
 var blockArray = [];
 blockArray.push(block);
 blockArray.push(block2);
+blockArray.push(npc);
 console.log(blockArray);
 
 layer.draw();
@@ -66,43 +68,37 @@ var container = stage.container();
 container.tabIndex = 1;
 container.focus();
 
-const DELTA = 5;
-
 var keys = [];
 
 // Handles keys being pressed down
 container.addEventListener('keydown', function(event) {
 	keys[event.keyCode] = true;
 
-    // Down arrow or S for moving sprite down 
-    if (keys[40] || keys[83]) {
-				player.y = player.y + DELTA;
-				player.group.y(player.y);
+  // Down arrow or W for moving sprite down 
+  if (keys[40] || keys[83]) {
+		player.move(DIRECTION.UP);
 	}
-	// Up arrow or W to move sprite up
+	// Up arrow or S to move sprite up
 	else if (keys[38] || keys[87]) {
-				player.y = player.y - DELTA;
-				player.group.y(player.y);
+		player.move(DIRECTION.DOWN);
 	}
 	
-    // Left arrow or A for moving sprite left
-    if (keys[37] || keys[65]) {
-				player.x = player.x - DELTA;
-				player.group.x(player.x);
-    }
-    // Right arrow or D to move sprite right
-    else if (keys[39] || keys[68]) {
-				player.x = player.x + DELTA;
-				player.group.x(player.x);
+  // Left arrow or A for moving sprite left
+  if (keys[37] || keys[65]) {
+		player.move(DIRECTION.LEFT);
+  }
+	// Right arrow or D to move sprite right
+  else if (keys[39] || keys[68]) {
+		player.move(DIRECTION.RIGHT);
 	}
 	
-    // Space or E for interaction 
-    if (keys[32] || keys[69]) {
-        interactDown = true;
-    }
-    // Escape or P for pausing (to menu)
-    if (keys[27] || keys[80]) {
-        pauseGame = !pauseGame;
+  // Space or E for interaction 
+  if (keys[32] || keys[69]) {
+    interactDown = true;
+  }
+  // Escape or P for pausing (to menu)
+  if (keys[27] || keys[80]) {
+    pauseGame = !pauseGame;
 	}
 	
 
@@ -118,13 +114,13 @@ container.addEventListener('keydown', function(event) {
 		
 	});
 
-	npcArray.forEach((node) => {
-		if(node.isSeen(player)){
-			//trigger some interaction, for now, change colour
-			console.log("i am touching", node);
-		} 
+	// npcArray.forEach((node) => {
+	// 	if(node.isSeen(player)){
+	// 		//trigger some interaction, for now, change colour
+	// 		console.log("i am touching", node);
+	// 	} 
 		
-	});
+	// });
 
 
   event.preventDefault();
