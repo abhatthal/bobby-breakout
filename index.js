@@ -68,7 +68,7 @@ function createlogin(req,res){
                   }
                 });
               }else{    // wrong psw
-                alert(" account taken!");
+                console.log(" account taken!");
                 res.status(405).redirect('back');
               }
             }
@@ -105,7 +105,7 @@ function checklogin(req, res){
               else if(result.rows[0].password === loginpsw){  // account exist and psw correct
                 res.status(200).redirect("/bb-test.html");
               }else{    // wrong psw
-                alert("password incorrect or account not exist!");
+                console.log("password incorrect or account not exist!");
                 res.status(405).redirect('back');
               }
             }
