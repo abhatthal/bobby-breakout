@@ -126,7 +126,9 @@ container.addEventListener('keydown', function(event) {
   }
   // Escape or P for pausing (to menu)
   if (keys[27] || keys[80]) {
-    alert("GAME IS PAUSED. WHY DON'T YOU CONTINUE PLAYING?")
+    alert("GAME IS PAUSED. WHY DON'T YOU CONTINUE PLAYING?");
+    keys[27] = false;
+    keys[80] = false;
   }
   
 
