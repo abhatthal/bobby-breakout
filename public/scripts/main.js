@@ -4,8 +4,8 @@ import { DIRECTION } from './helper_functions.js';
 
 var stage = new Konva.Stage({
     container: 'container',
-  width: window.innerWidth,
-  height: window.innerHeight
+  width: 1000,
+  height: 500
 });
 
 var layer = new Konva.Layer();
@@ -13,8 +13,8 @@ stage.add(layer);
 
 
 var player = new Player({
-    x: Math.random() * window.innerWidth/2,
-    y: Math.random() * window.innerHeight/2,
+    x: Math.random() * stage.width()/2,
+    y: Math.random() * stage.height()/2,
     width: 40,
     height: 40, 
     image: 'assets/bobby.jpg',
@@ -23,8 +23,8 @@ layer.add(player.render);
 
 
 var block = new Wall({
-    x: Math.random() * window.innerWidth/2,
-    y: Math.random() * window.innerHeight/2,
+    x: Math.random() * stage.width()/2,
+    y: Math.random() * stage.height()/2,
     width: 100,
     height: 100, 
     colour: 'blue',
@@ -33,8 +33,8 @@ var block = new Wall({
 layer.add(block.render);
 
 var block2 = new Wall({
-    x: Math.random() * window.innerWidth/2,
-    y: Math.random() * window.innerHeight/2,
+    x: Math.random() * stage.width()/2,
+    y: Math.random() * stage.height()/2,
     width: 50,
     height: 100, 
     colour: 'green',
@@ -43,8 +43,8 @@ var block2 = new Wall({
 layer.add(block2.render);
 
 var npc = new NPC({
-    x: Math.random() * window.innerWidth/2,
-    y: Math.random() * window.innerHeight/2,
+    x: Math.random() * stage.width()/2,
+    y: Math.random() * stage.height()/2,
     width: 40,
     height: 40, 
     colour: 'yellow'

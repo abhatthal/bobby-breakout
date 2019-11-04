@@ -1,16 +1,39 @@
+body {
+  font: normal 75%/1.5 Open Sans,Arial,sans-serif;
+  background-color: #ECECEC;
+}
+
 #title {
   text-align: center;
 }
-/* 
+
+#gameArea {
+  width: 100%;
+}
+
 #container {
-  width: 758px;
-  height: 300px;
-} */
+  width: 1000px;
+  height: 500px;
+  margin: auto;
+  border: solid;
+  border-width: 5px;
+}
+
+#info {
+  position: absolute;
+  left: 180;
+  margin-top: 10px;
+}
 
 .controls {
   list-style-type: none;
   margin: 0;
   padding: 0
+}
+
+.controls li {
+  display: inline-block;
+  margin: 0 16px 0 0;
 }
 
 .controls .key {
