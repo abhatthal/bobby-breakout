@@ -15,6 +15,8 @@ stage.add(layer);
 var player = new Player({
   x: Math.random() * stage.width() / 2,
   y: Math.random() * stage.height() / 2,
+  // x: stage.width() / 2,
+  // y: stage.height() / 2,
   width: 40,
   height: 40, 
   image: 'assets/bobby.jpg',
@@ -33,15 +35,51 @@ var block = new Wall({
 });
 layer.add(block.render);
 
-var block2 = new Wall({
-  x: Math.random() * stage.width() / 2,
-  y: Math.random() * stage.height() / 2,
-  width: 50,
-  height: 100, 
+// borders for stage
+var stageTop = new Wall({
+  x: 0,
+  y: 0,
+  width: stage.width(),
+  height: 0, 
   colour: 'green',
-  name: 'wall'
+  name: 'wall',
+  draggable: false
 });
-layer.add(block2.render);
+layer.add(stageTop.render);
+
+var stageBottom = new Wall({
+  x: 0,
+  y: stage.height(),
+  width: stage.width(),
+  height: 0, 
+  colour: 'green',
+  name: 'wall',
+  draggable: false
+});
+layer.add(stageBottom.render);
+
+var stageLeft = new Wall({
+  x: 0,
+  y: 0,
+  width: 0,
+  height: stage.height(), 
+  colour: 'green',
+  name: 'wall',
+  draggable: false
+});
+layer.add(stageLeft.render);
+
+var stageRight = new Wall({
+  x: stage.width(),
+  y: 0,
+  width: 0,
+  height: stage.height(), 
+  colour: 'green',
+  name: 'wall',
+  draggable: false
+});
+layer.add(stageRight.render);
+
 
 var npc = new NPC({
   x: Math.random() * stage.width() / 2,
@@ -59,7 +97,10 @@ npcArray.push(npc)
 
 var blockArray = [];
 blockArray.push(block);
-blockArray.push(block2);
+blockArray.push(stageTop);
+blockArray.push(stageBottom);
+blockArray.push(stageLeft);
+blockArray.push(stageRight);
 console.log(blockArray);
 
 layer.draw();
@@ -126,7 +167,7 @@ container.addEventListener('keydown', function(event) {
   }
   // Escape or P for pausing (to menu)
   if (keys[27] || keys[80]) {
-    alert("GAME IS PAUSED. WHY DON'T YOU CONTINUE PLAYING?");
+    alert("Game Paused\nPress ok to continue");
     keys[27] = false;
     keys[80] = false;
   }
