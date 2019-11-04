@@ -3,7 +3,7 @@ import { Player, NPC } from './Character.js'
 import { DIRECTION } from './helper_functions.js';
 
 var stage = new Konva.Stage({
-    container: 'container',
+  container: 'container',
   width: 1000,
   height: 500
 });
@@ -13,42 +13,42 @@ stage.add(layer);
 
 
 var player = new Player({
-    x: Math.random() * stage.width()/2,
-    y: Math.random() * stage.height()/2,
-    width: 40,
-    height: 40, 
-    image: 'assets/bobby.jpg',
+  x: Math.random() * stage.width() / 2,
+  y: Math.random() * stage.height() / 2,
+  width: 40,
+  height: 40, 
+  image: 'assets/bobby.jpg',
   colour: 'grey'
 });
 layer.add(player.render);
 
 
 var block = new Wall({
-    x: Math.random() * stage.width()/2,
-    y: Math.random() * stage.height()/2,
-    width: 100,
-    height: 100, 
-    colour: 'blue',
-    name: 'wall'
+  x: Math.random() * stage.width() / 2,
+  y: Math.random() * stage.height() / 2,
+  width: 100,
+  height: 100, 
+  colour: 'blue',
+  name: 'wall'
 });
 layer.add(block.render);
 
 var block2 = new Wall({
-    x: Math.random() * stage.width()/2,
-    y: Math.random() * stage.height()/2,
-    width: 50,
-    height: 100, 
-    colour: 'green',
-    name: 'wall'
+  x: Math.random() * stage.width() / 2,
+  y: Math.random() * stage.height() / 2,
+  width: 50,
+  height: 100, 
+  colour: 'green',
+  name: 'wall'
 });
 layer.add(block2.render);
 
 var npc = new NPC({
-    x: Math.random() * stage.width()/2,
-    y: Math.random() * stage.height()/2,
-    width: 40,
-    height: 40, 
-    colour: 'yellow'
+  x: Math.random() * stage.width() / 2,
+  y: Math.random() * stage.height() / 2,
+  width: 40,
+  height: 40, 
+  colour: 'yellow'
 })
 
 npc.isSeeing(player);
@@ -73,29 +73,29 @@ var keys = [];
 
 // Tooltip for interaction
 var tooltip = new Konva.Text({
-    x: 0,
-    y: 0,
-    text: "E/SPACE\nTO INTERACT",
-    fontSize: 18,
-    fill: '#555',
-    padding: 20,
-    align: 'center'
+  x: 0,
+  y: 0,
+  text: "E/SPACE\nTO INTERACT",
+  fontSize: 18,
+  fill: '#555',
+  padding: 20,
+  align: 'center'
 })
 
 var tooltipBox = new Konva.Rect({
-    x: 0,
-    y: 0,
-    stroke: '#555',
-    strokeWidth: 5,
-    fill: '#ddd',
-    width: 160,
-    height: tooltip.height(),
-    shadowColor: 'black',
-    shadowBlur: 10,
-    shadowOffsetX: 10,
-    shadowOffsetY: 10,
-    shadowOpacity: 0.2,
-    cornerRadius: 10
+  x: 0,
+  y: 0,
+  stroke: '#555',
+  strokeWidth: 5,
+  fill: '#ddd',
+  width: 160,
+  height: tooltip.height(),
+  shadowColor: 'black',
+  shadowBlur: 10,
+  shadowOffsetX: 10,
+  shadowOffsetY: 10,
+  shadowOpacity: 0.2,
+  cornerRadius: 10
 })
 
 // Handles keys being pressed down
@@ -152,8 +152,8 @@ container.addEventListener('keydown', function(event) {
       layer.draw();
     }
     else {
-        tooltip.remove();
-        tooltipBox.remove();
+      tooltip.remove();
+      tooltipBox.remove();
     }
   });
 

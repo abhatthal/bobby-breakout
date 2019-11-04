@@ -19,7 +19,7 @@ export class Entity{
     };
     this.group = new Konva.Group({
       x: this.x,
-        y: this.y,
+      y: this.y,
       id: this.id,
       draggable: true
     });

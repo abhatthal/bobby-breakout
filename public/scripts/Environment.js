@@ -1,8 +1,7 @@
 import {Entity} from './Entity.js'
 
-export class Environment extends Entity{
-	constructor(data){
-  	super(data);
+export class Environment extends Entity {
+  constructor(data) {
+    super(data);
   }
-
 }

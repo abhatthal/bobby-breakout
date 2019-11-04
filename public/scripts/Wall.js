@@ -1,8 +1,7 @@
 import { Environment } from './Environment.js'
 
 export class Wall extends Environment{
-	constructor(data){	
-  	super(data);
+  constructor(data){	
+    super(data);
   }
-	
 }

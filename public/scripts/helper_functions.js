@@ -1,4 +1,4 @@
-//generates random string of length 16
+// generates random string of length 16
 export function genID(){
   var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
   var id = ""
