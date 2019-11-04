@@ -30,3 +30,11 @@ export async function loadImage(imageUrl) {
     await imageLoadPromise;
     return img;
 }
+
+export function DegreesToRadians(degree){
+    return degree * Math.PI/180;
+}
+
+export function RadiansToDegrees(radians){
+    return radians * 180/Math.PI;
+}

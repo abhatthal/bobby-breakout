@@ -48,7 +48,9 @@ var npc = new NPC({
 	width: 40,
 	height: 40, 
 	colour: 'yellow'
-})
+});
+
+npc.isSeeing();
 
 layer.add(npc.render);
 
