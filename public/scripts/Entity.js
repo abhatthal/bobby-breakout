@@ -3,6 +3,7 @@ import { genID, loadImage } from './helper_functions.js'
 
 export class Entity{
   constructor(data){
+    this.name = data.name;
     this.width = data.width;
     this.height = data.height;
     this.x = data.x;

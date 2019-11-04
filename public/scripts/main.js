@@ -18,7 +18,8 @@ var startPoint = new Environment({
   y: stage.height() - 120,
   width: 120,
   height: 120, 
-  colour: 'green'
+  colour: 'green',
+  name: 'start'
 });
 layer.add(startPoint.render);
 
@@ -27,7 +28,8 @@ var endPoint = new Environment({
   y: 0,
   width: 120,
   height: 120, 
-  colour: 'red'
+  colour: 'red',
+  name: 'end'
 });
 layer.add(endPoint.render);
 
@@ -47,17 +49,17 @@ var block = new Wall({
   x: stage.width() / 2 - 70,
   y: stage.height() / 2,
   width: 300,
-  height: 10, 
+  height: 30, 
   colour: 'orange',
   name: 'wall'
 });
 layer.add(block.render);
 
 var block2 = new Wall({
-  x: 150,
-  y: 0,
+  x: stage.width() / 2,
+  y: stage.height() - 150,
   width: 20,
-  height: 100, 
+  height: 150, 
   colour: 'blue',
   name: 'wall'
 });
@@ -210,13 +212,13 @@ container.addEventListener('keydown', function(event) {
   });
 
   npcArray.forEach((node) => {
-    player.checkCollision(node);  
+    player.checkCollision(node);
     node.checkPlayerDetection(player);
-    if(player.isColliding(node) ){
+    if(player.isColliding(node)) {
       //trigger some interaction, for now, change colour
       console.log("i am touching an NPC", node.id);
     }
-    if(node.isSeeing(player)){
+    if(node.isSeeing(player)) {
       console.log("i see the player");
       tooltip.x(node.x + 50);
       tooltip.y(node.y - 50);
@@ -229,6 +231,27 @@ container.addEventListener('keydown', function(event) {
     else {
       tooltip.remove();
       tooltipBox.remove();
+    }
+  });
+
+  spawnArray.forEach((node) => {
+    player.checkCollision(node);
+    if(player.isColliding(node)) {
+      //trigger some interaction, for now, change colour
+      if (node.name === 'start') {
+        console.log("i am at the spawn", node.id);
+      }
+      else if (node.name === 'end') {
+        console.log("i am a winner", node.id);
+        setTimeout(function() {
+          alert("YOU WIN! Play again?");
+          location.reload();
+        }, 1000);
+      }
+      else {
+        console.log("i am not sure where i am...", node.id);
+        console.log(node.name);
+      }
     }
   });
 
