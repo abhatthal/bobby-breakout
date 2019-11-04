@@ -3,9 +3,9 @@ import { Player, NPC } from './Character.js'
 import { DIRECTION } from './helper_functions.js';
 
 var stage = new Konva.Stage({
-  container: 'container',
-  width: window.innerWidth,
-  height: window.innerHeight
+    container: 'container',
+  width: 1000,
+  height: 500
 });
 
 var layer = new Konva.Layer();
@@ -13,43 +13,44 @@ stage.add(layer);
 
 
 var player = new Player({
-  x: Math.random() * window.innerWidth/2,
-  y: Math.random() * window.innerHeight/2,
-  width: 40,
-  height: 40, 
-  // image: 'assets/bobby.jpg',
+    x: Math.random() * stage.width()/2,
+    y: Math.random() * stage.height()/2,
+    width: 40,
+    height: 40, 
+    image: 'assets/bobby.jpg',
   colour: 'grey'
 });
 layer.add(player.render);
 
 
 var block = new Wall({
-  x: Math.random() * window.innerWidth/2,
-  y: Math.random() * window.innerHeight/2,
-  width: 100,
-  height: 100, 
-  colour: 'blue',
-  name: 'wall'
+    x: Math.random() * stage.width()/2,
+    y: Math.random() * stage.height()/2,
+    width: 100,
+    height: 100, 
+    colour: 'blue',
+    name: 'wall'
 });
 layer.add(block.render);
 
 var block2 = new Wall({
-  x: Math.random() * window.innerWidth/2,
-  y: Math.random() * window.innerHeight/2,
-  width: 50,
-  height: 100, 
-  colour: 'green',
-  name: 'wall'
+    x: Math.random() * stage.width()/2,
+    y: Math.random() * stage.height()/2,
+    width: 50,
+    height: 100, 
+    colour: 'green',
+    name: 'wall'
 });
 layer.add(block2.render);
 
 var npc = new NPC({
-  x: Math.random() * window.innerWidth/2,
-  y: Math.random() * window.innerHeight/2,
-  width: 40,
-  height: 40, 
-  colour: 'yellow'
-});
+    x: Math.random() * stage.width()/2,
+    y: Math.random() * stage.height()/2,
+    width: 40,
+    height: 40, 
+    colour: 'yellow'
+})
+
 npc.isSeeing(player);
 layer.add(npc.render);
 
@@ -134,10 +135,8 @@ container.addEventListener('keydown', function(event) {
   });
 
   npcArray.forEach((node) => {
-<<<<<<< HEAD
     player.checkCollision(node);  
     node.checkPlayerDetection(player);
-=======
     if(player.isColliding(node) ){
       //trigger some interaction, for now, change colour
       console.log("i am touching an NPC", node.id);
@@ -156,7 +155,6 @@ container.addEventListener('keydown', function(event) {
         tooltip.remove();
         tooltipBox.remove();
     }
->>>>>>> b96f98a2b8a6a8303ec511e1c21e063e42303b68
   });
 
 

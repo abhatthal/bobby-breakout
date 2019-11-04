@@ -1,27 +1,49 @@
-.jumbotron {
-  background: #532F8C;
-  color: white;
-  padding-bottom: 80px; }
-  .jumbotron .btn-primary {
-    background: #845ac7;
-    border-color: #845ac7; }
-    .jumbotron .btn-primary:hover {
-      background: #7646c1; }
-  .jumbotron p {
-    color: #d9ccee;
-    max-width: 75%;
-    margin: 1em auto 2em; }
-  .navbar + .jumbotron {
-    margin-top: -20px; }
-  .jumbotron .lang-logo {
-    display: block;
-    background: #B01302;
-    border-radius: 50%;
-    overflow: hidden;
-    width: 100px;
-    height: 100px;
-    margin: auto;
-    border: 2px solid white; }
-    .jumbotron .lang-logo img {
-      max-width: 100%; }
+body {
+  font: normal 75%/1.5 Open Sans,Arial,sans-serif;
+  background-color: #ECECEC;
+}
 
+#title {
+  text-align: center;
+}
+
+#gameArea {
+  width: 100%;
+}
+
+#container {
+  width: 1000px;
+  height: 500px;
+  margin: auto;
+  border: solid;
+  border-width: 5px;
+}
+
+#info {
+  position: absolute;
+  left: 180;
+  margin-top: 10px;
+}
+
+.controls {
+  list-style-type: none;
+  margin: 0;
+  padding: 0
+}
+
+.controls li {
+  display: inline-block;
+  margin: 0 16px 0 0;
+}
+
+.controls .key {
+  display: inline-block;
+  background: url(/assets/icon_key.png);
+  height: 15px;
+  width: 15px;
+  text-align: center;
+  line-height: 15px;
+  font-size: 87.50250000000001%;
+  font-weight: bold;
+  color: #09f;
+}
