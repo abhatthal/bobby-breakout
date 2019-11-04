@@ -13,8 +13,8 @@ stage.add(layer);
 
 
 var player = new Player({
-  x: Math.random() * stage.width() / 2,
-  y: Math.random() * stage.height() / 2,
+  x: 60,
+  y: stage.height() - 80,
   // x: stage.width() / 2,
   // y: stage.height() / 2,
   width: 40,
@@ -26,14 +26,25 @@ layer.add(player.render);
 
 
 var block = new Wall({
-  x: Math.random() * stage.width() / 2,
-  y: Math.random() * stage.height() / 2,
-  width: 100,
+  x: stage.width() / 2 - 70,
+  y: stage.height() / 2,
+  width: 300,
+  height: 10, 
+  colour: 'red',
+  name: 'wall'
+});
+layer.add(block.render);
+
+var block2 = new Wall({
+  x: 150,
+  y: stage.height() - 100,
+  width: 20,
   height: 100, 
   colour: 'blue',
   name: 'wall'
 });
-layer.add(block.render);
+layer.add(block2.render);
+
 
 // borders for stage
 var stageTop = new Wall({
@@ -43,7 +54,6 @@ var stageTop = new Wall({
   height: 0, 
   colour: 'green',
   name: 'wall',
-  draggable: false
 });
 layer.add(stageTop.render);
 
@@ -54,7 +64,6 @@ var stageBottom = new Wall({
   height: 0, 
   colour: 'green',
   name: 'wall',
-  draggable: false
 });
 layer.add(stageBottom.render);
 
@@ -65,7 +74,6 @@ var stageLeft = new Wall({
   height: stage.height(), 
   colour: 'green',
   name: 'wall',
-  draggable: false
 });
 layer.add(stageLeft.render);
 
@@ -76,27 +84,27 @@ var stageRight = new Wall({
   height: stage.height(), 
   colour: 'green',
   name: 'wall',
-  draggable: false
 });
 layer.add(stageRight.render);
 
 
 var npc = new NPC({
-  x: Math.random() * stage.width() / 2,
-  y: Math.random() * stage.height() / 2,
+  x: 400,
+  y: 50,
   width: 40,
   height: 40, 
   colour: 'yellow'
-})
-
+});
 npc.isSeeing(player);
 layer.add(npc.render);
+
 
 var npcArray = []
 npcArray.push(npc)
 
 var blockArray = [];
 blockArray.push(block);
+blockArray.push(block2);
 blockArray.push(stageTop);
 blockArray.push(stageBottom);
 blockArray.push(stageLeft);
