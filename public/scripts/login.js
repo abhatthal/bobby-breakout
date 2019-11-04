@@ -2,7 +2,7 @@
 
 console.log('test');
 
-var checklogin = document.getElementById('loginbtn');
+//var checklogin = document.getElementById('loginbtn');
 var goreg = document.getElementById('goregisterbtn');
 
 
