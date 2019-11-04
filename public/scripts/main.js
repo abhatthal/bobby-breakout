@@ -1,4 +1,5 @@
 import { Wall } from './Wall.js'
+import { Environment } from './Environment.js'
 import { Player, NPC } from './Character.js'
 import { DIRECTION } from './helper_functions.js';
 
@@ -12,11 +13,28 @@ var layer = new Konva.Layer();
 stage.add(layer);
 
 
+var startPoint = new Environment({
+  x: 0,
+  y: stage.height() - 120,
+  width: 120,
+  height: 120, 
+  colour: 'green'
+});
+layer.add(startPoint.render);
+
+var endPoint = new Environment({
+  x: stage.width() - 120,
+  y: 0,
+  width: 120,
+  height: 120, 
+  colour: 'red'
+});
+layer.add(endPoint.render);
+
+
 var player = new Player({
-  x: 60,
+  x: 40,
   y: stage.height() - 80,
-  // x: stage.width() / 2,
-  // y: stage.height() / 2,
   width: 40,
   height: 40, 
   image: 'assets/bobby.jpg',
@@ -30,14 +48,14 @@ var block = new Wall({
   y: stage.height() / 2,
   width: 300,
   height: 10, 
-  colour: 'red',
+  colour: 'orange',
   name: 'wall'
 });
 layer.add(block.render);
 
 var block2 = new Wall({
   x: 150,
-  y: stage.height() - 100,
+  y: 0,
   width: 20,
   height: 100, 
   colour: 'blue',
@@ -99,8 +117,8 @@ npc.isSeeing(player);
 layer.add(npc.render);
 
 
-var npcArray = []
-npcArray.push(npc)
+var npcArray = [];
+npcArray.push(npc);
 
 var blockArray = [];
 blockArray.push(block);
@@ -110,6 +128,12 @@ blockArray.push(stageBottom);
 blockArray.push(stageLeft);
 blockArray.push(stageRight);
 console.log(blockArray);
+
+// An array containing start and end spawns
+// presently does nothing
+var spawnArray = [];
+spawnArray.push(startPoint);
+spawnArray.push(endPoint);
 
 layer.draw();
 
