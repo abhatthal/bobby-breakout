@@ -39,12 +39,12 @@ export class Character extends Entity {
         this.group.x(this.x);
         break;
       case DIRECTION.UP:
-        this.x += this.speed * DIRECTION.UNIT_UP;
-        this.group.x(this.x);
+        this.y += this.speed * DIRECTION.UNIT_UP;
+        this.group.y(this.y);
         break;
       case DIRECTION.DOWN:
-        this.x += this.speed * DIRECTION.UNIT_DOWN;
-        this.group.x(this.x);
+        this.y += this.speed * DIRECTION.UNIT_DOWN;
+        this.group.y(this.y);
         break;
     }
   }
