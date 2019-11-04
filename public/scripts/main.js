@@ -70,6 +70,33 @@ container.focus();
 
 var keys = [];
 
+// Tooltip for interaction
+var tooltip = new Konva.Text({
+    x: 0,
+    y: 0,
+    text: "E/SPACE\nTO INTERACT",
+    fontSize: 18,
+    fill: '#555',
+    padding: 20,
+    align: 'center'
+})
+
+var tooltipBox = new Konva.Rect({
+    x: 0,
+    y: 0,
+    stroke: '#555',
+    strokeWidth: 5,
+    fill: '#ddd',
+    width: 160,
+    height: tooltip.height(),
+    shadowColor: 'black',
+    shadowBlur: 10,
+    shadowOffsetX: 10,
+    shadowOffsetY: 10,
+    shadowOpacity: 0.2,
+    cornerRadius: 10
+})
+
 // Handles keys being pressed down
 container.addEventListener('keydown', function(event) {
   keys[event.keyCode] = true;
@@ -121,6 +148,17 @@ container.addEventListener('keydown', function(event) {
     }
     if(node.isSeeing(player)){
       console.log("i see the player");
+      tooltip.x(node.x + 50);
+      tooltip.y(node.y - 50);
+      tooltipBox.x(node.x + 50);
+      tooltipBox.y(node.y - 50);
+      layer.add(tooltipBox);
+      layer.add(tooltip);
+      layer.draw();
+    }
+    else {
+        tooltip.remove();
+        tooltipBox.remove();
     }
   });
 
