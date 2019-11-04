@@ -70,6 +70,33 @@ container.focus();
 
 var keys = [];
 
+// Tooltip for interaction
+var tooltip = new Konva.Text({
+    x: 0,
+    y: 0,
+    text: "E/SPACE\nTO INTERACT",
+    fontSize: 18,
+    fill: '#555',
+    padding: 20,
+    align: 'center'
+})
+
+var tooltipBox = new Konva.Rect({
+    x: 0,
+    y: 0,
+    stroke: '#555',
+    strokeWidth: 5,
+    fill: '#ddd',
+    width: 160,
+    height: tooltip.height(),
+    shadowColor: 'black',
+    shadowBlur: 10,
+    shadowOffsetX: 10,
+    shadowOffsetY: 10,
+    shadowOpacity: 0.2,
+    cornerRadius: 10
+})
+
 // Handles keys being pressed down
 container.addEventListener('keydown', function(event) {
   keys[event.keyCode] = true;
@@ -98,7 +125,7 @@ container.addEventListener('keydown', function(event) {
   }
   // Escape or P for pausing (to menu)
   if (keys[27] || keys[80]) {
-    pauseGame = !pauseGame;
+    alert("GAME IS PAUSED. WHY DON'T YOU CONTINUE PLAYING?")
   }
   
 
@@ -107,8 +134,29 @@ container.addEventListener('keydown', function(event) {
   });
 
   npcArray.forEach((node) => {
+<<<<<<< HEAD
     player.checkCollision(node);  
     node.checkPlayerDetection(player);
+=======
+    if(player.isColliding(node) ){
+      //trigger some interaction, for now, change colour
+      console.log("i am touching an NPC", node.id);
+    }
+    if(node.isSeeing(player)){
+      console.log("i see the player");
+      tooltip.x(node.x + 50);
+      tooltip.y(node.y - 50);
+      tooltipBox.x(node.x + 50);
+      tooltipBox.y(node.y - 50);
+      layer.add(tooltipBox);
+      layer.add(tooltip);
+      layer.draw();
+    }
+    else {
+        tooltip.remove();
+        tooltipBox.remove();
+    }
+>>>>>>> b96f98a2b8a6a8303ec511e1c21e063e42303b68
   });
 
 
