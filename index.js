@@ -35,32 +35,53 @@ express()
 
 function createlogin(req,res){
   console.log('post login info');
-  /*
+
+  const pool =  new pg.Client(conString);
   pool.connect(function (isErr) {
       if (isErr) {
           console.log('connect error:' + isErr.message);
           client.end();
           return;
-      }else{
+      }else{   // connected
           console.log('db connected');
-                pool.query('select * from users',function(result){
-                console.log(result.rows);
-
-                pool.end();
+          const {uname,psw, mgw} = req.body;   // get register form loginform
+          var querycheck = `SELECT password FROM users WHERE username=$1 ` ;
+          pool.query(querycheck,[uname],function(err,result){
+            if(err){
+              console.log(err);
+              pool.end();
+              return;
+            }else{  //query success
+              if(result.rows.length<1 ){
+                console.log(" account is not used, creatable!");
+                var premiumcheck = false;
+                if([mgw] === 'bobby'){
+                  premiumcheck = true;
+                }
+                var querycreate = `INSERT into users(username, password, premium) values($1, $2, $3)` ;
+                pool.query(querycreate,[uname, psw, premiumcheck], function (err, result){
+                  if(err){
+                    console.log(err + 'fail to create');
+                  }else{
+                    console.log('acct created');
+                    res.status(200).redirect('/login.html');
+                  }
                 });
+              }else{    // wrong psw
+                alert(" account taken!");
+                res.status(405).redirect('back');
               }
-      });*/
+            }
+          });
+      }
+    });
 
-    }
+}
 
 function checklogin(req, res){
-    console.log(req.body);
-    const {loginuname,loginpsw} = req.body;
-    console.log({loginuname,loginpsw});
     console.log('post login info');
 
     const pool =  new pg.Client(conString);
-
     pool.connect(function (isErr) {
         if (isErr) {
             console.log('connect error:' + isErr.message);
@@ -75,7 +96,7 @@ function checklogin(req, res){
             if(err){
               console.log(err);
               return;
-            }else{  //login found
+            }else{   //query success
               if(result.rows.length<1 ){
                 console.log("password incorrect or account not exist!");
                 res.status(404).redirect('back');

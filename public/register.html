@@ -10,15 +10,15 @@
   <img src="../img/bobby.png" alt="Bobby Photograph">
   <br><br><br>
   <div class="loginbox">
-    <form  method="post">
-        <p><b>Username</b></p>
+    <form class="form" method="POST" action="/register">
+        <label>Username</label>
         <input type="text" placeholder="Enter Username" name="uname" required>
 
-        <p><b>Password</b></p>
+        <label>Password</label>
         <input type="password" placeholder="Enter Password" name="psw" required>
 
-        <p><b>Magic</b></p>
-        <input type="text" placeholder="Enter Magicword" name="mgw" required>
+        <label>Magic</label>
+        <input type="text" value = "try this!" placeholder="Enter Magicword" name="mgw" >
 
         <button type="submit">Login</button>
     </form>
