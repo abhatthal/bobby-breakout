@@ -131,8 +131,6 @@ blockArray.push(stageLeft);
 blockArray.push(stageRight);
 console.log(blockArray);
 
-// An array containing start and end spawns
-// presently does nothing
 var spawnArray = [];
 spawnArray.push(startPoint);
 spawnArray.push(endPoint);
@@ -254,7 +252,6 @@ container.addEventListener('keydown', function(event) {
       }
     }
   });
-
 
   event.preventDefault();
   layer.batchDraw();
