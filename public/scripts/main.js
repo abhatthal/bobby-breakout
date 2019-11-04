@@ -103,25 +103,12 @@ container.addEventListener('keydown', function(event) {
   
 
   blockArray.forEach((node) => {
-    if(player.isColliding(node)){
-      //trigger some interaction, for now, change colour
-      player.shape.attrs.fill = 'red';
-      console.log("i am touching a Wall", node.id);
-    } 
-    else{
-      player.shape.attrs.fill = 'grey';
-    }
-    
+    player.checkCollision(node);    
   });
 
   npcArray.forEach((node) => {
-    if(player.isColliding(node) ){
-      //trigger some interaction, for now, change colour
-      console.log("i am touching an NPC", node.id);
-    }
-    if(node.isSeeing(player)){
-      console.log("i see the player");
-    }
+    player.checkCollision(node);  
+    node.checkPlayerDetection(player);
   });
 
 

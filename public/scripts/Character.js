@@ -1,6 +1,7 @@
 import { Entity } from './Entity.js';
 import { DIRECTION } from './helper_functions.js';
 import { VisionCone } from './BoundingBox.js';
+import { Wall } from './Wall.js';
 
 export class Character extends Entity {
   constructor(data) {
@@ -42,6 +43,23 @@ export class Player extends Character {
   constructor(data) {
     super(data);
   }
+
+  checkCollision(obj){ //block array of Environment objects
+    if(this.isColliding(obj) ){
+      if(obj instanceof Wall){
+        console.log("i am touching a Wall", obj.id);
+        //bruno add the wall stuff here
+        //...
+      }
+      else if(obj instanceof NPC){
+        console.log("i am touching an NPC", obj.id);
+      }
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
 }
 
 export class NPC extends Character {
@@ -74,4 +92,15 @@ export class NPC extends Character {
       obj.y > tempRectGlobalPos.y + this.tempRectArea.attrs.height ||
       obj.y + obj.height < tempRectGlobalPos.y);
   }
+
+  checkPlayerDetection(player){
+    if(this.isSeeing(player) && player instanceof Player){
+      console.log("i see the player");
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
 }
