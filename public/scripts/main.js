@@ -3,6 +3,16 @@ import {Environment} from './Environment.js';
 import {Player, NPC} from './Character.js';
 import {DIRECTION} from './helper_functions.js';
 
+// Set premium content visbility
+const premiumContainer = document.getElementById('premium_content');
+const url = new URL(window.location.href);
+const isPremium = url.searchParams.get('premium');
+
+if (isPremium === 'true') {
+  premiumContainer.style.display = 'block';
+}
+// END premium content visbility
+
 const stage = new Konva.Stage({
   container: 'container',
   width: 1000,

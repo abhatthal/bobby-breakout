@@ -47,3 +47,8 @@ body {
   font-weight: bold;
   color: #09f;
 }
+#premium_content {
+  width: 15%;
+  float: left;
+  margin-left: 180px;
+}

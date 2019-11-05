@@ -5,9 +5,10 @@ const PORT = process.env.PORT || 5000;
 // //////////////////
 // Lang: Have set conncetion on db inside function
 // lang local test
-const pg = require('pg');
-const conString = 'tcp://postgres:00012345@localhost:5432/tokimon'; // tcp://用户名：密码@localhost/数据库名
-// /////////////////
+var pg = require('pg');
+var conString = "tcp://postgres:00012345@localhost:5432/bobbybreakout"; //tcp://用户名：密码@localhost/数据库名
+///////////////////
+
 
 
 const app = express();
@@ -95,9 +96,9 @@ function checklogin(req, res) {
           } else if (result.rows[0].password === loginpsw) { // account exist and psw correct
             console.log(result.rows[0].premium);
             if (result.rows[0].premium) {
-              res.status(200).redirect('/bb-test.html?premium=true');
+              res.status(200).redirect('/main.html?premium=true');
             } else {
-              res.status(200).redirect('/bb-test.html?premium=false');
+              res.status(200).redirect('/main.html?premium=false');
             }
           } else { // wrong psw
             console.log('password incorrect or account not exist!');
