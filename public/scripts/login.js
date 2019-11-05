@@ -2,11 +2,11 @@
 
 console.log('test');
 
-//var checklogin = document.getElementById('loginbtn');
-var goreg = document.getElementById('goregisterbtn');
+// var checklogin = document.getElementById('loginbtn');
+const goreg = document.getElementById('goregisterbtn');
 
 
-//console.log(logininfo.elements(1).value);
+// console.log(logininfo.elements(1).value);
 
 /*
 checklogin.onclick = function(){
@@ -25,6 +25,6 @@ checklogin.onclick = function(){
   }
 }
 */
-goreg.onclick = function(){
+goreg.onclick = function() {
   window.location.href='register.html';
 };
