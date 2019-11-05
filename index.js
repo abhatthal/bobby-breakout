@@ -27,7 +27,7 @@ express()
     .use(bodyParser.urlencoded({ extended: false }))     //.urlencoded()
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
-    .get('/', (req, res) => res.render('pages/index'))
+    .get('/', (req, res) => res.sendFile(path.join(path.join(__dirname, 'public'), 'login.html')))
     //for register and login
     .post('/login',(req,res) => checklogin(req,res))
     .post('/register',(req,res) => createlogin(req,res))
