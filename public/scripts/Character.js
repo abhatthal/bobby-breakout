@@ -66,11 +66,11 @@ export class Player extends Character {
   checkCollision(obj) { // block array of Environment objects
     if (this.isColliding(obj) ) {
       if (obj instanceof Wall) {
-        console.log('i am touching a Wall', obj.id);
+        // console.log('i am touching a Wall', obj.id);
         // bruno add the wall stuff here
         // ...
       } else if (obj instanceof NPC) {
-        console.log('i am touching an NPC', obj.id);
+        // console.log('i am touching an NPC', obj.id);
       }
       return true;
     } else {
@@ -84,6 +84,7 @@ export class NPC extends Character {
     super(data);
     this.friendly = data.friendly; // bool
     this.orientation = DIRECTION.LEFT;
+    this.impassible = data.impassible || false;
 
     this.visionCone = new VisionCone(this.group, this.shape);
     this.coneArea = this.visionCone.coneArea;
@@ -99,6 +100,14 @@ export class NPC extends Character {
     });
   }
 
+  get impassible() {
+    return this._impassible;
+  }
+
+  set impassible(val) {
+    this._impassible = val;
+  }
+
   isSeeing(obj) {
     // console.log(this.tempRectArea);
     // console.log(this.tempRectArea.absolutePosition());
@@ -112,7 +121,7 @@ export class NPC extends Character {
 
   checkPlayerDetection(player) {
     if (this.isSeeing(player) && player instanceof Player) {
-      console.log('i see the player');
+      // console.log('i see the player');
       return true;
     } else {
       return false;

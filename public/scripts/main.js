@@ -28,7 +28,7 @@ const fightLayer = new Konva.Layer();
 const fightTooltip = new Konva.Text({
   x: 100,
   y: 100,
-  text: 'TIME TO FIGHT! coming later...',
+  text: 'TIME TO FIGHT! coming later...\nE/SPACE TO RETURN',
   fontSize: 18,
   fill: '#555',
   padding: 20,
@@ -104,7 +104,7 @@ const block2 = new Wall({
   height: 150,
   colour: 'blue',
   name: 'wall',
-  impassible: false,
+  impassible: true,
 });
 layer.add(block2.render);
 
@@ -157,6 +157,7 @@ const npc = new NPC({
   width: 40,
   height: 40,
   colour: 'yellow',
+  impassible: true,
 });
 npc.isSeeing(player);
 layer.add(npc.render);
@@ -172,7 +173,7 @@ blockArray.push(stageTop);
 blockArray.push(stageBottom);
 blockArray.push(stageLeft);
 blockArray.push(stageRight);
-console.log(blockArray);
+// console.log(blockArray);
 
 const spawnArray = [];
 spawnArray.push(startPoint);
@@ -215,6 +216,7 @@ const tooltipBox = new Konva.Rect({
 });
 
 let readyToInteract = false;
+let inFightScene = false;
 // Handles keys being pressed down
 container.addEventListener('keydown', function(event) {
   keys[event.keyCode] = true;
@@ -242,10 +244,15 @@ container.addEventListener('keydown', function(event) {
     node.checkPlayerDetection(player);
     if (player.isColliding(node)) {
       // trigger some interaction, for now, change colour
-      console.log('i am touching an NPC', node.id);
+    //   console.log('i am touching an NPC', node.id);
+      // handle impassible NPCs here
+      if (node.impassible === true) {
+        doReverseMovement(keys);
+      }
+      isColliding = true;
     }
     if (node.isSeeing(player)) {
-      console.log('i see the player');
+    //   console.log('i see the player');
       tooltip.x(node.x + 50);
       tooltip.y(node.y - 50);
       tooltipBox.x(node.x + 50);
@@ -266,16 +273,16 @@ container.addEventListener('keydown', function(event) {
     if (player.isColliding(node)) {
       // trigger some interaction, for now, change colour
       if (node.name === 'start') {
-        console.log('i am at the spawn', node.id);
+        // console.log('i am at the spawn', node.id);
       } else if (node.name === 'end') {
-        console.log('i am a winner', node.id);
+        // console.log('i am a winner', node.id);
         setTimeout(function() {
           alert('YOU WIN! Play again?');
           location.reload();
         }, 1000);
       } else {
-        console.log('i am not sure where i am...', node.id);
-        console.log(node.name);
+        // console.log('i am not sure where i am...', node.id);
+        // console.log(node.name);
       }
     }
   });
@@ -308,9 +315,15 @@ function doKeyProcess(keys) {
 
   // Space or E for interaction
   if (keys[32] || keys[69]) {
-    if (readyToInteract) {
+    if (inFightScene) {
+        fightLayer.remove();
+        stage.add(layer);
+        inFightScene = false;
+    }
+    else if (readyToInteract) {
       layer.remove();
       stage.add(fightLayer);
+      inFightScene = true;
     }
   }
   // Escape or P for pausing (to menu)

@@ -14,7 +14,7 @@ export class Entity {
       var imageObj;
       const promise = loadImage(data.image);
       promise.then(function(result) {
-        console.log(result);
+        // console.log(result);
         imageObj = result;
       });
     };
