@@ -90,7 +90,7 @@ function checklogin(req, res){
         }else{    // connected
           console.log('db connected');
           const {loginuname,loginpsw} = req.body;   // get login form loginform
-          var querycheck = `SELECT password FROM users WHERE username=$1 ` ;
+          var querycheck = `SELECT password, premium FROM users WHERE username=$1 ` ;
           //console.log( {username , password , premium } );//
           pool.query(querycheck,[loginuname], function (err, result){
             if(err){
@@ -103,7 +103,12 @@ function checklogin(req, res){
               }
               //console.log(result.rows);
               else if(result.rows[0].password === loginpsw){  // account exist and psw correct
-                res.status(200).redirect("/bb-test.html");
+                console.log(result.rows[0].premium);
+                if (result.rows[0].premium) {
+                  res.status(200).redirect("/bb-test.html?premium=true");
+                } else {
+                  res.status(200).redirect("/bb-test.html?premium=false");
+                }
               }else{    // wrong psw
                 console.log("password incorrect or account not exist!");
                 res.status(405).redirect('back');
