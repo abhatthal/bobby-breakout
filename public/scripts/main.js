@@ -75,6 +75,33 @@ const endPoint = new Environment({
 });
 layer.add(endPoint.render);
 
+// Tooltip for completing level
+const completionTooltip = new Konva.Text({
+    x: stage.width() - 400,
+    y: 0,
+    text: 'E/SPACE\nTO COMPLETE LEVEL',
+    fontSize: 18,
+    fill: '#555',
+    padding: 20,
+    align: 'center',
+});
+
+const completionTooltipBox = new Konva.Rect({
+    x: stage.width() - 400,
+    y: 0,
+    stroke: '#555',
+    strokeWidth: 5,
+    fill: '#ddd',
+    width: 240,
+    height: completionTooltip.height(),
+    shadowColor: 'black',
+    shadowBlur: 10,
+    shadowOffsetX: 10,
+    shadowOffsetY: 10,
+    shadowOpacity: 0.2,
+    cornerRadius: 10,
+});
+
 
 const player = new Player({
   x: 40,
@@ -217,6 +244,7 @@ const tooltipBox = new Konva.Rect({
 
 let readyToInteract = false;
 let inFightScene = false;
+let atEndPoint = false;
 // Handles keys being pressed down
 container.addEventListener('keydown', function(event) {
   keys[event.keyCode] = true;
@@ -276,14 +304,23 @@ container.addEventListener('keydown', function(event) {
         // console.log('i am at the spawn', node.id);
       } else if (node.name === 'end') {
         // console.log('i am a winner', node.id);
-        setTimeout(function() {
-          alert('YOU WIN! Play again?');
-          location.reload();
-        }, 1000);
+        // setTimeout(function() {
+        //   alert('YOU WIN! Play again?');
+        //   location.reload();
+        // }, 1000);
+        atEndPoint = true;
+        layer.add(completionTooltipBox);
+        layer.add(completionTooltip);
+        layer.draw()
       } else {
         // console.log('i am not sure where i am...', node.id);
         // console.log(node.name);
       }
+    }
+    else {
+        atEndPoint = false;
+        completionTooltipBox.remove();
+        completionTooltip.remove();
     }
   });
 
@@ -315,7 +352,11 @@ function doKeyProcess(keys) {
 
   // Space or E for interaction
   if (keys[32] || keys[69]) {
-    if (inFightScene) {
+    if (atEndPoint) {
+        alert('YOU WIN! Play again?');
+        location.reload();
+    }
+    else if (inFightScene) {
         fightLayer.remove();
         stage.add(layer);
         inFightScene = false;
