@@ -78,3 +78,12 @@ done' > .git/hooks/pre-commit
 ```
 
 * `chmod +x .git/hooks/pre-commit`
+
+
+
+## Database setup
+
+1. change the connection string in main.js
+2. run create table users(username varchar(255), password varchar(255), premium bool);
+
+Note: need to add more field to DB for player status
