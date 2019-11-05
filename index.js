@@ -55,7 +55,7 @@ function createlogin(req,res){
               if(result.rows.length<1 ){
                 console.log(" account is not used, creatable!");
                 var premiumcheck = false;
-                if([mgw] === 'bobby'){
+                if(mgw === 'bobby'){
                   premiumcheck = true;
                 }
                 var querycreate = `INSERT into users(username, password, premium) values($1, $2, $3)` ;
