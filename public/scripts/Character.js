@@ -1,7 +1,7 @@
-import { Entity } from './Entity.js';
-import { DIRECTION } from './helper_functions.js';
-import { VisionCone } from './BoundingBox.js';
-import { Wall } from './Wall.js';
+import {Entity} from './Entity.js';
+import {DIRECTION} from './helper_functions.js';
+import {VisionCone} from './BoundingBox.js';
+import {Wall} from './Wall.js';
 
 export class Character extends Entity {
   constructor(data) {
@@ -29,7 +29,7 @@ export class Character extends Entity {
     //   this.group.y(this.y);
     // }
 
-    switch(dir) {
+    switch (dir) {
       case DIRECTION.LEFT:
         this.x += this.speed * DIRECTION.UNIT_LEFT;
         this.group.x(this.x);
@@ -63,19 +63,17 @@ export class Player extends Character {
     super(data);
   }
 
-  checkCollision(obj){ // block array of Environment objects
+  checkCollision(obj) { // block array of Environment objects
     if (this.isColliding(obj) ) {
-      if (obj instanceof Wall){
-        console.log("i am touching a Wall", obj.id);
+      if (obj instanceof Wall) {
+        console.log('i am touching a Wall', obj.id);
         // bruno add the wall stuff here
         // ...
-      }
-      else if (obj instanceof NPC) {
-        console.log("i am touching an NPC", obj.id);
+      } else if (obj instanceof NPC) {
+        console.log('i am touching an NPC', obj.id);
       }
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
@@ -84,7 +82,7 @@ export class Player extends Character {
 export class NPC extends Character {
   constructor(data) {
     super(data);
-    this.friendly = data.friendly; //bool
+    this.friendly = data.friendly; // bool
     this.orientation = DIRECTION.LEFT;
 
     this.visionCone = new VisionCone(this.group, this.shape);
@@ -94,7 +92,7 @@ export class NPC extends Character {
 
     this.group.add(this.coneArea);
     this.group.add(this.tempRectArea);
-    
+
     this.feelers = this.visionCone.feelers;
     this.feelers.forEach((feeler) => {
       this.group.add(feeler);
@@ -105,7 +103,7 @@ export class NPC extends Character {
     // console.log(this.tempRectArea);
     // console.log(this.tempRectArea.absolutePosition());
 
-    let tempRectGlobalPos = this.tempRectArea.absolutePosition();
+    const tempRectGlobalPos = this.tempRectArea.absolutePosition();
     return !(obj.x > tempRectGlobalPos.x + this.tempRectArea.attrs.width ||
       obj.x + obj.width < tempRectGlobalPos.x ||
       obj.y > tempRectGlobalPos.y + this.tempRectArea.attrs.height ||
@@ -113,13 +111,11 @@ export class NPC extends Character {
   }
 
   checkPlayerDetection(player) {
-    if(this.isSeeing(player) && player instanceof Player) {
-      console.log("i see the player");
+    if (this.isSeeing(player) && player instanceof Player) {
+      console.log('i see the player');
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
-
 }
