@@ -1,0 +1,54 @@
+body {
+  font: normal 75%/1.5 Open Sans,Arial,sans-serif;
+  background-color: #ECECEC;
+}
+
+#title {
+  text-align: center;
+}
+
+#gameArea {
+  width: 100%;
+}
+
+#container {
+  width: 1000px;
+  height: 500px;
+  margin: auto;
+  border: solid;
+  border-width: 5px;
+}
+
+#info {
+  position: absolute;
+  left: 460;
+  margin-top: 10px;
+}
+
+.controls {
+  list-style-type: none;
+  margin: 0;
+  padding: 0
+}
+
+.controls li {
+  display: inline-block;
+  margin: 0 16px 0 0;
+}
+
+.controls .key {
+  display: inline-block;
+  background: url(/assets/icon_key.png);
+  height: 15px;
+  width: 15px;
+  text-align: center;
+  line-height: 15px;
+  font-size: 87.50250000000001%;
+  font-weight: bold;
+  color: #09f;
+}
+#premium_content {
+  width: 15%;
+  float: left;
+  margin-left: 180px;
+}

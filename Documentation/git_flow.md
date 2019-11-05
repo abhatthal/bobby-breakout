@@ -1,6 +1,16 @@
 # CMPT276
 CMPT 276 group project
 
+## Heroku
+⬢ gentle-savannah-07254
+
+https://gentle-savannah-07254.herokuapp.com/ | https://git.heroku.com/gentle-savannah-07254.git
+
+* Make sure to add the Heroku Git URL to your git remote.
+```
+git remote add heroku https://git.heroku.com/gentle-savannah-07254.git
+```
+
 ## How to Collaborate: Git Flow
 
 <ol>
