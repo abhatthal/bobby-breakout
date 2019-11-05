@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 5000;
 // Lang: Have set conncetion on db inside function
 // lang local test
 var pg = require('pg');
-var conString = "tcp://postgres:00012345@localhost:5432/bobbybreakout"; //tcp://用户名：密码@localhost/数据库名
+var conString = "postgres://vyqzrennssqgdm:5427cde89c19c7c04595851cca03f048cce351ed5ce02df1f19e4ff075effa20@ec2-174-129-253-162.compute-1.amazonaws.com:5432/dchmahd956dtm0";
 ///////////////////
 
 
@@ -49,7 +49,7 @@ function createlogin(req, res) {
           if (result.rows.length<1 ) {
             console.log(' account is not used, creatable!');
             let premiumcheck = false;
-            if (mgw === 'bobby') {
+            if (mgw === 'bobbyisgreat') {
               premiumcheck = true;
             }
             const querycreate = `INSERT into users(username, password, premium) values($1, $2, $3)`;
