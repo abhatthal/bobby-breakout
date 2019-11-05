@@ -12,6 +12,38 @@ var stage = new Konva.Stage({
 var layer = new Konva.Layer();
 stage.add(layer);
 
+var fightLayer = new Konva.Layer();
+
+// Tooltip for fight
+var fightTooltip = new Konva.Text({
+  x: 100,
+  y: 100,
+  text: "TIME TO FIGHT! coming later...",
+  fontSize: 18,
+  fill: '#555',
+  padding: 20,
+  align: 'center'
+});
+
+var fightTooltipBox = new Konva.Rect({
+  x: 100,
+  y: 100,
+  stroke: '#555',
+  strokeWidth: 5,
+  fill: '#ddd',
+  width: 300,
+  height: fightTooltip.height(),
+  shadowColor: 'black',
+  shadowBlur: 10,
+  shadowOffsetX: 10,
+  shadowOffsetY: 10,
+  shadowOpacity: 0.2,
+  cornerRadius: 10
+});
+
+fightLayer.add(fightTooltipBox);
+fightLayer.add(fightTooltip);
+fightLayer.draw();
 
 var startPoint = new Environment({
   x: 0,
@@ -61,7 +93,8 @@ var block2 = new Wall({
   width: 20,
   height: 150, 
   colour: 'blue',
-  name: 'wall'
+  name: 'wall',
+  impassible: false
 });
 layer.add(block2.render);
 
@@ -171,43 +204,28 @@ var tooltipBox = new Konva.Rect({
   cornerRadius: 10
 })
 
+var readyToInteract = false;
 // Handles keys being pressed down
 container.addEventListener('keydown', function(event) {
   keys[event.keyCode] = true;
 
-  // Down arrow or W for moving sprite down 
-  if (keys[40] || keys[83]) {
-    player.move(DIRECTION.UP);
-  }
-  // Up arrow or S to move sprite up
-  else if (keys[38] || keys[87]) {
-    player.move(DIRECTION.DOWN);
-  }
-  
-  // Left arrow or A for moving sprite left
-  if (keys[37] || keys[65]) {
-    player.move(DIRECTION.LEFT);
-  }
-  // Right arrow or D to move sprite right
-  else if (keys[39] || keys[68]) {
-    player.move(DIRECTION.RIGHT);
-  }
-  
-  // Space or E for interaction 
-  if (keys[32] || keys[69]) {
-    interactDown = true;
-  }
-  // Escape or P for pausing (to menu)
-  if (keys[27] || keys[80]) {
-    alert("Game Paused\nPress ok to continue");
-    keys[27] = false;
-    keys[80] = false;
-  }
-  
+  doKeyProcess(keys);
 
-  blockArray.forEach((node) => {
-    player.checkCollision(node);    
+  var is_colliding = false;
+	blockArray.forEach((node) => {
+		if(player.checkCollision(node)) {
+      // handle impassible walls here
+      if (node.impassible === true) {
+        doReverseMovement(keys);
+      }
+      is_colliding = true;
+    }
   });
+  if (is_colliding) {
+    player.shape.attrs.fill = 'red';
+  } else {
+    player.shape.attrs.fill = 'grey';
+  }
 
   npcArray.forEach((node) => {
     player.checkCollision(node);
@@ -225,10 +243,12 @@ container.addEventListener('keydown', function(event) {
       layer.add(tooltipBox);
       layer.add(tooltip);
       layer.draw();
+      readyToInteract = true;
     }
     else {
       tooltip.remove();
       tooltipBox.remove();
+      readyToInteract = false;
     }
   });
 
@@ -261,3 +281,57 @@ container.addEventListener('keydown', function(event) {
 container.addEventListener('keyup', function(event) {
   keys[event.keyCode] = false;
 });
+
+function doKeyProcess(keys) {
+	// Down arrow or W for moving sprite down 
+	if (keys[40] || keys[83]) {
+		player.move(DIRECTION.UP);
+	}
+	// Up arrow or S to move sprite up
+	else if (keys[38] || keys[87]) {
+		player.move(DIRECTION.DOWN);
+	}
+	
+  // Left arrow or A for moving sprite left
+  if (keys[37] || keys[65]) {
+		player.move(DIRECTION.LEFT);
+  }
+	// Right arrow or D to move sprite right
+  else if (keys[39] || keys[68]) {
+		player.move(DIRECTION.RIGHT);
+	}
+	
+  // Space or E for interaction 
+  if (keys[32] || keys[69]) {
+    if (readyToInteract) {
+      layer.remove();
+      stage.add(fightLayer);
+    }
+  }
+  // Escape or P for pausing (to menu)
+  if (keys[27] || keys[80]) {
+    alert("Game Paused\nPress ok to continue");
+    keys[27] = false;
+    keys[80] = false;
+	}
+}
+
+function doReverseMovement(keys) {
+  // Down arrow or W for moving sprite down 
+	if (keys[40] || keys[83]) {
+		player.move(DIRECTION.DOWN);
+	}
+	// Up arrow or S to move sprite up
+	else if (keys[38] || keys[87]) {
+		player.move(DIRECTION.UP);
+	}
+	
+  // Left arrow or A for moving sprite left
+  if (keys[37] || keys[65]) {
+		player.move(DIRECTION.RIGHT);
+  }
+	// Right arrow or D to move sprite right
+  else if (keys[39] || keys[68]) {
+		player.move(DIRECTION.LEFT);
+	}
+}
