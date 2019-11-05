@@ -35,23 +35,6 @@ Our application will utilize the Google Identity Platform where users can secure
 
 ---
 
-<a name="user-stories">
-
-## User Stories
-
-**User Story 1**\
-The user gets to choose one of two possible approaches to gameplay: a passive stealth route or an aggressive “beat-em-up” or “kill-em-all” route. The scenario depends on the choices the player makes during interactions with other entities within the game. The passive route is takes more time and requires the player to be more meticulous and complete more side quests, while the aggressive route is faster but also comes with a higher risk. If the player engages in combat with other entities too much, more difficult enemies are spawned and the chance of getting an “instant defeat” through being too violent increases. However if the player is too passive, enemies will increase their surveillance area to track the player down.
-
-
-**User Story 2**\
-The user gets to modify the possible attacking moves of Bobby Chan by changing equipped items through an inventory menu. The menu can be reached by pressing a hotkey.  
-
-**User Story 3**\
-The user must interact with the environment and other entities of the game to proceed to certain locked or initially blocked off areas. 
-
-
----
-
 
 ## About Us
 
