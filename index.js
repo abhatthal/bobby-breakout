@@ -27,6 +27,7 @@ app.get('/', (req, res) => res.render('pages/login'))
 app.get('/register', (req, res) => res.render('pages/register'))
 app.get('/login', (req, res) => res.render('pages/login'))
 app.get('/main', (req, res) => res.render('pages/main'))
+app.get('/bb-test', (req, res) => res.render('pages/bb-test'))
 
 app.post('/login', (req, res) => checklogin(req, res));
 app.post('/register', (req, res) => createlogin(req, res));
