@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 5000;
 // Lang: Have set conncetion on db inside function
 // lang local test
 var pg = require('pg');
-var conString = "postgres://vyqzrennssqgdm:5427cde89c19c7c04595851cca03f048cce351ed5ce02df1f19e4ff075effa20@ec2-174-129-253-162.compute-1.amazonaws.com:5432/dchmahd956dtm0";
+var conString = "postgres://vyqzrennssqgdm:5427cde89c19c7c04595851cca03f048cce351ed5ce02df1f19e4ff075effa20@ec2-174-129-253-162.compute-1.amazonaws.com:5432/dchmahd956dtm0?ssl=true";
 ///////////////////
 
 
@@ -18,11 +18,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: false}));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-// app.get('/', (req, res) => res.render('pages/index'));
+
 // using sendFile until we conv main.html to index.ejs
-app.get('/', function(req, res) {
-  res.sendFile(path.join(path.join(__dirname, 'public'), 'login.html'));
-});
+// app.get('/', function(req, res) {
+//   res.sendFile(path.join(path.join(__dirname, 'public'), 'login.html'));
+// });
+app.get('/', (req, res) => res.render('pages/login'))
+app.get('/register', (req, res) => res.render('pages/register'))
+app.get('/login', (req, res) => res.render('pages/login'))
+app.get('/main', (req, res) => res.render('pages/levels/main'))
+app.get('/bb-test', (req, res) => res.render('pages/levels/bb-test'))
+
 app.post('/login', (req, res) => checklogin(req, res));
 app.post('/register', (req, res) => createlogin(req, res));
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
@@ -58,7 +64,7 @@ function createlogin(req, res) {
                 console.log(err + 'fail to create');
               } else {
                 console.log('acct created');
-                res.status(200).redirect('/login.html');
+                res.status(200).redirect('/login');
               }
             });
           } else { // wrong psw
@@ -96,9 +102,9 @@ function checklogin(req, res) {
           } else if (result.rows[0].password === loginpsw) { // account exist and psw correct
             console.log(result.rows[0].premium);
             if (result.rows[0].premium) {
-              res.status(200).redirect('/main.html?premium=true');
+              res.status(200).redirect('/main?premium=true');
             } else {
-              res.status(200).redirect('/main.html?premium=false');
+              res.status(200).redirect('/main?premium=false');
             }
           } else { // wrong psw
             console.log('password incorrect or account not exist!');
