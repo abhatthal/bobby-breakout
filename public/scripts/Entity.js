@@ -9,6 +9,8 @@ export class Entity {
     this.x = data.x;
     this.y = data.y;
     this.id = genID();
+    this.hp = (data.hp) ? data.hp : null;
+    this.dmg = (data.dmg) ? data.dmg : null;
 
     if (data.image) {
       var imageObj;
