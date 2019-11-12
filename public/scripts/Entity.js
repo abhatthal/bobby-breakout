@@ -10,8 +10,8 @@ export class Entity {
     this.y = data.y;
     this.id = genID();
 
+    let imageObj;
     if (data.image) {
-      var imageObj;
       const promise = loadImage(data.image);
       promise.then(function(result) {
         // console.log(result);
