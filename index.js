@@ -5,10 +5,10 @@ const PORT = process.env.PORT || 5000;
 // //////////////////
 // Lang: Have set conncetion on db inside function
 // lang local test
-var pg = require('pg');
-var conString = "postgres://vyqzrennssqgdm:5427cde89c19c7c04595851cca03f048cce351ed5ce02df1f19e4ff075effa20@ec2-174-129-253-162.compute-1.amazonaws.com:5432/dchmahd956dtm0?ssl=true";
-///////////////////
-
+const pg = require('pg');
+// eslint-disable-next-line max-len
+const conString = 'postgres://vyqzrennssqgdm:5427cde89c19c7c04595851cca03f048cce351ed5ce02df1f19e4ff075effa20@ec2-174-129-253-162.compute-1.amazonaws.com:5432/dchmahd956dtm0?ssl=true';
+// /////////////////
 
 
 const app = express();
@@ -23,11 +23,11 @@ app.set('view engine', 'ejs');
 // app.get('/', function(req, res) {
 //   res.sendFile(path.join(path.join(__dirname, 'public'), 'login.html'));
 // });
-app.get('/', (req, res) => res.render('pages/login'))
-app.get('/register', (req, res) => res.render('pages/register'))
-app.get('/login', (req, res) => res.render('pages/login'))
-app.get('/main', (req, res) => res.render('pages/levels/main'))
-app.get('/bb-test', (req, res) => res.render('pages/levels/bb-test'))
+app.get('/', (req, res) => res.render('pages/login'));
+app.get('/register', (req, res) => res.render('pages/register'));
+app.get('/login', (req, res) => res.render('pages/login'));
+app.get('/main', (req, res) => res.render('pages/levels/main'));
+app.get('/bb-test', (req, res) => res.render('pages/levels/bb-test'));
 
 app.post('/login', (req, res) => checklogin(req, res));
 app.post('/register', (req, res) => createlogin(req, res));
@@ -99,7 +99,8 @@ function checklogin(req, res) {
           if (result.rows.length<1 ) {
             console.log('password incorrect or account not exist!');
             res.status(404).redirect('back');
-          } else if (result.rows[0].password === loginpsw) { // account exist and psw correct
+          } else if (result.rows[0].password === loginpsw) {
+            // account exist and psw correct
             console.log(result.rows[0].premium);
             if (result.rows[0].premium) {
               res.status(200).redirect('/main?premium=true');

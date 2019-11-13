@@ -31,10 +31,10 @@ export async function loadImage(imageUrl) {
   return img;
 }
 
-export function DegreesToRadians(degree) {
+export function degreesToRadians(degree) {
   return degree * Math.PI/180;
 }
 
-export function RadiansToDegrees(radians) {
+export function radiansToDegrees(radians) {
   return radians * 180/Math.PI;
 }
