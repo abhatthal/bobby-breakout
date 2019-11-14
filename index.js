@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cool = require('cool-ascii-faces');
 const PORT = process.env.PORT || 5000;
 
 // //////////////////
@@ -28,6 +29,8 @@ app.get('/register', (req, res) => res.render('pages/register'));
 app.get('/login', (req, res) => res.render('pages/login'));
 app.get('/main', (req, res) => res.render('pages/levels/main'));
 app.get('/bb-test', (req, res) => res.render('pages/levels/bb-test'));
+// generate a random ascii face
+app.get('/cool', (req, res) => res.send(cool()));
 
 app.post('/login', (req, res) => checklogin(req, res));
 app.post('/register', (req, res) => createlogin(req, res));
