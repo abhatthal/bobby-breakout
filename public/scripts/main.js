@@ -110,6 +110,7 @@ const player = new Player({
   height: 40,
   image: 'assets/bobby.jpg',
   colour: 'grey',
+  hp: 100,
 });
 layer.add(player.render);
 
@@ -185,6 +186,7 @@ const npc = new NPC({
   height: 40,
   colour: 'yellow',
   impassible: true,
+  hp: 100,
 });
 npc.isSeeing(player);
 layer.add(npc.render);
