@@ -75,25 +75,6 @@ const endPoint = new Environment({
 });
 layer.add(endPoint.render);
 
-function httpGet(theUrl) {
-  const xmlHttp = new XMLHttpRequest();
-  xmlHttp.open('GET', theUrl, false); // false for synchronous request
-  xmlHttp.send(null);
-  return xmlHttp.responseText;
-}
-
-// Draw a face
-const face = new Konva.Text({
-  x: stage.width() - 400,
-  y: 0,
-  text: httpGet('/cool'),
-  fontSize: 18,
-  fill: '#555',
-  padding: 20,
-  align: 'center',
-});
-layer.add(face);
-
 // Tooltip for completing level
 const completionTooltip = new Konva.Text({
   x: stage.width() - 400,
@@ -207,6 +188,27 @@ const npc = new NPC({
 });
 npc.isSeeing(player);
 layer.add(npc.render);
+
+
+function httpGet(theUrl) {
+  const xmlHttp = new XMLHttpRequest();
+  xmlHttp.open('GET', theUrl, false); // false for synchronous request
+  xmlHttp.send(null);
+  return xmlHttp.responseText;
+}
+
+// Draw a face
+const text = httpGet('/cool');
+const face = new Konva.Text({
+  x: 380,
+  y: 40,
+  text: text,
+  fontSize: 20 - Math.floor(0.5 * text.length),
+  fill: '#555',
+  padding: 20,
+  align: 'center',
+});
+layer.add(face);
 
 
 const npcArray = [];
