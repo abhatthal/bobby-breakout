@@ -1,6 +1,7 @@
 import {Wall} from './Wall.js';
 import {Environment} from './Environment.js';
 import {Player, NPC} from './Character.js';
+import {Inventory} from './Inventory.js'
 import {DIRECTION} from './helper_functions.js';
 
 // Set premium content visbility
@@ -244,9 +245,12 @@ const tooltipBox = new Konva.Rect({
   cornerRadius: 10,
 });
 
+const playerInventory = new Inventory();
+
 let readyToInteract = false;
 let inFightScene = false;
 let atEndPoint = false;
+let inInventoryWindow = false;
 // Handles keys being pressed down
 container.addEventListener('keydown', function(event) {
   keys[event.keyCode] = true;
@@ -364,6 +368,20 @@ function doKeyProcess(keys) {
       layer.remove();
       stage.add(fightLayer);
       inFightScene = true;
+    }
+  }
+
+  // I to open inventory window
+  if (keys[73]) {
+    if (inInventoryWindow) {
+      playerInventory.layer.remove();
+      stage.add(layer);
+      inInventoryWindow = false;
+    }
+    else {
+      layer.remove();
+      stage.add(playerInventory.layer);
+      inInventoryWindow = true;
     }
   }
   // Escape or P for pausing (to menu)
