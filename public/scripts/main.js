@@ -2,6 +2,7 @@ import {Wall} from './Wall.js';
 import {Environment} from './Environment.js';
 import {Player, NPC} from './Character.js';
 import {DIRECTION} from './helper_functions.js';
+import {ToolTip} from './ToolTip.js';
 
 // Set premium content visbility
 const premiumContainer = document.getElementById('premium_content');
@@ -218,31 +219,39 @@ container.focus();
 const keys = [];
 
 // Tooltip for interaction
-const tooltip = new Konva.Text({
+const tooltip = new ToolTip({
   x: 0,
   y: 0,
   text: 'E/SPACE\nTO INTERACT',
-  fontSize: 18,
-  fill: '#555',
-  padding: 20,
-  align: 'center',
 });
 
-const tooltipBox = new Konva.Rect({
-  x: 0,
-  y: 0,
-  stroke: '#555',
-  strokeWidth: 5,
-  fill: '#ddd',
-  width: 160,
-  height: tooltip.height(),
-  shadowColor: 'black',
-  shadowBlur: 10,
-  shadowOffsetX: 10,
-  shadowOffsetY: 10,
-  shadowOpacity: 0.2,
-  cornerRadius: 10,
-});
+// #region oldtooltip
+// const tooltip = new Konva.Text({
+//   x: 0,
+//   y: 0,
+//   text: 'E/SPACE\nTO INTERACT',
+//   fontSize: 18,
+//   fill: '#555',
+//   padding: 20,
+//   align: 'center',
+// });
+
+// const tooltipBox = new Konva.Rect({
+//   x: 0,
+//   y: 0,
+//   stroke: '#555',
+//   strokeWidth: 5,
+//   fill: '#ddd',
+//   width: 160,
+//   height: tooltip.height(),
+//   shadowColor: 'black',
+//   shadowBlur: 10,
+//   shadowOffsetX: 10,
+//   shadowOffsetY: 10,
+//   shadowOpacity: 0.2,
+//   cornerRadius: 10,
+// });
+// #endregion
 
 let readyToInteract = false;
 let inFightScene = false;
@@ -283,17 +292,30 @@ container.addEventListener('keydown', function(event) {
     }
     if (node.isSeeing(player)) {
     //   console.log('i see the player');
-      tooltip.x(node.x + 50);
-      tooltip.y(node.y - 50);
-      tooltipBox.x(node.x + 50);
-      tooltipBox.y(node.y - 50);
-      layer.add(tooltipBox);
-      layer.add(tooltip);
+      // tooltip.x(node.x + 50);
+      // tooltip.y(node.y - 50);
+      // tooltipBox.x(node.x + 50);
+      // tooltipBox.y(node.y - 50);
+      // layer.add(tooltipBox);
+      // layer.add(tooltip);
+
+      tooltip.moveTo({
+        x: node.x + 50,
+        y: node.y - 50,
+      });
+
+      layer.add(tooltip.renderBox, tooltip.renderText);
+      // not sure why adding tooltip by a group doesn't work
+      // layer.add(tooltip.render);
+
       layer.draw();
       readyToInteract = true;
     } else {
+      // tooltip.remove();
+      // tooltipBox.remove();
+
+
       tooltip.remove();
-      tooltipBox.remove();
       readyToInteract = false;
     }
   });

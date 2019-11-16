@@ -1,12 +1,21 @@
+import {genID} from './helper_functions.js';
+
 export class ToolTip {
   constructor(data) {
     this.x = data.x;
     this.y = data.y;
+    this.id = genID();
     this.text = data.text;
 
     this.primaryColor = '#555';
     this.secondaryColor = '#ddd';
     this.tertiaryColor = 'black';
+
+    this.group = new Konva.Group({
+      x: this.x,
+      y: this.y,
+      id: this.id,
+    });
 
     this.tipText = new Konva.Text({
       // x: this.x,
@@ -21,10 +30,10 @@ export class ToolTip {
     this.tipBox = new Konva.Rect({
       // x: this.x,
       // y: this.y,
-      stroke: this.secondaryColor,
+      stroke: this.primaryColor,
       strokeWidth: 5,
       fill: this.secondaryColor,
-      width: 240,
+      width: 160,
       height: this.tipText.height(),
       shadowColor: this.tertiaryColor,
       shadowBlur: 10,
@@ -34,36 +43,55 @@ export class ToolTip {
       cornerRadius: 10,
     });
 
-    this.toolTipGroup = new Konva.Group({
-      x: this.x,
-      y: this.y,
-    });
-
-    this.toolTipGroup.add(this.tipBox);
-    this.toolTipGroup.add(this.tipText);
+    this.group.add(this.tipBox, this.tipText);
   }
 
-  get toolTipGroup() {
-    return this._toolTipGroup;
-  }
-
-  set toolTipGroup(data) {
+  remove() {
+    this.tipBox.remove();
+    this.tipText.remove();
+    this.group.remove();
     return;
+  }
+
+  moveTo(pos) {
+    this.x = pos.x;
+    this.y = pos.y;
+    // update each Konva obj's pos
+    this.group.x(this.x);
+    this.group.y(this.y);
+    this.tipBox.x(this.x);
+    this.tipBox.y(this.y);
+    this.tipText.x(this.x);
+    this.tipText.y(this.y);
+  }
+
+  // rendering by group not working for some reason
+  // for now return separately with renderBox and renderText
+  get render() {
+    return this.group;
+  }
+
+  get renderBox() {
+    return this.tipBox;
+  }
+
+  get renderText() {
+    return this.tipText;
   }
 
   get x() {
     return this._x;
   }
 
-  set x(value) {
-    this._x = value;
-  }
-
   get y() {
     return this._y;
   }
 
-  set y(value) {
-    this._y = value;
+  set x(val) {
+    this._x = val;
+  }
+
+  set y(val) {
+    this._y = val;
   }
 }
