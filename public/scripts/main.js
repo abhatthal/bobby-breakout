@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import {Wall} from './Wall.js';
 import {Environment} from './Environment.js';
 import {Player, NPC} from './Character.js';
@@ -20,11 +21,16 @@ const stage = new Konva.Stage({
 });
 
 const layer = new Konva.Layer();
-stage.add(layer);
+//stage.add(layer);
+
 
 const fightLayer = new Konva.Layer();
+//Lang test
+stage.add(fightLayer);
 
 // Tooltip for fight
+
+/*   iter 1 text box
 const fightTooltip = new Konva.Text({
   x: 100,
   y: 100,
@@ -34,15 +40,17 @@ const fightTooltip = new Konva.Text({
   padding: 20,
   align: 'center',
 });
+*/
 
-const fightTooltipBox = new Konva.Rect({
-  x: 100,
-  y: 100,
+
+const SkillA1box = new Konva.Rect({
+  x: 300,
+  y: 400,
   stroke: '#555',
   strokeWidth: 5,
-  fill: '#ddd',
-  width: 300,
-  height: fightTooltip.height(),
+  fill: '#ffffff',
+  width: 100,
+  height: 50, //fightSkillbox.height(),
   shadowColor: 'black',
   shadowBlur: 10,
   shadowOffsetX: 10,
@@ -51,8 +59,111 @@ const fightTooltipBox = new Konva.Rect({
   cornerRadius: 10,
 });
 
-fightLayer.add(fightTooltipBox);
+const SkillA2box = new Konva.Rect({
+  x: 450,
+  y: 400,
+  stroke: '#555',
+  strokeWidth: 5,
+  fill: '#ddd',
+  width: 100,
+  height: 50, //fightSkillbox.height(),
+  shadowColor: 'black',
+  shadowBlur: 10,
+  shadowOffsetX: 10,
+  shadowOffsetY: 10,
+  shadowOpacity: 0.2,
+  cornerRadius: 10,
+});
+
+const SkillA3box = new Konva.Rect({
+  x: 600,
+  y: 400,
+  stroke: '#555',
+  strokeWidth: 5,
+  fill: '#ddd',
+  width: 100,
+  height: 50, //fightSkillbox.height(),
+  shadowColor: 'black',
+  shadowBlur: 10,
+  shadowOffsetX: 10,
+  shadowOffsetY: 10,
+  shadowOpacity: 0.2,
+  cornerRadius: 10,
+});
+
+const SkillA4box = new Konva.Rect({
+  x: 750,
+  y: 400,
+  stroke: '#555',
+  strokeWidth: 5,
+  fill: '#ddd',
+  width: 100,
+  height: 50, //fightSkillbox.height(),
+  shadowColor: 'black',
+  shadowBlur: 10,
+  shadowOffsetX: 10,
+  shadowOffsetY: 10,
+  shadowOpacity: 0.2,
+  cornerRadius: 10,
+});
+
+const fightTooltip = new Konva.Rect({
+  x: 250,
+  y: 30,
+  stroke: '#555',
+  strokeWidth: 5,
+  fill: '#ddd',
+  width: 500,
+  height: 150, //fightSkillbox.height(),
+  shadowColor: 'black',
+  shadowBlur: 10,
+  shadowOffsetX: 10,
+  shadowOffsetY: 10,
+  shadowOpacity: 0.2,
+  cornerRadius: 10,
+});
+
+const Enemybox = new Konva.Rect({
+  x: 820,
+  y: 30,
+  stroke: '#555',
+  strokeWidth: 5,
+  fill: '#ddd',
+  width: 150,
+  height: 300, //fightSkillbox.height(),
+  shadowColor: 'black',
+  shadowBlur: 10,
+  shadowOffsetX: 10,
+  shadowOffsetY: 10,
+  shadowOpacity: 0.2,
+  cornerRadius: 10,
+});
+
+const PlayerBox = new Konva.Rect({
+  x: 20,
+  y: 130,
+  stroke: '#555',
+  strokeWidth: 5,
+  fill: '#ddd',
+  width: 150,
+  height: 300, //fightSkillbox.height(),
+  shadowColor: 'black',
+  shadowBlur: 10,
+  shadowOffsetX: 10,
+  shadowOffsetY: 10,
+  shadowOpacity: 0.2,
+  cornerRadius: 10,
+});
+
 fightLayer.add(fightTooltip);
+fightLayer.add(PlayerBox);
+fightLayer.add(Enemybox);
+//fightLayer.add(fightTooltip);
+//fightLayer.add(fightSkillbox);
+fightLayer.add(SkillA1box);
+fightLayer.add(SkillA2box);
+fightLayer.add(SkillA3box);
+fightLayer.add(SkillA4box);
 fightLayer.draw();
 
 const startPoint = new Environment({
@@ -335,37 +446,53 @@ container.addEventListener('keyup', function(event) {
 
 function doKeyProcess(keys) {
   // Down arrow or W for moving sprite down
-  if (keys[40] || keys[83]) {
-    player.move(DIRECTION.UP);
-  } else if (keys[38] || keys[87]) {
-    // Up arrow or S to move sprite up
-    player.move(DIRECTION.DOWN);
-  }
+  if(inFightScene != true) {
+    if (keys[40] || keys[83]) {
+      player.move(DIRECTION.UP);
+    } else if (keys[38] || keys[87]) {
+      // Up arrow or S to move sprite up
+      player.move(DIRECTION.DOWN);
+    }
 
-  // Left arrow or A for moving sprite left
-  if (keys[37] || keys[65]) {
-    player.move(DIRECTION.LEFT);
-  } else if (keys[39] || keys[68]) {
-    // Right arrow or D to move sprite right
-    player.move(DIRECTION.RIGHT);
-  }
+    // Left arrow or A for moving sprite left
+    if (keys[37] || keys[65]) {
+      player.move(DIRECTION.LEFT);
+    } else if (keys[39] || keys[68]) {
+      // Right arrow or D to move sprite right
+      player.move(DIRECTION.RIGHT);
+    }
 
-  // Space or E for interaction
-  if (keys[32] || keys[69]) {
-    if (atEndPoint) {
+    // Space or E for interaction
+    if (keys[32] || keys[69]) {
+      if (atEndPoint) {
+          alert('YOU WIN! Play again?');
+          location.reload();
+      }
+    }
+  }else{
+    //fight scene keybinding
+    if (keys[32] || keys[69]) {
+      if (atEndPoint) {
         alert('YOU WIN! Play again?');
         location.reload();
     }
-    else if (inFightScene) {
-        fightLayer.remove();
-        stage.add(layer);
-        inFightScene = false;
-    }
-    else if (readyToInteract) {
-      layer.remove();
-      stage.add(fightLayer);
-      inFightScene = true;
-    }
+  }
+
+  /*
+  // this is for escaping fight scene
+  else if (inFightScene) {
+    fightLayer.remove();
+    stage.add(layer);
+    inFightScene = false;
+  }
+  // this is for enter fight scene
+  else if (readyToInteract) {    
+    layer.remove();
+    stage.add(fightLayer);
+    inFightScene = true;
+  }
+*/
+
   }
   // Escape or P for pausing (to menu)
   if (keys[27] || keys[80]) {
