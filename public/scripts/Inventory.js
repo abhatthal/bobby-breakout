@@ -53,6 +53,7 @@ export class Inventory {
       fontSize: 18,
       fill: '#555',
       padding: 20,
+      width: 220,
       align: 'center',
     });
     
