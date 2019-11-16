@@ -2,6 +2,7 @@ import {Wall} from './Wall.js';
 import {Environment} from './Environment.js';
 import {Player, NPC} from './Character.js';
 import {Inventory} from './Inventory.js'
+import {Item} from './Item.js'
 import {DIRECTION} from './helper_functions.js';
 
 // Set premium content visbility
@@ -372,6 +373,13 @@ function doKeyProcess(keys) {
   }
 
   // I to open inventory window
+  if (keys[90]) {
+    var item = new Item({
+      name: 'Sword',
+      info: 'looool',
+    })
+    playerInventory.add(item);
+  }
   if (keys[73]) {
     if (inInventoryWindow) {
       playerInventory.layer.remove();
