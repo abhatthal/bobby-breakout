@@ -196,16 +196,19 @@ function httpGet(theUrl) {
   const xmlHttp = new XMLHttpRequest();
   xmlHttp.open('GET', theUrl, false); // false for synchronous request
   xmlHttp.send(null);
-  return xmlHttp.responseText;
+  if (xmlHttp.responseText.length < 10) {
+    return xmlHttp.responseText;
+  } else {
+    return '٩◔̯◔۶'; // return a face that will fit
+  }
 }
 
-// Draw a face
-const text = httpGet('/cool');
+// Draw a face using cool-ascii-faces API
 const face = new Konva.Text({
   x: 380,
   y: 40,
-  text: text,
-  fontSize: 20 - Math.floor(0.5 * text.length),
+  text: httpGet('https://fathomless-temple-39382.herokuapp.com/'),
+  fontSize: 16,
   fill: '#555',
   padding: 20,
   align: 'center',
