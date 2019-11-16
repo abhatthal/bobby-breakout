@@ -4,6 +4,7 @@ export class ToolTip {
   constructor(data) {
     this.x = data.x;
     this.y = data.y;
+    this.width = (data.width) ? data.width : 160; // default to 160 if not specified
     this.id = genID();
     this.text = data.text;
 
@@ -12,14 +13,19 @@ export class ToolTip {
     this.tertiaryColor = 'black';
 
     this.group = new Konva.Group({
-      x: this.x,
-      y: this.y,
+      // x, y specific to text and box for now since we're not rendering by group
+      // when rendering by group works, comment out x, y attributes for text and box
+      // and assign x, y here
+      // remember to update position in moveTo if doing so
+
+      // x: this.x,
+      // y: this.y,
       id: this.id,
     });
 
     this.tipText = new Konva.Text({
-      // x: this.x,
-      // y: this.y,
+      x: this.x,
+      y: this.y,
       text: this.text,
       fontSize: 18,
       fill: this.primaryColor,
@@ -28,12 +34,12 @@ export class ToolTip {
     });
 
     this.tipBox = new Konva.Rect({
-      // x: this.x,
-      // y: this.y,
+      x: this.x,
+      y: this.y,
       stroke: this.primaryColor,
       strokeWidth: 5,
       fill: this.secondaryColor,
-      width: 160,
+      width: this.width,
       height: this.tipText.height(),
       shadowColor: this.tertiaryColor,
       shadowBlur: 10,
@@ -57,8 +63,8 @@ export class ToolTip {
     this.x = pos.x;
     this.y = pos.y;
     // update each Konva obj's pos
-    this.group.x(this.x);
-    this.group.y(this.y);
+    // this.group.x(this.x);
+    // this.group.y(this.y);
     this.tipBox.x(this.x);
     this.tipBox.y(this.y);
     this.tipText.x(this.x);
