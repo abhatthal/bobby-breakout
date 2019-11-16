@@ -1,6 +1,6 @@
 import {genID} from './helper_functions.js';
 
-export class ToolTip {
+export class Tooltip {
   constructor(data) {
     this.x = data.x;
     this.y = data.y;

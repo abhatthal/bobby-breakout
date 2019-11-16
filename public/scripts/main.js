@@ -2,7 +2,7 @@ import {Wall} from './Wall.js';
 import {Environment} from './Environment.js';
 import {Player, NPC} from './Character.js';
 import {DIRECTION} from './helper_functions.js';
-import {ToolTip} from './ToolTip.js';
+import {Tooltip} from './Tooltip.js';
 
 // Set premium content visbility
 const premiumContainer = document.getElementById('premium_content');
@@ -26,7 +26,7 @@ stage.add(layer);
 const fightLayer = new Konva.Layer();
 
 // Tooltip for fight
-const fightTooltip = new ToolTip({
+const fightTooltip = new Tooltip({
   x: 100,
   y: 100,
   width: 300,
@@ -57,7 +57,7 @@ const endPoint = new Environment({
 layer.add(endPoint.render);
 
 // Tooltip for completing level
-const completionTooltip = new ToolTip({
+const completionTooltip = new Tooltip({
   x: stage.width() - 400,
   y: 0,
   width: 240,
@@ -180,7 +180,7 @@ container.focus();
 const keys = [];
 
 // Tooltip for interaction
-const tooltip = new ToolTip({
+const tooltip = new Tooltip({
   x: 0,
   y: 0,
   text: 'E/SPACE\nTO INTERACT',
