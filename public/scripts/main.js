@@ -326,7 +326,6 @@ container.addEventListener('keyup', function(event) {
 
 function doKeyProcess(keys) {
   // Down arrow or W for moving sprite down
-  if(inFightScene != true) {
     if (keys[40] || keys[83]) {
       player.move(DIRECTION.UP);
     } else if (keys[38] || keys[87]) {
