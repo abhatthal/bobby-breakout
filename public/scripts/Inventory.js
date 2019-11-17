@@ -43,7 +43,13 @@ export class Inventory {
 
   add(item) {
     this.inventory.push(item);
-    var shape = this.inventory_icon[this.inventory_num]
+    for (var i = 0; i < this.inventory_size; i++) {
+      if (this.inventory_icon[i].name() === 'empty') {
+        var shape = this.inventory_icon[i];
+        break;
+      };
+    };
+    
     // Placeholder before adding item icons
     shape.fill('green');
     shape.name('filled');
@@ -94,16 +100,15 @@ export class Inventory {
     this.inventory_num += 1;
   }
 
-  drop(item) {
+  drop(item, icon) {
     var index = this.inventory.indexOf(item);
     if (index > -1) {
       this.inventory.splice(index, 1);
       this.inventory_num -= 1;
-      var shape = this.inventory_icon[this.inventory_num];
-      shape.fill('red');
-      shape.name('empty');
-      shape.listening(false);
     }
+    icon.fill('red');
+    icon.name('empty');
+    icon.listening(false);
     this.layer.draw();
   }
 

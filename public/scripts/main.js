@@ -423,7 +423,7 @@ let currentShape;
 
 document.getElementById('dropButton').addEventListener('click', () => {
   var index = playerInventory.inventory_icon.indexOf(currentShape);
-  playerInventory.drop(playerInventory.inventory[index]);
+  playerInventory.drop(playerInventory.inventory[index], currentShape);
 });
 
 stage.on('contextmenu', function(e) {
