@@ -26,8 +26,8 @@ stage.add(layer);
 
 
 const fightLayer = new Konva.Layer();
-//Lang test
-//stage.add(fightLayer);
+// Lang test
+// stage.add(fightLayer);
 
 // Tooltip for fight
 const SkillA1Tooltip = new Tooltip({
@@ -35,7 +35,7 @@ const SkillA1Tooltip = new Tooltip({
   y: 400,
   width: 100,
   height: 50,
-  text: 'This is your A1 skill',
+  text: 'A1',
 });
 
 const SkillA2Tooltip = new Tooltip({
@@ -43,7 +43,7 @@ const SkillA2Tooltip = new Tooltip({
   y: 400,
   width: 100,
   height: 50,
-  text: 'This is your A22 skill',
+  text: 'A2',
 });
 
 const SkillA3Tooltip = new Tooltip({
@@ -51,7 +51,7 @@ const SkillA3Tooltip = new Tooltip({
   y: 400,
   width: 100,
   height: 50,
-  text: 'This is your A333 skill',
+  text: 'A3',
 });
 
 const SkillA4Tooltip = new Tooltip({
@@ -59,7 +59,7 @@ const SkillA4Tooltip = new Tooltip({
   y: 400,
   width: 100,
   height: 50,
-  text: 'This is your A4444 skill',
+  text: 'A4',
 });
 
 const fightTooltip = new Tooltip({
@@ -75,7 +75,15 @@ const PlayerTooltip = new Tooltip({
   y: 130,
   width: 150,
   height: 300,
-  text: 'Bobby here! smash all ppl blocking your way',
+  text: 'Bobby here! \nsmash all ppl \nblocking your way',
+});
+
+const EnemyTooltip = new Tooltip({
+  x: 820,
+  y: 30,
+  width: 150,
+  height: 300,
+  text: 'Bbart: \ncome fight bobby',
 });
 
 fightLayer.add(SkillA1Tooltip.renderBox, SkillA1Tooltip.renderText);
@@ -294,6 +302,7 @@ container.addEventListener('keydown', function(event) {
     }
   });
 
+
   spawnArray.forEach((node) => {
     player.checkCollision(node);
     if (player.isColliding(node)) {
@@ -326,20 +335,20 @@ container.addEventListener('keyup', function(event) {
 
 function doKeyProcess(keys) {
   // Down arrow or W for moving sprite down
-    if (keys[40] || keys[83]) {
-      player.move(DIRECTION.UP);
-    } else if (keys[38] || keys[87]) {
-      // Up arrow or S to move sprite up
-      player.move(DIRECTION.DOWN);
-    }
+  if (keys[40] || keys[83]) {
+    player.move(DIRECTION.UP);
+  } else if (keys[38] || keys[87]) {
+    // Up arrow or S to move sprite up
+    player.move(DIRECTION.DOWN);
+  }
 
-    // Left arrow or A for moving sprite left
-    if (keys[37] || keys[65]) {
-      player.move(DIRECTION.LEFT);
-    } else if (keys[39] || keys[68]) {
-      // Right arrow or D to move sprite right
-      player.move(DIRECTION.RIGHT);
-    }
+  // Left arrow or A for moving sprite left
+  if (keys[37] || keys[65]) {
+    player.move(DIRECTION.LEFT);
+  } else if (keys[39] || keys[68]) {
+    // Right arrow or D to move sprite right
+    player.move(DIRECTION.RIGHT);
+  }
 
   // Space or E for interaction
   if (keys[32] || keys[69]) {
