@@ -10,7 +10,6 @@ const pg = require('pg');
 const conString = 'postgres://vyqzrennssqgdm:5427cde89c19c7c04595851cca03f048cce351ed5ce02df1f19e4ff075effa20@ec2-174-129-253-162.compute-1.amazonaws.com:5432/dchmahd956dtm0?ssl=true';
 // /////////////////
 
-
 const app = express();
 const bodyParser = require('body-parser');
 
@@ -19,10 +18,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// using sendFile until we conv main.html to index.ejs
-// app.get('/', function(req, res) {
-//   res.sendFile(path.join(path.join(__dirname, 'public'), 'login.html'));
-// });
 app.get('/', (req, res) => res.render('pages/login'));
 app.get('/register', (req, res) => res.render('pages/register'));
 app.get('/login', (req, res) => res.render('pages/login'));

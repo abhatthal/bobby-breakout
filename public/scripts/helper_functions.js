@@ -41,3 +41,10 @@ export function degreesToRadians(degree) {
 export function radiansToDegrees(radians) {
   return radians * 180/Math.PI;
 }
+
+export function httpGet(theUrl) {
+  const xmlHttp = new XMLHttpRequest();
+  xmlHttp.open('GET', theUrl, false); // false for synchronous request
+  xmlHttp.send(null);
+  return xmlHttp.responseText;
+}
