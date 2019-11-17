@@ -22,160 +22,69 @@ const stage = new Konva.Stage({
 });
 
 const layer = new Konva.Layer();
-//stage.add(layer);
+stage.add(layer);
 
 
 const fightLayer = new Konva.Layer();
 //Lang test
-stage.add(fightLayer);
+//stage.add(fightLayer);
 
 // Tooltip for fight
-<<<<<<< HEAD
-
-/*   iter 1 text box
-const fightTooltip = new Konva.Text({
-  x: 100,
-  y: 100,
-  text: 'TIME TO FIGHT! coming later...\nE/SPACE TO RETURN',
-  fontSize: 18,
-  fill: '#555',
-  padding: 20,
-  align: 'center',
-});
-*/
-
-
-const SkillA1box = new Konva.Rect({
+const SkillA1Tooltip = new Tooltip({
   x: 300,
   y: 400,
-  stroke: '#555',
-  strokeWidth: 5,
-  fill: '#ffffff',
   width: 100,
-  height: 50, //fightSkillbox.height(),
-  shadowColor: 'black',
-  shadowBlur: 10,
-  shadowOffsetX: 10,
-  shadowOffsetY: 10,
-  shadowOpacity: 0.2,
-  cornerRadius: 10,
+  height: 50,
+  text: 'This is your A1 skill',
 });
 
-const SkillA2box = new Konva.Rect({
+const SkillA2Tooltip = new Tooltip({
   x: 450,
   y: 400,
-  stroke: '#555',
-  strokeWidth: 5,
-  fill: '#ddd',
   width: 100,
-  height: 50, //fightSkillbox.height(),
-  shadowColor: 'black',
-  shadowBlur: 10,
-  shadowOffsetX: 10,
-  shadowOffsetY: 10,
-  shadowOpacity: 0.2,
-  cornerRadius: 10,
+  height: 50,
+  text: 'This is your A22 skill',
 });
 
-const SkillA3box = new Konva.Rect({
+const SkillA3Tooltip = new Tooltip({
   x: 600,
   y: 400,
-  stroke: '#555',
-  strokeWidth: 5,
-  fill: '#ddd',
   width: 100,
-  height: 50, //fightSkillbox.height(),
-  shadowColor: 'black',
-  shadowBlur: 10,
-  shadowOffsetX: 10,
-  shadowOffsetY: 10,
-  shadowOpacity: 0.2,
-  cornerRadius: 10,
+  height: 50,
+  text: 'This is your A333 skill',
 });
 
-const SkillA4box = new Konva.Rect({
+const SkillA4Tooltip = new Tooltip({
   x: 750,
   y: 400,
-  stroke: '#555',
-  strokeWidth: 5,
-  fill: '#ddd',
   width: 100,
-  height: 50, //fightSkillbox.height(),
-  shadowColor: 'black',
-  shadowBlur: 10,
-  shadowOffsetX: 10,
-  shadowOffsetY: 10,
-  shadowOpacity: 0.2,
-  cornerRadius: 10,
+  height: 50,
+  text: 'This is your A4444 skill',
 });
 
-const fightTooltip = new Konva.Rect({
+const fightTooltip = new Tooltip({
   x: 250,
   y: 30,
-  stroke: '#555',
-  strokeWidth: 5,
-  fill: '#ddd',
   width: 500,
-  height: 150, //fightSkillbox.height(),
-  shadowColor: 'black',
-  shadowBlur: 10,
-  shadowOffsetX: 10,
-  shadowOffsetY: 10,
-  shadowOpacity: 0.2,
-  cornerRadius: 10,
-});
-
-const Enemybox = new Konva.Rect({
-  x: 820,
-  y: 30,
-  stroke: '#555',
-  strokeWidth: 5,
-  fill: '#ddd',
-  width: 150,
-  height: 300, //fightSkillbox.height(),
-  shadowColor: 'black',
-  shadowBlur: 10,
-  shadowOffsetX: 10,
-  shadowOffsetY: 10,
-  shadowOpacity: 0.2,
-  cornerRadius: 10,
-});
-
-const PlayerBox = new Konva.Rect({
-  x: 20,
-  y: 130,
-  stroke: '#555',
-  strokeWidth: 5,
-  fill: '#ddd',
-  width: 150,
-  height: 300, //fightSkillbox.height(),
-  shadowColor: 'black',
-  shadowBlur: 10,
-  shadowOffsetX: 10,
-  shadowOffsetY: 10,
-  shadowOpacity: 0.2,
-  cornerRadius: 10,
-});
-
-fightLayer.add(fightTooltip);
-fightLayer.add(PlayerBox);
-fightLayer.add(Enemybox);
-//fightLayer.add(fightTooltip);
-//fightLayer.add(fightSkillbox);
-fightLayer.add(SkillA1box);
-fightLayer.add(SkillA2box);
-fightLayer.add(SkillA3box);
-fightLayer.add(SkillA4box);
-=======
-const fightTooltip = new Tooltip({
-  x: 100,
-  y: 100,
-  width: 300,
+  height: 150,
   text: 'TIME TO FIGHT! coming later...\nE/SPACE TO RETURN',
 });
 
+const PlayerTooltip = new Tooltip({
+  x: 20,
+  y: 130,
+  width: 150,
+  height: 300,
+  text: 'Bobby here! smash all ppl blocking your way',
+});
+
+fightLayer.add(SkillA1Tooltip.renderBox, SkillA1Tooltip.renderText);
+fightLayer.add(SkillA2Tooltip.renderBox, SkillA2Tooltip.renderText);
+fightLayer.add(SkillA3Tooltip.renderBox, SkillA3Tooltip.renderText);
+fightLayer.add(SkillA4Tooltip.renderBox, SkillA4Tooltip.renderText);
+fightLayer.add(PlayerTooltip.renderBox, PlayerTooltip.renderText);
+fightLayer.add(EnemyTooltip.renderBox, EnemyTooltip.renderText);
 fightLayer.add(fightTooltip.renderBox, fightTooltip.renderText);
->>>>>>> origin/develop
 fightLayer.draw();
 
 const startPoint = new Environment({
