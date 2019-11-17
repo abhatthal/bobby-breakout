@@ -1,7 +1,7 @@
 import {Wall} from './Wall.js';
 import {Environment} from './Environment.js';
 import {Player, NPC} from './Character.js';
-import {DIRECTION} from './helper_functions.js';
+import {DIRECTION, httpGet} from './helper_functions.js';
 
 // Set premium content visbility
 const premiumContainer = document.getElementById('premium_content');
@@ -192,22 +192,12 @@ npc.isSeeing(player);
 layer.add(npc.render);
 
 
-function httpGet(theUrl) {
-  const xmlHttp = new XMLHttpRequest();
-  xmlHttp.open('GET', theUrl, false); // false for synchronous request
-  xmlHttp.send(null);
-  if (xmlHttp.responseText.length < 10) {
-    return xmlHttp.responseText;
-  } else {
-    return '٩◔̯◔۶'; // return a face that will fit
-  }
-}
-
 // Draw a face using cool-ascii-faces API
+const text = httpGet('https://fathomless-temple-39382.herokuapp.com/');
 const face = new Konva.Text({
   x: 380,
   y: 40,
-  text: httpGet('https://fathomless-temple-39382.herokuapp.com/'),
+  text: (text.length < 14) ? text : '( ﾟヮﾟ)', // ensure we get a face that fits
   fontSize: 16,
   fill: '#555',
   padding: 20,
