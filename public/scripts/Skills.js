@@ -8,5 +8,6 @@ class Skill {
 
   hpchange(Obj, val) {
     Obj.hp += val;
+    Obj.hp += damage;
   }
 }

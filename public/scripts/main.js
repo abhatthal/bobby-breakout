@@ -256,11 +256,7 @@ const tooltip = new Tooltip({
 let readyToInteract = false;
 let inFightScene = false;
 let atEndPoint = false;
-/*
-// Skill and attack preset
-const normalattack = Skill1;
-const doubleattack = Skill2;
-*/
+
 // Handles keys being pressed down
 container.addEventListener('keydown', function(event) {
   keys[event.keyCode] = true;
@@ -338,7 +334,6 @@ container.addEventListener('keydown', function(event) {
         completionTooltip.remove();
       }
     });
-
   } else {
     // during fight and key pressed
     doKeyfight(keys);
@@ -365,6 +360,16 @@ function doKeyfight(keys) {
     fightLayer.remove();
     stage.add(layer);
     inFightScene = false;
+  } else if (keys[81]) {
+  // press Q for hit
+  // normalattack.hpchange(npc, 0);
+    npc.hp -= 50;
+    alert(npc.hp);
+    if (player.hp <= 0 || npc.hp <= 0) {
+      fightLayer.remove();
+      stage.add(layer);
+      inFightScene = false;
+    }
   }
 }
 
