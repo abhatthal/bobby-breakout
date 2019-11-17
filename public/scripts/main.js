@@ -417,3 +417,28 @@ function doReverseMovement(keys) {
     player.move(DIRECTION.LEFT);
   }
 }
+
+var menu = document.getElementById('menu');
+let currentShape;
+
+document.getElementById('dropButton').addEventListener('click', () => {
+  var index = playerInventory.inventory_icon.indexOf(currentShape);
+  playerInventory.drop(playerInventory.inventory[index]);
+});
+
+stage.on('contextmenu', function(e) {
+  e.evt.preventDefault();
+  if (e.target.name() !== 'filled') {
+    return;
+  };
+  currentShape = e.target;
+  menu.style.display = 'initial';
+  var containerRect = stage.container().getBoundingClientRect();
+  menu.style.top = containerRect.top + stage.getPointerPosition().y + 4 +'px';
+  menu.style.left = containerRect.left + stage.getPointerPosition().x + 4 + 'px';
+});
+
+window.addEventListener('click', () => {
+  // hide menu 
+  menu.style.display = 'none';
+})

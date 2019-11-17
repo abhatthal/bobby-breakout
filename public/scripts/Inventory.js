@@ -1,14 +1,14 @@
 export class Inventory {
   constructor() {
-    this.equipt = [];
-    this.equipt_num = 0;
+    this.equipped = [];
+    this.equipped_num = 0;
     this.inventory = [];
     this.inventory_num = 0;
     this.inventory_size = 20;
 
     this.layer = new Konva.Layer();
     this.inventory_icon = []
-    this.equipt_icon = []
+    this.equipped_icon = []
 
     for (var i = 0; i < this.inventory_size; i++) {
       var shape = new Konva.Rect({
@@ -19,6 +19,7 @@ export class Inventory {
         fill: 'red',
         stroke: 'black',
         strokeWidth: 4,
+        name: 'empty',
       });
       this.inventory_icon.push(shape);
       this.layer.add(shape);
@@ -33,7 +34,7 @@ export class Inventory {
         stroke: 'black',
         strokeWidth: 4,
       });
-      this.equipt_icon.push(shape);
+      this.equipped_icon.push(shape);
       this.layer.add(shape);
     }
 
@@ -45,6 +46,7 @@ export class Inventory {
     var shape = this.inventory_icon[this.inventory_num]
     // Placeholder before adding item icons
     shape.fill('green');
+    shape.name('filled');
 
     const info = new Konva.Text({
       x: 750,
@@ -87,6 +89,7 @@ export class Inventory {
       infoBox.hide();
       layer.draw();
     });
+    shape.listening(true);
     this.layer.draw();
     this.inventory_num += 1;
   }
@@ -96,23 +99,28 @@ export class Inventory {
     if (index > -1) {
       this.inventory.splice(index, 1);
       this.inventory_num -= 1;
+      var shape = this.inventory_icon[this.inventory_num];
+      shape.fill('red');
+      shape.name('empty');
+      shape.listening(false);
     }
+    this.layer.draw();
   }
 
-  equipt(item) {
-    this.equipt.push(item);
+  equipped(item) {
+    this.equipped.push(item);
     this.drop(item);
     this.inventory_num -= 1;
-    this.equipt_num += 1;
+    this.equipped_num += 1;
   }
 
-  unequipt(item) {
-    var index = this.equipt.indexOf(item);
+  unequipped(item) {
+    var index = this.equipped.indexOf(item);
     if (index > -1) {
-      this.equipt.splice(index, 1);
+      this.equipped.splice(index, 1);
     }
     this.inventory.push(item);
     this.inventory_num += 1;
-    this.equipt_num -= 1;
+    this.equipped_num -= 1;
   }
 }
