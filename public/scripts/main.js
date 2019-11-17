@@ -149,10 +149,10 @@ const npc = new NPC({
   colour: 'yellow',
   impassible: true,
   hp: 100,
+  enableFace: true,
 });
 npc.isSeeing(player);
 layer.add(npc.render);
-
 
 const npcArray = [];
 npcArray.push(npc);

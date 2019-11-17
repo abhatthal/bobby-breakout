@@ -1,5 +1,5 @@
 import {Entity} from './Entity.js';
-import {DIRECTION} from './helper_functions.js';
+import {DIRECTION, httpGet} from './helper_functions.js';
 import {VisionCone} from './BoundingBox.js';
 import {Wall} from './Wall.js';
 
@@ -7,28 +7,24 @@ export class Character extends Entity {
   constructor(data) {
     super(data);
     this.speed = 5; // movement speed
+    this.enableFace = (data.enableFace) ? data.enableFace : false;
+    // Draw a face using cool-ascii-faces API
+    const text = httpGet('https://fathomless-temple-39382.herokuapp.com/');
+    this.face = new Konva.Text({
+      x: -18,
+      y: -10,
+      text: (text.length < 12) ? text : '( ﾟヮﾟ)', // ensure we get a face that fits
+      fontSize: 16,
+      fill: '#555',
+      padding: 20,
+      align: 'center',
+    });
+    if (this.enableFace) {
+      this.group.add(this.face);
+    }
   }
 
   move(dir) {
-    // console.log(dir);
-    // if (dir === DIRECTION.LEFT) {
-    //   this.x += this.speed * DIRECTION.UNIT_LEFT;
-    //   this.group.x(this.x);
-    // }
-    // else if (dir === DIRECTION.RIGHT) {
-    //   this.x += this.speed * DIRECTION.UNIT_RIGHT;
-    //   this.group.x(this.x);
-    // }
-
-    // if (dir === DIRECTION.UP) {
-    //   this.y += this.speed * DIRECTION.UNIT_UP;
-    //   this.group.y(this.y);
-    // }
-    // else if (dir === DIRECTION.DOWN) {
-    //   this.y += this.speed * DIRECTION.UNIT_DOWN;
-    //   this.group.y(this.y);
-    // }
-
     switch (dir) {
       case DIRECTION.LEFT:
         this.x += this.speed * DIRECTION.UNIT_LEFT;
