@@ -2,6 +2,7 @@ import {Wall} from './Wall.js';
 import {Environment} from './Environment.js';
 import {Player, NPC} from './Character.js';
 import {DIRECTION} from './helper_functions.js';
+import {Tooltip} from './Tooltip.js';
 
 // Set premium content visbility
 const premiumContainer = document.getElementById('premium_content');
@@ -25,34 +26,14 @@ stage.add(layer);
 const fightLayer = new Konva.Layer();
 
 // Tooltip for fight
-const fightTooltip = new Konva.Text({
+const fightTooltip = new Tooltip({
   x: 100,
   y: 100,
-  text: 'TIME TO FIGHT! coming later...\nE/SPACE TO RETURN',
-  fontSize: 18,
-  fill: '#555',
-  padding: 20,
-  align: 'center',
-});
-
-const fightTooltipBox = new Konva.Rect({
-  x: 100,
-  y: 100,
-  stroke: '#555',
-  strokeWidth: 5,
-  fill: '#ddd',
   width: 300,
-  height: fightTooltip.height(),
-  shadowColor: 'black',
-  shadowBlur: 10,
-  shadowOffsetX: 10,
-  shadowOffsetY: 10,
-  shadowOpacity: 0.2,
-  cornerRadius: 10,
+  text: 'TIME TO FIGHT! coming later...\nE/SPACE TO RETURN',
 });
 
-fightLayer.add(fightTooltipBox);
-fightLayer.add(fightTooltip);
+fightLayer.add(fightTooltip.renderBox, fightTooltip.renderText);
 fightLayer.draw();
 
 const startPoint = new Environment({
@@ -76,30 +57,11 @@ const endPoint = new Environment({
 layer.add(endPoint.render);
 
 // Tooltip for completing level
-const completionTooltip = new Konva.Text({
+const completionTooltip = new Tooltip({
   x: stage.width() - 400,
   y: 0,
-  text: 'E/SPACE\nTO COMPLETE LEVEL',
-  fontSize: 18,
-  fill: '#555',
-  padding: 20,
-  align: 'center',
-});
-
-const completionTooltipBox = new Konva.Rect({
-  x: stage.width() - 400,
-  y: 0,
-  stroke: '#555',
-  strokeWidth: 5,
-  fill: '#ddd',
   width: 240,
-  height: completionTooltip.height(),
-  shadowColor: 'black',
-  shadowBlur: 10,
-  shadowOffsetX: 10,
-  shadowOffsetY: 10,
-  shadowOpacity: 0.2,
-  cornerRadius: 10,
+  text: 'E/SPACE\nTO COMPLETE LEVEL',
 });
 
 
@@ -187,10 +149,10 @@ const npc = new NPC({
   colour: 'yellow',
   impassible: true,
   hp: 100,
+  enableFace: true,
 });
 npc.isSeeing(player);
 layer.add(npc.render);
-
 
 const npcArray = [];
 npcArray.push(npc);
@@ -218,30 +180,10 @@ container.focus();
 const keys = [];
 
 // Tooltip for interaction
-const tooltip = new Konva.Text({
+const tooltip = new Tooltip({
   x: 0,
   y: 0,
   text: 'E/SPACE\nTO INTERACT',
-  fontSize: 18,
-  fill: '#555',
-  padding: 20,
-  align: 'center',
-});
-
-const tooltipBox = new Konva.Rect({
-  x: 0,
-  y: 0,
-  stroke: '#555',
-  strokeWidth: 5,
-  fill: '#ddd',
-  width: 160,
-  height: tooltip.height(),
-  shadowColor: 'black',
-  shadowBlur: 10,
-  shadowOffsetX: 10,
-  shadowOffsetY: 10,
-  shadowOpacity: 0.2,
-  cornerRadius: 10,
 });
 
 let readyToInteract = false;
@@ -274,7 +216,7 @@ container.addEventListener('keydown', function(event) {
     node.checkPlayerDetection(player);
     if (player.isColliding(node)) {
       // trigger some interaction, for now, change colour
-    //   console.log('i am touching an NPC', node.id);
+      // console.log('i am touching an NPC', node.id);
       // handle impassible NPCs here
       if (node.impassible === true) {
         doReverseMovement(keys);
@@ -282,18 +224,21 @@ container.addEventListener('keydown', function(event) {
       isColliding = true;
     }
     if (node.isSeeing(player)) {
-    //   console.log('i see the player');
-      tooltip.x(node.x + 50);
-      tooltip.y(node.y - 50);
-      tooltipBox.x(node.x + 50);
-      tooltipBox.y(node.y - 50);
-      layer.add(tooltipBox);
-      layer.add(tooltip);
+      // console.log('i see the player');
+
+      tooltip.moveTo({
+        x: node.x + 50,
+        y: node.y - 50,
+      });
+
+      layer.add(tooltip.renderBox, tooltip.renderText);
+      // not sure why adding tooltip by a group doesn't work
+      // layer.add(tooltip.render);
+
       layer.draw();
       readyToInteract = true;
     } else {
       tooltip.remove();
-      tooltipBox.remove();
       readyToInteract = false;
     }
   });
@@ -306,13 +251,8 @@ container.addEventListener('keydown', function(event) {
         // console.log('i am at the spawn', node.id);
       } else if (node.name === 'end') {
         // console.log('i am a winner', node.id);
-        // setTimeout(function() {
-        //   alert('YOU WIN! Play again?');
-        //   location.reload();
-        // }, 1000);
         atEndPoint = true;
-        layer.add(completionTooltipBox);
-        layer.add(completionTooltip);
+        layer.add(completionTooltip.renderBox, completionTooltip.renderText);
         layer.draw();
       } else {
         // console.log('i am not sure where i am...', node.id);
@@ -320,7 +260,6 @@ container.addEventListener('keydown', function(event) {
       }
     } else {
       atEndPoint = false;
-      completionTooltipBox.remove();
       completionTooltip.remove();
     }
   });
