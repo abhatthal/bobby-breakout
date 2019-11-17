@@ -1,16 +1,21 @@
-// import {genID, loadImage} from './helper_functions.js';
+// import {httpGet} from './helper_functions.js';
 
-export class Entity {
+export class Stats {
   constructor(data) {
-    this.walkedSteps = (data.walkedSteps) ? data.walkedSteps : 0;
+    this.userID = data.userID;
+    this._walkedSteps = 0;
     // TODO: add at least 4 more metrics
-  } // end constructor
-
+  }
   // updates the database based on passed in stats
   updateStats({
-    walkedSteps = 0,
-  }) {
-    // TODO: update database
+    userID = this.userID,
+    walkedSteps = this.walkedSteps,
+  } = {}) {
+    const socket = io.connect();
+    socket.on('connect', function() {
+      socket.emit('userID', userID);
+      socket.emit('walkedSteps', walkedSteps);
+    });
   }
 
   set walkedSteps(val) {

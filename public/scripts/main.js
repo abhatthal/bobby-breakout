@@ -4,6 +4,15 @@ import {Player, NPC} from './Character.js';
 import {DIRECTION} from './helper_functions.js';
 import {Tooltip} from './Tooltip.js';
 
+// TESTING USER STATS
+import {Stats} from './Stats.js';
+const userStats = new Stats({
+  userID: 12,
+});
+userStats.updateStats({walkedSteps: 5});
+// TESTING USER STATS
+
+
 // Set premium content visbility
 const premiumContainer = document.getElementById('premium_content');
 const url = new URL(window.location.href);
