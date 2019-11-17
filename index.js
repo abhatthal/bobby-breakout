@@ -132,4 +132,8 @@ io.on('connection', function(client) {
   client.on('walkedSteps', function(data) {
     console.log(data);
   });
+
+  client.on('playTime', function(data) {
+    console.log(data);
+  });
 });
