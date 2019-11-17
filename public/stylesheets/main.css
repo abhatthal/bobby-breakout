@@ -55,16 +55,16 @@ body {
 }
 
 /* Example from Konva Demos */
-#menu {
+.menu {
   display: none;
   position: absolute;
-  width: 60px;
+  width: 80px;
   background-color: white;
   box-shadow: 0 0 5px grey;
   border-radius: 3px;
 }
 
-#menu button {
+.menu button {
   width: 100%;
   background-color: white;
   border: none;
@@ -72,6 +72,6 @@ body {
   padding: 10px;
 }
 
-#menu button:hover {
+.menu button:hover {
   background-color: lightgray;
 }

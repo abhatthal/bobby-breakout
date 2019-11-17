@@ -373,6 +373,7 @@ function doKeyProcess(keys) {
   }
 
   // I to open inventory window
+  // For debugging purposes, a key to add an item
   if (keys[90]) {
     var item = new Item({
       name: 'Sword',
@@ -418,7 +419,8 @@ function doReverseMovement(keys) {
   }
 }
 
-var menu = document.getElementById('menu');
+var inventoryMenu = document.getElementById('inventoryMenu');
+var equippedMenu = document.getElementById('equippedMenu');
 let currentShape;
 
 document.getElementById('dropButton').addEventListener('click', () => {
@@ -426,19 +428,41 @@ document.getElementById('dropButton').addEventListener('click', () => {
   playerInventory.drop(playerInventory.inventory[index], currentShape);
 });
 
+document.getElementById('equipButton').addEventListener('click', () => {
+  var index = playerInventory.inventory_icon.indexOf(currentShape);
+  playerInventory.equip(playerInventory.inventory[index], currentShape);
+});
+
+document.getElementById('unequipButton').addEventListener('click', () => {
+  var index = playerInventory.equipped_icon.indexOf(currentShape);
+  playerInventory.unequip(playerInventory.equipped[index], currentShape);
+});
+
 stage.on('contextmenu', function(e) {
   e.evt.preventDefault();
-  if (e.target.name() !== 'filled') {
+  if (e.target.name() === 'filled') {
+    currentShape = e.target;
+    equippedMenu.style.display = 'none';
+    inventoryMenu.style.display = 'initial';
+    var containerRect = stage.container().getBoundingClientRect();
+    inventoryMenu.style.top = containerRect.top + stage.getPointerPosition().y + 4 +'px';
+    inventoryMenu.style.left = containerRect.left + stage.getPointerPosition().x + 4 + 'px';
+  }
+  else if (e.target.name() === 'equipped') {
+    currentShape = e.target;
+    inventoryMenu.style.display = 'none';
+    equippedMenu.style.display = 'initial';
+    var containerRect = stage.container().getBoundingClientRect();
+    equippedMenu.style.top = containerRect.top + stage.getPointerPosition().y + 4 +'px';
+    equippedMenu.style.left = containerRect.left + stage.getPointerPosition().x + 4 + 'px';
+  }
+  else {
     return;
-  };
-  currentShape = e.target;
-  menu.style.display = 'initial';
-  var containerRect = stage.container().getBoundingClientRect();
-  menu.style.top = containerRect.top + stage.getPointerPosition().y + 4 +'px';
-  menu.style.left = containerRect.left + stage.getPointerPosition().x + 4 + 'px';
+  }
 });
 
 window.addEventListener('click', () => {
   // hide menu 
-  menu.style.display = 'none';
+  inventoryMenu.style.display = 'none';
+  equippedMenu.style.display = 'none';
 })

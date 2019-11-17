@@ -2,6 +2,7 @@ export class Inventory {
   constructor() {
     this.equipped = [];
     this.equipped_num = 0;
+    this.equipped_size = 4;
     this.inventory = [];
     this.inventory_num = 0;
     this.inventory_size = 20;
@@ -9,6 +10,61 @@ export class Inventory {
     this.layer = new Konva.Layer();
     this.inventory_icon = []
     this.equipped_icon = []
+
+    const inventoryTitle = new Konva.Text({
+      x: 0,
+      y: 0,
+      text: 'Inventory',
+      fontSize: 40,
+      fill: '#555',
+      padding: 20,
+      width: 1050,
+      align: 'center',
+      fill: 'black',
+    });
+    this.layer.add(inventoryTitle);
+
+    const equippedTitle = new Konva.Text({
+      x: 0,
+      y: 390,
+      text: 'Equipped',
+      fontSize: 30,
+      fill: '#555',
+      padding: 20,
+      width: 1050,
+      align: 'center',
+      fill: 'black',
+    });
+    this.layer.add(equippedTitle);
+
+    const playerInfo = new Konva.Text({
+      x: 20,
+      y: 100,
+      text: `Bobby Chan\n\nStatistics:`,
+      fontSize: 18,
+      fill: '#555',
+      padding: 20,
+      width: 300,
+      align: 'center',
+    });
+    
+    const playerInfoBox = new Konva.Rect({
+      x: 20,
+      y: 100,
+      stroke: '#555',
+      strokeWidth: 5,
+      fill: '#ddd',
+      width: 300,
+      height: playerInfo.height(),
+      shadowColor: 'black',
+      shadowBlur: 10,
+      shadowOffsetX: 10,
+      shadowOffsetY: 10,
+      shadowOpacity: 0.2,
+      cornerRadius: 10,
+    });
+    this.layer.add(playerInfoBox);
+    this.layer.add(playerInfo);
 
     for (var i = 0; i < this.inventory_size; i++) {
       var shape = new Konva.Rect({
@@ -33,6 +89,7 @@ export class Inventory {
         fill: 'yellow',
         stroke: 'black',
         strokeWidth: 4,
+        name: 'empty',
       });
       this.equipped_icon.push(shape);
       this.layer.add(shape);
@@ -42,14 +99,18 @@ export class Inventory {
   }
 
   add(item) {
-    this.inventory.push(item);
+    // Inventory is full --> do nothing
+    if (this.inventory_num >= this.inventory_size) {
+      return;
+    }
     for (var i = 0; i < this.inventory_size; i++) {
       if (this.inventory_icon[i].name() === 'empty') {
         var shape = this.inventory_icon[i];
         break;
       };
     };
-    
+    this.inventory[i] = item;
+
     // Placeholder before adding item icons
     shape.fill('green');
     shape.name('filled');
@@ -101,31 +162,83 @@ export class Inventory {
   }
 
   drop(item, icon) {
-    var index = this.inventory.indexOf(item);
-    if (index > -1) {
-      this.inventory.splice(index, 1);
-      this.inventory_num -= 1;
-    }
+    this.inventory_num -= 1;
     icon.fill('red');
     icon.name('empty');
     icon.listening(false);
     this.layer.draw();
   }
 
-  equipped(item) {
-    this.equipped.push(item);
-    this.drop(item);
-    this.inventory_num -= 1;
+  equip(item, inventoryIcon) {
+    for (var i = 0; i < this.equipped_size; i++) {
+      if (this.equipped_icon[i].name() === 'empty') {
+        var shape = this.equipped_icon[i];
+        break;
+      };
+    };
+    this.equipped[i] = item;
+    this.drop(item, inventoryIcon);
     this.equipped_num += 1;
+    shape.fill('green');
+    shape.name('equipped');
+    shape.listening(true);
+
+    const info = new Konva.Text({
+      x: 750,
+      y: 100,
+      text: `${item.name}\n\n${item.info}`,
+      fontSize: 18,
+      fill: '#555',
+      padding: 20,
+      width: 220,
+      align: 'center',
+    });
+    
+    const infoBox = new Konva.Rect({
+      x: 750,
+      y: 100,
+      stroke: '#555',
+      strokeWidth: 5,
+      fill: '#ddd',
+      width: 225,
+      height: info.height(),
+      shadowColor: 'black',
+      shadowBlur: 10,
+      shadowOffsetX: 10,
+      shadowOffsetY: 10,
+      shadowOpacity: 0.2,
+      cornerRadius: 10,
+    });
+    var layer = this.layer;
+    shape.on('mouseover', function() {
+      document.body.style.cursor = 'pointer';      
+      layer.add(infoBox);
+      layer.add(info);
+      info.show();
+      infoBox.show();
+      layer.draw();
+    });
+    shape.on('mouseout', function() {
+      document.body.style.cursor = 'default';
+      info.hide();
+      infoBox.hide();
+      layer.draw();
+    });
+
+    this.layer.draw();
   }
 
-  unequipped(item) {
-    var index = this.equipped.indexOf(item);
-    if (index > -1) {
-      this.equipped.splice(index, 1);
+  unequip(item, icon) {
+    // If the inventory is full --> do nothing
+    if (this.inventory_num >= this.inventory_size) {
+      return;
     }
-    this.inventory.push(item);
-    this.inventory_num += 1;
+
+    this.add(item);
     this.equipped_num -= 1;
+    icon.fill('yellow');
+    icon.name('empty');
+    icon.listening(false);
+    this.layer.draw();
   }
 }
