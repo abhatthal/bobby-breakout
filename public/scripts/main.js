@@ -4,6 +4,7 @@ import {Environment} from './Environment.js';
 import {Player, NPC} from './Character.js';
 import {DIRECTION} from './helper_functions.js';
 import {Tooltip} from './Tooltip.js';
+// import {Skill} from './Skills.js';
 
 // Set premium content visbility
 const premiumContainer = document.getElementById('premium_content');
@@ -26,10 +27,8 @@ stage.add(layer);
 
 
 const fightLayer = new Konva.Layer();
-// Lang test
-// stage.add(fightLayer);
 
-// Tooltip for fight
+// Tooltip for fight scene
 const SkillA1Tooltip = new Tooltip({
   x: 300,
   y: 400,
@@ -62,14 +61,6 @@ const SkillA4Tooltip = new Tooltip({
   text: 'A4',
 });
 
-const fightTooltip = new Tooltip({
-  x: 250,
-  y: 30,
-  width: 500,
-  height: 150,
-  text: 'TIME TO FIGHT! coming later...\nE/SPACE TO RETURN',
-});
-
 const PlayerTooltip = new Tooltip({
   x: 20,
   y: 130,
@@ -83,7 +74,23 @@ const EnemyTooltip = new Tooltip({
   y: 30,
   width: 150,
   height: 300,
-  text: 'Bbart: \ncome fight bobby',
+  text: 'Bbart: \ncome fight bobby\n\n',
+});
+
+const fightTooltip = new Tooltip({
+  x: 250,
+  y: 30,
+  width: 500,
+  height: 150,
+  text: 'TIME TO FIGHT! coming later...\nE/SPACE TO RETURN',
+});
+
+const EscapeTooltip = new Tooltip({
+  x: 300,
+  y: 320,
+  width: 550,
+  height: 150,
+  text: 'Q to normal attack; E to escape fight',
 });
 
 fightLayer.add(SkillA1Tooltip.renderBox, SkillA1Tooltip.renderText);
@@ -93,6 +100,7 @@ fightLayer.add(SkillA4Tooltip.renderBox, SkillA4Tooltip.renderText);
 fightLayer.add(PlayerTooltip.renderBox, PlayerTooltip.renderText);
 fightLayer.add(EnemyTooltip.renderBox, EnemyTooltip.renderText);
 fightLayer.add(fightTooltip.renderBox, fightTooltip.renderText);
+fightLayer.add(EscapeTooltip.renderBox, EscapeTooltip.renderText);
 fightLayer.draw();
 
 const startPoint = new Environment({
@@ -248,82 +256,93 @@ const tooltip = new Tooltip({
 let readyToInteract = false;
 let inFightScene = false;
 let atEndPoint = false;
+/*
+// Skill and attack preset
+const normalattack = Skill1;
+const doubleattack = Skill2;
+*/
 // Handles keys being pressed down
 container.addEventListener('keydown', function(event) {
   keys[event.keyCode] = true;
 
-  doKeyProcess(keys);
+  // movement in world map
+  if (inFightScene == false) {
+    doKeyProcess(keys);
 
-  let isColliding = false;
-  blockArray.forEach((node) => {
-    if (player.checkCollision(node)) {
+    let isColliding = false;
+    blockArray.forEach((node) => {
+      if (player.checkCollision(node)) {
       // handle impassible walls here
-      if (node.impassible === true) {
-        doReverseMovement(keys);
+        if (node.impassible === true) {
+          doReverseMovement(keys);
+        }
+        isColliding = true;
       }
-      isColliding = true;
+    });
+    if (isColliding) {
+      player.shape.attrs.fill = 'red';
+    } else {
+      player.shape.attrs.fill = 'grey';
     }
-  });
-  if (isColliding) {
-    player.shape.attrs.fill = 'red';
-  } else {
-    player.shape.attrs.fill = 'grey';
-  }
 
-  npcArray.forEach((node) => {
-    player.checkCollision(node);
-    node.checkPlayerDetection(player);
-    if (player.isColliding(node)) {
+    npcArray.forEach((node) => {
+      player.checkCollision(node);
+      node.checkPlayerDetection(player);
+      if (player.isColliding(node)) {
       // trigger some interaction, for now, change colour
       // console.log('i am touching an NPC', node.id);
       // handle impassible NPCs here
-      if (node.impassible === true) {
-        doReverseMovement(keys);
+        if (node.impassible === true) {
+          doReverseMovement(keys);
+        }
+        isColliding = true;
       }
-      isColliding = true;
-    }
-    if (node.isSeeing(player)) {
+      if (node.isSeeing(player)) {
       // console.log('i see the player');
 
-      tooltip.moveTo({
-        x: node.x + 50,
-        y: node.y - 50,
-      });
+        tooltip.moveTo({
+          x: node.x + 50,
+          y: node.y - 50,
+        });
 
-      layer.add(tooltip.renderBox, tooltip.renderText);
-      // not sure why adding tooltip by a group doesn't work
-      // layer.add(tooltip.render);
+        layer.add(tooltip.renderBox, tooltip.renderText);
+        // not sure why adding tooltip by a group doesn't work
+        // layer.add(tooltip.render);
 
-      layer.draw();
-      readyToInteract = true;
-    } else {
-      tooltip.remove();
-      readyToInteract = false;
-    }
-  });
-
-
-  spawnArray.forEach((node) => {
-    player.checkCollision(node);
-    if (player.isColliding(node)) {
-      // trigger some interaction, for now, change colour
-      if (node.name === 'start') {
-        // console.log('i am at the spawn', node.id);
-      } else if (node.name === 'end') {
-        // console.log('i am a winner', node.id);
-        atEndPoint = true;
-        layer.add(completionTooltip.renderBox, completionTooltip.renderText);
         layer.draw();
+        readyToInteract = true;
       } else {
+        tooltip.remove();
+        readyToInteract = false;
+      }
+    });
+
+
+    spawnArray.forEach((node) => {
+      player.checkCollision(node);
+      if (player.isColliding(node)) {
+      // trigger some interaction, for now, change colour
+        if (node.name === 'start') {
+        // console.log('i am at the spawn', node.id);
+        } else if (node.name === 'end') {
+        // console.log('i am a winner', node.id);
+          atEndPoint = true;
+          layer.add(completionTooltip.renderBox, completionTooltip.renderText);
+          layer.draw();
+        } else {
         // console.log('i am not sure where i am...', node.id);
         // console.log(node.name);
+        }
+      } else {
+        atEndPoint = false;
+        completionTooltip.remove();
       }
-    } else {
-      atEndPoint = false;
-      completionTooltip.remove();
-    }
-  });
+    });
 
+  } else {
+    // during fight and key pressed
+    doKeyfight(keys);
+  }
   event.preventDefault();
   layer.batchDraw();
 });
@@ -333,38 +352,55 @@ container.addEventListener('keyup', function(event) {
   keys[event.keyCode] = false;
 });
 
-function doKeyProcess(keys) {
-  // Down arrow or W for moving sprite down
-  if (keys[40] || keys[83]) {
-    player.move(DIRECTION.UP);
-  } else if (keys[38] || keys[87]) {
-    // Up arrow or S to move sprite up
-    player.move(DIRECTION.DOWN);
-  }
+// fight is trigger
+/*
+function fightloop(subject, opponent) {
+  // assume player act first
 
-  // Left arrow or A for moving sprite left
-  if (keys[37] || keys[65]) {
-    player.move(DIRECTION.LEFT);
-  } else if (keys[39] || keys[68]) {
-    // Right arrow or D to move sprite right
-    player.move(DIRECTION.RIGHT);
-  }
-
-  // Space or E for interaction
+}
+*/
+function doKeyfight(keys) {
+  // trigger escape with E
   if (keys[32] || keys[69]) {
-    if (atEndPoint) {
-      alert('YOU WIN! Play again?');
-      location.reload();
-    } else if (inFightScene) {
-      fightLayer.remove();
-      stage.add(layer);
-      inFightScene = false;
-    } else if (readyToInteract) {
-      layer.remove();
-      stage.add(fightLayer);
-      inFightScene = true;
+    fightLayer.remove();
+    stage.add(layer);
+    inFightScene = false;
+  }
+}
+
+function doKeyProcess(keys) {
+  if (inFightScene == false) {
+    // Down arrow or W for moving sprite down
+    if (keys[40] || keys[83]) {
+      player.move(DIRECTION.UP);
+    } else if (keys[38] || keys[87]) {
+    // Up arrow or S to move sprite up
+      player.move(DIRECTION.DOWN);
+    }
+
+    // Left arrow or A for moving sprite left
+    if (keys[37] || keys[65]) {
+      player.move(DIRECTION.LEFT);
+    } else if (keys[39] || keys[68]) {
+    // Right arrow or D to move sprite right
+      player.move(DIRECTION.RIGHT);
+    }
+
+    // Space or E for interaction
+    if (keys[32] || keys[69]) {
+      if (atEndPoint) {
+        alert('YOU WIN! Play again?');
+        location.reload();
+      } else if (readyToInteract) {
+        // trigger fight loop
+        layer.remove();
+        stage.add(fightLayer);
+        inFightScene = true;
+        // fightloop(player, npc);
+      }
     }
   }
+
   // Escape or P for pausing (to menu)
   if (keys[27] || keys[80]) {
     alert('Game Paused\nPress ok to continue');
