@@ -1,4 +1,4 @@
-import {DegreesToRadians} from './helper_functions.js';
+import {degreesToRadians} from './helper_functions.js';
 
 export class BoundingBox {
   constructor(group, shape, isVisible) {
@@ -51,8 +51,10 @@ export class VisionCone {
       points: [
         this.startPoints.x,
         this.startPoints.y,
-        this.startPoints.x + this.cone.getAttr('radius') * Math.cos( DegreesToRadians(this.cone.getAttr('rotation')) ),
-        this.startPoints.y + this.cone.getAttr('radius') * Math.sin( DegreesToRadians(this.cone.getAttr('rotation')) ),
+        this.startPoints.x +
+          this.cone.getAttr('radius') * Math.cos( degreesToRadians(this.cone.getAttr('rotation')) ),
+        this.startPoints.y +
+          this.cone.getAttr('radius') * Math.sin( degreesToRadians(this.cone.getAttr('rotation')) ),
       ],
       stroke: 'red',
       strokeWidth: 4,
@@ -62,8 +64,12 @@ export class VisionCone {
       points: [
         this.startPoints.x,
         this.startPoints.y,
-        this.startPoints.x + this.cone.getAttr('radius') * Math.cos( DegreesToRadians(this.cone.getAttr('rotation') + this.cone.getAttr('angle')/2) ),
-        this.startPoints.y + this.cone.getAttr('radius') * Math.sin( DegreesToRadians(this.cone.getAttr('rotation') + this.cone.getAttr('angle')/2) ),
+        this.startPoints.x +
+          this.cone.getAttr('radius') * Math.cos( degreesToRadians(this.cone.getAttr('rotation') +
+          this.cone.getAttr('angle')/2) ),
+        this.startPoints.y +
+          this.cone.getAttr('radius') * Math.sin( degreesToRadians(this.cone.getAttr('rotation') +
+          this.cone.getAttr('angle')/2) ),
       ],
       stroke: 'red',
       strokeWidth: 4,
@@ -73,8 +79,12 @@ export class VisionCone {
       points: [
         this.startPoints.x,
         this.startPoints.y,
-        this.startPoints.x + this.cone.getAttr('radius') * Math.cos( DegreesToRadians(this.cone.getAttr('rotation') + this.cone.getAttr('angle')) ),
-        this.startPoints.y + this.cone.getAttr('radius') * Math.sin( DegreesToRadians(this.cone.getAttr('rotation') + this.cone.getAttr('angle')) ),
+        this.startPoints.x +
+          this.cone.getAttr('radius') * Math.cos( degreesToRadians(this.cone.getAttr('rotation') +
+          this.cone.getAttr('angle')) ),
+        this.startPoints.y +
+          this.cone.getAttr('radius') * Math.sin( degreesToRadians(this.cone.getAttr('rotation') +
+          this.cone.getAttr('angle')) ),
       ],
       stroke: 'red',
       strokeWidth: 4,

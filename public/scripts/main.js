@@ -188,29 +188,29 @@ layer.add(endPoint.render);
 
 // Tooltip for completing level
 const completionTooltip = new Konva.Text({
-    x: stage.width() - 400,
-    y: 0,
-    text: 'E/SPACE\nTO COMPLETE LEVEL',
-    fontSize: 18,
-    fill: '#555',
-    padding: 20,
-    align: 'center',
+  x: stage.width() - 400,
+  y: 0,
+  text: 'E/SPACE\nTO COMPLETE LEVEL',
+  fontSize: 18,
+  fill: '#555',
+  padding: 20,
+  align: 'center',
 });
 
 const completionTooltipBox = new Konva.Rect({
-    x: stage.width() - 400,
-    y: 0,
-    stroke: '#555',
-    strokeWidth: 5,
-    fill: '#ddd',
-    width: 240,
-    height: completionTooltip.height(),
-    shadowColor: 'black',
-    shadowBlur: 10,
-    shadowOffsetX: 10,
-    shadowOffsetY: 10,
-    shadowOpacity: 0.2,
-    cornerRadius: 10,
+  x: stage.width() - 400,
+  y: 0,
+  stroke: '#555',
+  strokeWidth: 5,
+  fill: '#ddd',
+  width: 240,
+  height: completionTooltip.height(),
+  shadowColor: 'black',
+  shadowBlur: 10,
+  shadowOffsetX: 10,
+  shadowOffsetY: 10,
+  shadowOpacity: 0.2,
+  cornerRadius: 10,
 });
 
 
@@ -221,6 +221,7 @@ const player = new Player({
   height: 40,
   image: 'assets/bobby.jpg',
   colour: 'grey',
+  hp: 100,
 });
 layer.add(player.render);
 
@@ -296,6 +297,7 @@ const npc = new NPC({
   height: 40,
   colour: 'yellow',
   impassible: true,
+  hp: 100,
 });
 npc.isSeeing(player);
 layer.add(npc.render);
@@ -422,16 +424,15 @@ container.addEventListener('keydown', function(event) {
         atEndPoint = true;
         layer.add(completionTooltipBox);
         layer.add(completionTooltip);
-        layer.draw()
+        layer.draw();
       } else {
         // console.log('i am not sure where i am...', node.id);
         // console.log(node.name);
       }
-    }
-    else {
-        atEndPoint = false;
-        completionTooltipBox.remove();
-        completionTooltip.remove();
+    } else {
+      atEndPoint = false;
+      completionTooltipBox.remove();
+      completionTooltip.remove();
     }
   });
 
@@ -462,37 +463,20 @@ function doKeyProcess(keys) {
       player.move(DIRECTION.RIGHT);
     }
 
-    // Space or E for interaction
-    if (keys[32] || keys[69]) {
-      if (atEndPoint) {
-          alert('YOU WIN! Play again?');
-          location.reload();
-      }
+  // Space or E for interaction
+  if (keys[32] || keys[69]) {
+    if (atEndPoint) {
+      alert('YOU WIN! Play again?');
+      location.reload();
+    } else if (inFightScene) {
+      fightLayer.remove();
+      stage.add(layer);
+      inFightScene = false;
+    } else if (readyToInteract) {
+      layer.remove();
+      stage.add(fightLayer);
+      inFightScene = true;
     }
-  }else{
-    //fight scene keybinding
-    if (keys[32] || keys[69]) {
-      if (atEndPoint) {
-        alert('YOU WIN! Play again?');
-        location.reload();
-    }
-  }
-
-  /*
-  // this is for escaping fight scene
-  else if (inFightScene) {
-    fightLayer.remove();
-    stage.add(layer);
-    inFightScene = false;
-  }
-  // this is for enter fight scene
-  else if (readyToInteract) {    
-    layer.remove();
-    stage.add(fightLayer);
-    inFightScene = true;
-  }
-*/
-
   }
   // Escape or P for pausing (to menu)
   if (keys[27] || keys[80]) {

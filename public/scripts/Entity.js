@@ -9,9 +9,11 @@ export class Entity {
     this.x = data.x;
     this.y = data.y;
     this.id = genID();
+    this.hp = (data.hp) ? data.hp : null;
+    this.dmg = (data.dmg) ? data.dmg : null;
 
+    let imageObj;
     if (data.image) {
-      var imageObj;
       const promise = loadImage(data.image);
       promise.then(function(result) {
         // console.log(result);
