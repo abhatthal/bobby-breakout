@@ -8,8 +8,8 @@ export class Inventory {
     this.inventory_size = 20;
 
     this.layer = new Konva.Layer();
-    this.inventory_icon = []
-    this.equipped_icon = []
+    this.inventory_icon = [];
+    this.equipped_icon = [];
 
     const inventoryTitle = new Konva.Text({
       x: 0,
@@ -47,7 +47,7 @@ export class Inventory {
       width: 300,
       align: 'center',
     });
-    
+
     const playerInfoBox = new Konva.Rect({
       x: 20,
       y: 100,
@@ -66,8 +66,8 @@ export class Inventory {
     this.layer.add(playerInfoBox);
     this.layer.add(playerInfo);
 
-    for (var i = 0; i < this.inventory_size; i++) {
-      var shape = new Konva.Rect({
+    for (let i = 0; i < this.inventory_size; i++) {
+      const shape = new Konva.Rect({
         x: 350 + (i % 5) * 80,
         y: 100 + (parseInt(i / 5) * 80),
         width: 50,
@@ -80,8 +80,8 @@ export class Inventory {
       this.inventory_icon.push(shape);
       this.layer.add(shape);
     }
-    for (var i = 0; i < 4; i++) {
-      var shape = new Konva.Rect({
+    for (let i = 0; i < 4; i++) {
+      const shape = new Konva.Rect({
         x: 390 + (i % 4) * 80,
         y: 450,
         width: 50,
@@ -103,9 +103,10 @@ export class Inventory {
     if (this.inventory_num >= this.inventory_size) {
       return;
     }
-    for (var i = 0; i < this.inventory_size; i++) {
+    let shape;
+    for (let i = 0; i < this.inventory_size; i++) {
       if (this.inventory_icon[i].name() === 'empty') {
-        var shape = this.inventory_icon[i];
+        shape = this.inventory_icon[i];
         break;
       };
     };
@@ -125,7 +126,7 @@ export class Inventory {
       width: 220,
       align: 'center',
     });
-    
+
     const infoBox = new Konva.Rect({
       x: 750,
       y: 100,
@@ -141,9 +142,10 @@ export class Inventory {
       shadowOpacity: 0.2,
       cornerRadius: 10,
     });
-    var layer = this.layer;
+
+    const layer = this.layer;
     shape.on('mouseover', function() {
-      document.body.style.cursor = 'pointer';      
+      document.body.style.cursor = 'pointer';
       layer.add(infoBox);
       layer.add(info);
       info.show();
@@ -174,10 +176,11 @@ export class Inventory {
     if (this.equipped_num >= this.equipped_size) {
       return;
     }
-    
-    for (var i = 0; i < this.equipped_size; i++) {
+
+    let shape;
+    for (let i = 0; i < this.equipped_size; i++) {
       if (this.equipped_icon[i].name() === 'empty') {
-        var shape = this.equipped_icon[i];
+        shape = this.equipped_icon[i];
         break;
       };
     };
@@ -198,7 +201,7 @@ export class Inventory {
       width: 220,
       align: 'center',
     });
-    
+
     const infoBox = new Konva.Rect({
       x: 750,
       y: 100,
@@ -214,9 +217,10 @@ export class Inventory {
       shadowOpacity: 0.2,
       cornerRadius: 10,
     });
-    var layer = this.layer;
+
+    const layer = this.layer;
     shape.on('mouseover', function() {
-      document.body.style.cursor = 'pointer';      
+      document.body.style.cursor = 'pointer';
       layer.add(infoBox);
       layer.add(info);
       info.show();

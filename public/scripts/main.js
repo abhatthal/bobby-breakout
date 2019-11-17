@@ -1,8 +1,8 @@
 import {Wall} from './Wall.js';
 import {Environment} from './Environment.js';
 import {Player, NPC} from './Character.js';
-import {Inventory} from './Inventory.js'
-import {Item} from './Item.js'
+import {Inventory} from './Inventory.js';
+import {Item} from './Item.js';
 import {DIRECTION} from './helper_functions.js';
 
 // Set premium content visbility
@@ -375,10 +375,10 @@ function doKeyProcess(keys) {
   // I to open inventory window
   // For debugging purposes, a key to add an item
   if (keys[90]) {
-    var item = new Item({
+    const item = new Item({
       name: 'Sword',
       info: 'looool',
-    })
+    });
     playerInventory.add(item);
   }
   if (keys[73]) {
@@ -386,8 +386,7 @@ function doKeyProcess(keys) {
       playerInventory.layer.remove();
       stage.add(layer);
       inInventoryWindow = false;
-    }
-    else {
+    } else {
       layer.remove();
       stage.add(playerInventory.layer);
       inInventoryWindow = true;
@@ -419,8 +418,8 @@ function doReverseMovement(keys) {
   }
 }
 
-var inventoryMenu = document.getElementById('inventoryMenu');
-var equippedMenu = document.getElementById('equippedMenu');
+const inventoryMenu = document.getElementById('inventoryMenu');
+const equippedMenu = document.getElementById('equippedMenu');
 let currentShape;
 
 document.getElementById('dropButton').addEventListener('click', () => {
@@ -428,12 +427,12 @@ document.getElementById('dropButton').addEventListener('click', () => {
 });
 
 document.getElementById('equipButton').addEventListener('click', () => {
-  var index = playerInventory.inventory_icon.indexOf(currentShape);
+  const index = playerInventory.inventory_icon.indexOf(currentShape);
   playerInventory.equip(playerInventory.inventory[index], currentShape);
 });
 
 document.getElementById('unequipButton').addEventListener('click', () => {
-  var index = playerInventory.equipped_icon.indexOf(currentShape);
+  const index = playerInventory.equipped_icon.indexOf(currentShape);
   playerInventory.unequip(playerInventory.equipped[index], currentShape);
 });
 
@@ -443,25 +442,23 @@ stage.on('contextmenu', function(e) {
     currentShape = e.target;
     equippedMenu.style.display = 'none';
     inventoryMenu.style.display = 'initial';
-    var containerRect = stage.container().getBoundingClientRect();
+    const containerRect = stage.container().getBoundingClientRect();
     inventoryMenu.style.top = containerRect.top + stage.getPointerPosition().y + 4 +'px';
     inventoryMenu.style.left = containerRect.left + stage.getPointerPosition().x + 4 + 'px';
-  }
-  else if (e.target.name() === 'equipped') {
+  } else if (e.target.name() === 'equipped') {
     currentShape = e.target;
     inventoryMenu.style.display = 'none';
     equippedMenu.style.display = 'initial';
-    var containerRect = stage.container().getBoundingClientRect();
+    const containerRect = stage.container().getBoundingClientRect();
     equippedMenu.style.top = containerRect.top + stage.getPointerPosition().y + 4 +'px';
     equippedMenu.style.left = containerRect.left + stage.getPointerPosition().x + 4 + 'px';
-  }
-  else {
+  } else {
     return;
   }
 });
 
 window.addEventListener('click', () => {
-  // hide menu 
+  // hide menu
   inventoryMenu.style.display = 'none';
   equippedMenu.style.display = 'none';
-})
+});
