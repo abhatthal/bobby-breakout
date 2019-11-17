@@ -161,7 +161,7 @@ export class Inventory {
     this.inventory_num += 1;
   }
 
-  drop(item, icon) {
+  drop(icon) {
     this.inventory_num -= 1;
     icon.fill('red');
     icon.name('empty');
@@ -170,6 +170,11 @@ export class Inventory {
   }
 
   equip(item, inventoryIcon) {
+    // Equipped is full --> do nothing
+    if (this.equipped_num >= this.equipped_size) {
+      return;
+    }
+    
     for (var i = 0; i < this.equipped_size; i++) {
       if (this.equipped_icon[i].name() === 'empty') {
         var shape = this.equipped_icon[i];
@@ -177,7 +182,7 @@ export class Inventory {
       };
     };
     this.equipped[i] = item;
-    this.drop(item, inventoryIcon);
+    this.drop(inventoryIcon);
     this.equipped_num += 1;
     shape.fill('green');
     shape.name('equipped');
