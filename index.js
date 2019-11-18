@@ -1,6 +1,12 @@
 const express = require('express');
 const path = require('path');
+const app = express();
+
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 const PORT = process.env.PORT || 5000;
+
+const bodyParser = require('body-parser');
 
 // //////////////////
 // Lang: Have set conncetion on db inside function
@@ -10,8 +16,6 @@ const pg = require('pg');
 const conString = 'postgres://vyqzrennssqgdm:5427cde89c19c7c04595851cca03f048cce351ed5ce02df1f19e4ff075effa20@ec2-174-129-253-162.compute-1.amazonaws.com:5432/dchmahd956dtm0?ssl=true';
 // /////////////////
 
-const app = express();
-const bodyParser = require('body-parser');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -26,7 +30,9 @@ app.get('/bb-test', (req, res) => res.render('pages/levels/bb-test'));
 
 app.post('/login', (req, res) => checklogin(req, res));
 app.post('/register', (req, res) => createlogin(req, res));
-app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+
+// app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+server.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 function createlogin(req, res) {
   console.log('post login info');
@@ -116,3 +122,18 @@ function checklogin(req, res) {
   return;
 }
 
+io.on('connection', function(client) {
+  console.log('Client connected...');
+
+  client.on('userID', function(data) {
+    console.log(data);
+  });
+
+  client.on('walkedSteps', function(data) {
+    console.log(data);
+  });
+
+  client.on('playTime', function(data) {
+    console.log(data);
+  });
+});
