@@ -10,6 +10,7 @@ export class MapControls extends Controls {
     this._readyToInteract = false;
     this._inFightScene = false;
     this._atEndPoint = false;
+    this._inInventoryWindow = false;
 
     this.eventListeners = [];
   }
@@ -157,6 +158,26 @@ export class MapControls extends Controls {
         const game = Game.getInstance();
         game.switchToFight();
         this._inFightScene = true;
+      }
+    }
+    // I to open inventory window
+    // For debugging purposes, a key to add an item
+    if (this.keys[90]) {
+      const item = new Item({
+        name: 'Sword',
+        info: 'looool',
+      });
+      playerInventory.add(item);
+    }
+    if (this.keys[73]) {
+      if (this._inInventoryWindow) {
+        playerInventory.layer.remove();
+        stage.add(this.layer);
+        this._inInventoryWindow = false;
+      } else {
+        this.layer.remove();
+        stage.add(playerInventory.layer);
+        this._inInventoryWindow = true;
       }
     }
     // Escape or P for pausing (to menu)
