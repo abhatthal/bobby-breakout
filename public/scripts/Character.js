@@ -2,11 +2,15 @@ import {Entity} from './Entity.js';
 import {DIRECTION, httpGet} from './helper_functions.js';
 import {VisionCone} from './BoundingBox.js';
 import {Wall} from './Wall.js';
+// import {Skill} from './Skills.js';
+// import * as defaultskill from './skilldefault.js';
 
 export class Character extends Entity {
   constructor(data) {
     super(data);
     this.speed = 5; // movement speed
+    this.fightSpeed = 0; // for fight priority
+    this.skillA1 = null; // defaultskill.Skill1;
     this.enableFace = (data.enableFace) ? data.enableFace : false;
     // Draw a face using fork off cool-ascii-faces web service
     // https://github.com/abhatthal/cool-face-service
@@ -50,8 +54,24 @@ export class Character extends Entity {
     return this._speed;
   }
 
+  get fightSpeed() {
+    return this._fightSpeed;
+  }
+
+  get skillA1() {
+    return this._skillA1;
+  }
+
   set speed(val) {
     this._speed = val;
+  }
+
+  set fightSpeed(val) {
+    this._fightSpeed = val;
+  }
+
+  set skillA1(val) {
+    this._skillA1 = val;
   }
 }
 
