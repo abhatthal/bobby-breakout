@@ -3,11 +3,11 @@ export class Scene {
 
   }
 
+  // to be overrode
   switchTo() {
-    console.log('Scene switchTo not implemented!');
   }
 
+  // to be overrode
   switchFrom() {
-    console.log('Scene switchFrom not implemented!');
   }
 }
