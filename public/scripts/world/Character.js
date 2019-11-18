@@ -1,5 +1,5 @@
 import {Entity} from './Entity.js';
-import {DIRECTION, httpGet} from './helper_functions.js';
+import {DIRECTION, httpGet} from '../util/helper_functions.js';
 import {VisionCone} from './BoundingBox.js';
 import {Wall} from './Wall.js';
 
