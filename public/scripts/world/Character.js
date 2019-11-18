@@ -8,8 +8,9 @@ export class Character extends Entity {
     super(data);
     this.speed = 5; // movement speed
     this.enableFace = (data.enableFace) ? data.enableFace : false;
-    // Draw a face using cool-ascii-faces API
-    const text = httpGet('https://fathomless-temple-39382.herokuapp.com/');
+    // Draw a face using fork off cool-ascii-faces web service
+    // https://github.com/abhatthal/cool-face-service
+    const text = httpGet('https://fathomless-temple-39382.herokuapp.com/?max_face_length=10');
     this.face = new Konva.Text({
       x: -18,
       y: -10,
