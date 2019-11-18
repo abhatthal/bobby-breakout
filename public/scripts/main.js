@@ -1,4 +1,5 @@
 import {Game} from './Game.js';
+import {Inventory} from './inventory/Inventory.js';
 
 // Set premium content visbility
 const premiumContainer = document.getElementById('premium_content');

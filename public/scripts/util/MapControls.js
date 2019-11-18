@@ -162,20 +162,20 @@ export class MapControls extends Controls {
     }
     // I to open inventory window
     // For debugging purposes, a key to add an item
-    if (keys[90]) {
+    if (this.keys[90]) {
       const item = new Item({
         name: 'Sword',
         info: 'looool',
       });
       playerInventory.add(item);
     }
-    if (keys[73]) {
+    if (this.keys[73]) {
       if (this._inInventoryWindow) {
         playerInventory.layer.remove();
-        stage.add(layer);
+        stage.add(this.layer);
         this._inInventoryWindow = false;
       } else {
-        layer.remove();
+        this.layer.remove();
         stage.add(playerInventory.layer);
         this._inInventoryWindow = true;
       }
