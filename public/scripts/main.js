@@ -5,8 +5,8 @@ import {Player, NPC} from './Character.js';
 import {DIRECTION} from './helper_functions.js';
 import {Tooltip} from './Tooltip.js';
 // import { stringify } from 'querystring';
-import {Skills} from './Skills.js';
-// import * as defaultskill from './skilldefault.js';
+// import {Skills} from './Skills.js';
+import * as skilldefault from './skilldefault.js';
 
 // Set premium content visbility
 const premiumContainer = document.getElementById('premium_content');
@@ -36,7 +36,7 @@ const SkillA1Tooltip = new Tooltip({
   y: 400,
   width: 100,
   height: 50,
-  text: 'A1',
+  text: 'A1 Z',
 });
 
 const SkillA2Tooltip = new Tooltip({
@@ -44,7 +44,7 @@ const SkillA2Tooltip = new Tooltip({
   y: 400,
   width: 100,
   height: 50,
-  text: 'A2',
+  text: 'A2 X',
 });
 
 const SkillA3Tooltip = new Tooltip({
@@ -52,7 +52,7 @@ const SkillA3Tooltip = new Tooltip({
   y: 400,
   width: 100,
   height: 50,
-  text: 'A3',
+  text: 'A3 C',
 });
 
 const SkillA4Tooltip = new Tooltip({
@@ -60,7 +60,7 @@ const SkillA4Tooltip = new Tooltip({
   y: 400,
   width: 100,
   height: 50,
-  text: 'A4',
+  text: 'A4 V',
 });
 
 const playerstattext = 'Bobby here! \nsmash all ppl \nblocking your way'; // + player.hp.toString();
@@ -364,11 +364,14 @@ container.addEventListener('keyup', function(event) {
   keys[event.keyCode] = false;
 });
 
-// Skill setup
+// Skills
+/*
 player.skillA1 = new Skills({
   description: 'aa',
   damage: -5,
 });
+*/
+player.skillA1 = skilldefault.Skill1;
 
 function fightLoop(subject, opponent) {
   // assume player act first
@@ -417,7 +420,12 @@ function doKeyfight(keys) {
   // press Q for normal hit
   // normalattack.hpchange(npc, 0);
     // player.skillA1.hpchange(npc, 0);
-    npc.hp -= 50;
+    // npc.hp -= 50;
+
+    // console.log(player.skillA1);
+
+    player.skillA1.hpChange(npc, -50);
+
     // alert(player.skillA1.descripttion);
     // npc.skillA1.hpchange(-50);
     alert(npc.hp);

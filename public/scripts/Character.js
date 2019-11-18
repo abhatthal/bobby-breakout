@@ -2,7 +2,7 @@ import {Entity} from './Entity.js';
 import {DIRECTION, httpGet} from './helper_functions.js';
 import {VisionCone} from './BoundingBox.js';
 import {Wall} from './Wall.js';
-// import {Skill} from './Skills.js';
+// import {Skills} from './Skills.js';
 // import * as defaultskill from './skilldefault.js';
 
 export class Character extends Entity {
