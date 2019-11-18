@@ -192,7 +192,7 @@ const skillA1Tooltip = new Tooltip({
   height: 50,
   text: 'A1 Z',
 });
-
+/*
 const skillA2Tooltip = new Tooltip({
   x: 450,
   y: 400,
@@ -216,7 +216,7 @@ const skillA4Tooltip = new Tooltip({
   height: 50,
   text: 'A4 V',
 });
-/*
+
 const PlayerTooltip = new Tooltip({
   x: 20,
   y: 130,
@@ -251,14 +251,14 @@ const escapeTooltip = new Tooltip({
 
 function fightSceneLoad(player, npc) {
   const playerStatText = 'Bobby here! \nsmash all ppl \nblocking your way\n' + player.hp; //
-  const enemyStatText = 'Bbart: \ncome fight bobby\n\n' + npc.hp;
+  const enemyStatText = 'Enemy: \ncome fight bobby\n\n' + npc.hp;
   console.log(playerStatText);
   const playerTooltip = new Tooltip({
     x: 20,
     y: 130,
     width: 150,
     height: 300,
-    text: playerStatText, // 'Bobby here! \nsmash all ppl \nblocking your way' + `${player.hp}`,
+    text: playerStatText,
   });
 
   const enemyTooltip = new Tooltip({
@@ -269,9 +269,11 @@ function fightSceneLoad(player, npc) {
     text: enemyStatText,
   });
   fightLayer.add(skillA1Tooltip.renderBox, skillA1Tooltip.renderText);
+  /*
   fightLayer.add(skillA2Tooltip.renderBox, skillA2Tooltip.renderText);
   fightLayer.add(skillA3Tooltip.renderBox, skillA3Tooltip.renderText);
   fightLayer.add(skillA4Tooltip.renderBox, skillA4Tooltip.renderText);
+  */
   fightLayer.add(playerTooltip.renderBox, playerTooltip.renderText);
   fightLayer.add(enemyTooltip.renderBox, enemyTooltip.renderText);
   fightLayer.add(fightTooltip.renderBox, fightTooltip.renderText);
