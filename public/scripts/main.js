@@ -4,7 +4,9 @@ import {Environment} from './Environment.js';
 import {Player, NPC} from './Character.js';
 import {DIRECTION} from './helper_functions.js';
 import {Tooltip} from './Tooltip.js';
+// import { stringify } from 'querystring';
 // import {Skill} from './Skills.js';
+// import * as defaultskill from './skilldefault.js';
 
 // Set premium content visbility
 const premiumContainer = document.getElementById('premium_content');
@@ -61,12 +63,13 @@ const SkillA4Tooltip = new Tooltip({
   text: 'A4',
 });
 
+const playerstattext = 'Bobby here! \nsmash all ppl \nblocking your way'; // + player.hp.toString();
 const PlayerTooltip = new Tooltip({
   x: 20,
   y: 130,
   width: 150,
   height: 300,
-  text: 'Bobby here! \nsmash all ppl \nblocking your way',
+  text: playerstattext, // 'Bobby here! \nsmash all ppl \nblocking your way' + `${player.hp}`,
 });
 
 const EnemyTooltip = new Tooltip({
@@ -93,15 +96,17 @@ const EscapeTooltip = new Tooltip({
   text: 'Q to normal attack; E to escape fight',
 });
 
-fightLayer.add(SkillA1Tooltip.renderBox, SkillA1Tooltip.renderText);
-fightLayer.add(SkillA2Tooltip.renderBox, SkillA2Tooltip.renderText);
-fightLayer.add(SkillA3Tooltip.renderBox, SkillA3Tooltip.renderText);
-fightLayer.add(SkillA4Tooltip.renderBox, SkillA4Tooltip.renderText);
-fightLayer.add(PlayerTooltip.renderBox, PlayerTooltip.renderText);
-fightLayer.add(EnemyTooltip.renderBox, EnemyTooltip.renderText);
-fightLayer.add(fightTooltip.renderBox, fightTooltip.renderText);
-fightLayer.add(EscapeTooltip.renderBox, EscapeTooltip.renderText);
-fightLayer.draw();
+function fightSceneLoad() {
+  fightLayer.add(SkillA1Tooltip.renderBox, SkillA1Tooltip.renderText);
+  fightLayer.add(SkillA2Tooltip.renderBox, SkillA2Tooltip.renderText);
+  fightLayer.add(SkillA3Tooltip.renderBox, SkillA3Tooltip.renderText);
+  fightLayer.add(SkillA4Tooltip.renderBox, SkillA4Tooltip.renderText);
+  fightLayer.add(PlayerTooltip.renderBox, PlayerTooltip.renderText);
+  fightLayer.add(EnemyTooltip.renderBox, EnemyTooltip.renderText);
+  fightLayer.add(fightTooltip.renderBox, fightTooltip.renderText);
+  fightLayer.add(EscapeTooltip.renderBox, EscapeTooltip.renderText);
+  fightLayer.draw();
+}
 
 const startPoint = new Environment({
   x: 0,
@@ -261,7 +266,7 @@ let atEndPoint = false;
 container.addEventListener('keydown', function(event) {
   keys[event.keyCode] = true;
 
-  // movement in world map
+  // key pressed in world map
   if (inFightScene == false) {
     doKeyProcess(keys);
 
@@ -336,7 +341,18 @@ container.addEventListener('keydown', function(event) {
     });
   } else {
     // during fight and key pressed
-    doKeyfight(keys);
+    fightLoop(player, npc);
+    if (!inFightScene) {
+      fightLayer.remove();
+      stage.add(layer);
+      if (npc.hp <= 0) {
+        alert('YOU beat an enemy!');
+        npcArray.pop(npc);
+      } else if (player.hp <= 0) {
+        alert('YOU Fail, retry?');
+        location.reload();
+      }
+    }
   }
   event.preventDefault();
   layer.batchDraw();
@@ -347,13 +363,43 @@ container.addEventListener('keyup', function(event) {
   keys[event.keyCode] = false;
 });
 
-// fight is trigger
-/*
-function fightloop(subject, opponent) {
+function fightLoop(subject, opponent) {
   // assume player act first
-
+  if (subject.fightSpeed >= opponent.fightSpeed) {
+    if (inFightScene) {
+      doKeyfight(keys, opponent);
+      if (opponent.hp <= 0) {
+        inFightScene = false;
+      }
+    }
+    if (inFightScene) {
+      enemyfight(opponent, subject);
+      if (subject.hp <= 0) {
+        inFightScene = false;
+      }
+    }
+  } else {
+    if (inFightScene) {
+      enemyfight(opponent, subject);
+      if (subject.hp <= 0) {
+        inFightScene = false;
+      }
+    }
+    if (inFightScene) {
+      doKeyfight(keys, opponent);
+      if (opponent.hp <= 0) {
+        inFightScene = false;
+      }
+    }
+  }
 }
-*/
+
+// Enemy fight strategy
+function enemyfight(opponent, subject) {
+  // alert(opponent.hp, subject.hp);
+  // opponent.skillA1.hpchange(subject, 0);
+}
+
 function doKeyfight(keys) {
   // trigger escape with E
   if (keys[32] || keys[69]) {
@@ -361,15 +407,13 @@ function doKeyfight(keys) {
     stage.add(layer);
     inFightScene = false;
   } else if (keys[81]) {
-  // press Q for hit
+  // press Q for normal hit
   // normalattack.hpchange(npc, 0);
+    // player.skillA1.hpchange(npc, 0);
     npc.hp -= 50;
+    // alert(player.skillA1.descripttion);
+    // npc.skillA1.hpchange(-50);
     alert(npc.hp);
-    if (player.hp <= 0 || npc.hp <= 0) {
-      fightLayer.remove();
-      stage.add(layer);
-      inFightScene = false;
-    }
   }
 }
 
@@ -399,6 +443,7 @@ function doKeyProcess(keys) {
       } else if (readyToInteract) {
         // trigger fight loop
         layer.remove();
+        fightSceneLoad();
         stage.add(fightLayer);
         inFightScene = true;
         // fightloop(player, npc);
