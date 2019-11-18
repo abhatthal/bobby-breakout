@@ -5,7 +5,7 @@ import {Player, NPC} from './Character.js';
 import {DIRECTION} from './helper_functions.js';
 import {Tooltip} from './Tooltip.js';
 // import { stringify } from 'querystring';
-// import {Skill} from './Skills.js';
+import {Skills} from './Skills.js';
 // import * as defaultskill from './skilldefault.js';
 
 // Set premium content visbility
@@ -341,6 +341,7 @@ container.addEventListener('keydown', function(event) {
     });
   } else {
     // during fight and key pressed
+    console.log(player.skillA1);
     fightLoop(player, npc);
     if (!inFightScene) {
       fightLayer.remove();
@@ -361,6 +362,12 @@ container.addEventListener('keydown', function(event) {
 // Handles when a key is released
 container.addEventListener('keyup', function(event) {
   keys[event.keyCode] = false;
+});
+
+// Skill setup
+player.skillA1 = new Skills({
+  description: 'aa',
+  damage: -5,
 });
 
 function fightLoop(subject, opponent) {

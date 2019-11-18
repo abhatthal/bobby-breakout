@@ -1,6 +1,6 @@
 // Note: skill hit is consider opposite logic.
 // Player attack --> npc.skillA1.hpChange(-5);
-class Skill {
+export class Skills {
   constructor(data) {
     this.description = data.description;
     this.damage = data.damage;
