@@ -30,84 +30,6 @@ stage.add(layer);
 
 const fightLayer = new Konva.Layer();
 
-// Tooltip for fight scene
-const SkillA1Tooltip = new Tooltip({
-  x: 300,
-  y: 400,
-  width: 100,
-  height: 50,
-  text: 'A1 Z',
-});
-
-const SkillA2Tooltip = new Tooltip({
-  x: 450,
-  y: 400,
-  width: 100,
-  height: 50,
-  text: 'A2 X',
-});
-
-const SkillA3Tooltip = new Tooltip({
-  x: 600,
-  y: 400,
-  width: 100,
-  height: 50,
-  text: 'A3 C',
-});
-
-const SkillA4Tooltip = new Tooltip({
-  x: 750,
-  y: 400,
-  width: 100,
-  height: 50,
-  text: 'A4 V',
-});
-
-const playerstattext = 'Bobby here! \nsmash all ppl \nblocking your way'; // + player.hp.toString();
-const PlayerTooltip = new Tooltip({
-  x: 20,
-  y: 130,
-  width: 150,
-  height: 300,
-  text: playerstattext, // 'Bobby here! \nsmash all ppl \nblocking your way' + `${player.hp}`,
-});
-
-const EnemyTooltip = new Tooltip({
-  x: 820,
-  y: 30,
-  width: 150,
-  height: 300,
-  text: 'Bbart: \ncome fight bobby\n\n',
-});
-
-const fightTooltip = new Tooltip({
-  x: 250,
-  y: 30,
-  width: 500,
-  height: 150,
-  text: 'TIME TO FIGHT! coming later...\nE/SPACE TO RETURN',
-});
-
-const EscapeTooltip = new Tooltip({
-  x: 300,
-  y: 320,
-  width: 550,
-  height: 150,
-  text: 'Q to normal attack; E to escape fight',
-});
-
-function fightSceneLoad() {
-  fightLayer.add(SkillA1Tooltip.renderBox, SkillA1Tooltip.renderText);
-  fightLayer.add(SkillA2Tooltip.renderBox, SkillA2Tooltip.renderText);
-  fightLayer.add(SkillA3Tooltip.renderBox, SkillA3Tooltip.renderText);
-  fightLayer.add(SkillA4Tooltip.renderBox, SkillA4Tooltip.renderText);
-  fightLayer.add(PlayerTooltip.renderBox, PlayerTooltip.renderText);
-  fightLayer.add(EnemyTooltip.renderBox, EnemyTooltip.renderText);
-  fightLayer.add(fightTooltip.renderBox, fightTooltip.renderText);
-  fightLayer.add(EscapeTooltip.renderBox, EscapeTooltip.renderText);
-  fightLayer.draw();
-}
-
 const startPoint = new Environment({
   x: 0,
   y: stage.height() - 120,
@@ -262,6 +184,101 @@ let readyToInteract = false;
 let inFightScene = false;
 let atEndPoint = false;
 
+// Tooltip for fight scene
+const skillA1Tooltip = new Tooltip({
+  x: 300,
+  y: 400,
+  width: 100,
+  height: 50,
+  text: 'A1 Z',
+});
+
+const skillA2Tooltip = new Tooltip({
+  x: 450,
+  y: 400,
+  width: 100,
+  height: 50,
+  text: 'A2 X',
+});
+
+const skillA3Tooltip = new Tooltip({
+  x: 600,
+  y: 400,
+  width: 100,
+  height: 50,
+  text: 'A3 C',
+});
+
+const skillA4Tooltip = new Tooltip({
+  x: 750,
+  y: 400,
+  width: 100,
+  height: 50,
+  text: 'A4 V',
+});
+/*
+const PlayerTooltip = new Tooltip({
+  x: 20,
+  y: 130,
+  width: 150,
+  height: 300,
+  text: playerStatText, // 'Bobby here! \nsmash all ppl \nblocking your way' + `${player.hp}`,
+});
+
+const EnemyTooltip = new Tooltip({
+  x: 820,
+  y: 30,
+  width: 150,
+  height: 300,
+  text: enemyStatText,
+});
+*/
+const fightTooltip = new Tooltip({
+  x: 250,
+  y: 30,
+  width: 500,
+  height: 150,
+  text: 'TIME TO FIGHT! coming later...\nE/SPACE TO RETURN',
+});
+
+const escapeTooltip = new Tooltip({
+  x: 300,
+  y: 320,
+  width: 550,
+  height: 150,
+  text: 'Q to normal attack; E to escape fight',
+});
+
+function fightSceneLoad(player, npc) {
+  const playerStatText = 'Bobby here! \nsmash all ppl \nblocking your way\n' + player.hp; //
+  const enemyStatText = 'Bbart: \ncome fight bobby\n\n' + npc.hp;
+  console.log(playerStatText);
+  const playerTooltip = new Tooltip({
+    x: 20,
+    y: 130,
+    width: 150,
+    height: 300,
+    text: playerStatText, // 'Bobby here! \nsmash all ppl \nblocking your way' + `${player.hp}`,
+  });
+
+  const enemyTooltip = new Tooltip({
+    x: 820,
+    y: 30,
+    width: 150,
+    height: 300,
+    text: enemyStatText,
+  });
+  fightLayer.add(skillA1Tooltip.renderBox, skillA1Tooltip.renderText);
+  fightLayer.add(skillA2Tooltip.renderBox, skillA2Tooltip.renderText);
+  fightLayer.add(skillA3Tooltip.renderBox, skillA3Tooltip.renderText);
+  fightLayer.add(skillA4Tooltip.renderBox, skillA4Tooltip.renderText);
+  fightLayer.add(playerTooltip.renderBox, playerTooltip.renderText);
+  fightLayer.add(enemyTooltip.renderBox, enemyTooltip.renderText);
+  fightLayer.add(fightTooltip.renderBox, fightTooltip.renderText);
+  fightLayer.add(escapeTooltip.renderBox, escapeTooltip.renderText);
+  fightLayer.draw();
+}
+
 // Handles keys being pressed down
 container.addEventListener('keydown', function(event) {
   keys[event.keyCode] = true;
@@ -402,6 +419,7 @@ function fightLoop(subject, opponent) {
       }
     }
   }
+  fightSceneLoad(player, npc);
 }
 
 // Enemy fight strategy
@@ -428,7 +446,7 @@ function doKeyfight(keys) {
 
     // alert(player.skillA1.descripttion);
     // npc.skillA1.hpchange(-50);
-    alert(npc.hp);
+    console.log(npc.hp);
   }
 }
 
@@ -458,7 +476,7 @@ function doKeyProcess(keys) {
       } else if (readyToInteract) {
         // trigger fight loop
         layer.remove();
-        fightSceneLoad();
+        fightSceneLoad(player, npc);
         stage.add(fightLayer);
         inFightScene = true;
         // fightloop(player, npc);
