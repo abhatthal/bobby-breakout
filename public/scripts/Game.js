@@ -16,13 +16,13 @@ export class Game {
   constructor(data) {
     this.stage = new Konva.Stage({
       container: 'container',
-      width: 1000,
-      height: 500,
+      width: document.getElementById('container').clientWidth,
+      height: document.getElementById('container').clientHeight,
     });
 
     this.player = new Player({
-      x: 40,
-      y: this.stage.height() - 80,
+      x: this.stage.width()/3,
+      y: this.stage.height()/2,
       width: 40,
       height: 40,
       image: 'assets/bobby.jpg',

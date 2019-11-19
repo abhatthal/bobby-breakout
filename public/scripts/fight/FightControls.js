@@ -5,6 +5,9 @@ export class FightControls extends Controls {
   constructor(data) {
     super(data);
     this.tooltips = data.tooltips;
+    this.player = data.player;
+    this.npc = data.npc;
+    console.log(this.npc);
   }
 
   addControlBindings() {
@@ -47,9 +50,14 @@ export class FightControls extends Controls {
       const game = Game.getInstance();
       game.switchToMap();
     }
+
+    // q key
+    if (this.keys[81]) {
+      this.fightLoop(this.player, this.npc);
+    }
   }
 
-  doKeyfight(keys) {    
+  doDamage(player, opponent) {
     // press Q for normal hit
     // normalattack.hpchange(npc, 0);
     // player.skillA1.hpchange(npc, 0);
@@ -57,23 +65,23 @@ export class FightControls extends Controls {
 
     // console.log(player.skillA1);
 
-    player.skillA1.hpChange(npc, -50);
+    player.skillA1.hpChange(opponent, -10);
+    console.log(opponent.hp);
 
     // alert(player.skillA1.descripttion);
     // npc.skillA1.hpchange(-50);
-    console.log(npc.hp);
   }
 
   fightLoop(subject, opponent) {
     // assume player act first
     if (subject.fightSpeed >= opponent.fightSpeed) {
-      this.doKeyfight(this.keys, opponent);
+      this.doDamage(subject, opponent);
       this.enemyfight(opponent, subject);
     } else {
       this.enemyfight(opponent, subject);
-      this.doKeyfight(this.keys, opponent);
+      this.doDamage(subject, opponent);
     }
-    this.fightSceneLoad(player, npc);
+    // this.fightSceneLoad(subject, npc);
   }
 
   // Enemy fight strategy
