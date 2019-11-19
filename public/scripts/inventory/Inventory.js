@@ -103,6 +103,7 @@ export class Inventory {
     if (this.inventory_num >= this.inventory_size) {
       return;
     }
+
     let shape;
     let i = 0;
     for (; i < this.inventory_size; i++) {
@@ -111,6 +112,7 @@ export class Inventory {
         break;
       };
     };
+    console.assert(shape.name() === 'empty');
     this.inventory[i] = item;
 
     // Placeholder before adding item icons
@@ -162,10 +164,13 @@ export class Inventory {
     shape.listening(true);
     this.layer.draw();
     this.inventory_num += 1;
+    console.assert(this.inventory_num <= this.inventory_size);
   }
 
   drop(icon) {
+    console.assert(icon.name() === 'filled');
     this.inventory_num -= 1;
+    console.assert(this.inventory_num > -1);
     icon.fill('red');
     icon.name('empty');
     icon.listening(false);
@@ -186,6 +191,7 @@ export class Inventory {
         break;
       };
     };
+    console.assert(shape.name() === 'empty');
     this.equipped[i] = item;
     this.drop(inventoryIcon);
     this.equipped_num += 1;
@@ -236,6 +242,7 @@ export class Inventory {
       layer.draw();
     });
 
+    console.assert(this.equipped_num <= this.equipped_size);
     this.layer.draw();
   }
 
@@ -245,8 +252,10 @@ export class Inventory {
       return;
     }
 
+    console.assert(icon.name() === 'equipped');
     this.add(item);
     this.equipped_num -= 1;
+    console.assert(this.equipped_num > -1);
     icon.fill('yellow');
     icon.name('empty');
     icon.listening(false);

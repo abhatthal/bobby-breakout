@@ -22,6 +22,8 @@ export class Stats {
   }
 
   set walkedSteps(val) {
+    console.assert(typeof val === 'number');
+    console.assert(val > -1);
     this._walkedSteps += val;
   }
 
@@ -30,6 +32,8 @@ export class Stats {
   }
 
   set playTime(val) {
+    console.assert(typeof val === 'number');
+    console.assert(val > -1);
     this._playTime = val;
   }
 

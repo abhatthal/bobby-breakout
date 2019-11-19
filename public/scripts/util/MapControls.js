@@ -14,7 +14,6 @@ export class MapControls extends Controls {
   }
 
   addControlBindings() {
-    console.log('binding stuff');
     const self = this;
 
     this.handleKeyUpMethod = this.handleKeyUpMethod || function(event) {
@@ -29,7 +28,6 @@ export class MapControls extends Controls {
   }
 
   removeControlBindings() {
-    console.log('unbinding stuff');
     const self = this;
 
     this.handleKeyUpMethod = this.handleKeyUpMethod || function(event) {

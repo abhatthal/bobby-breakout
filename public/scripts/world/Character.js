@@ -2,6 +2,7 @@ import {Entity} from './Entity.js';
 import {DIRECTION, httpGet} from '../util/helper_functions.js';
 import {VisionCone} from './BoundingBox.js';
 import {Wall} from './Wall.js';
+import {Inventory} from '../inventory/Inventory.js'
 
 export class Character extends Entity {
   constructor(data) {
@@ -51,6 +52,8 @@ export class Character extends Entity {
   }
 
   set speed(val) {
+    console.assert(typeof val === 'number');
+    console.assert(val > -1);
     this._speed = val;
   }
 }
@@ -61,6 +64,7 @@ export class Player extends Character {
   }
 
   set inventory(inv) {
+    console.assert(inv instanceof Inventory);
     this._inventory = inv;
   }
 
@@ -69,6 +73,7 @@ export class Player extends Character {
   }
 
   checkCollision(obj) { // block array of Environment objects
+    console.assert(obj != null);
     if (this.isColliding(obj) ) {
       if (obj instanceof Wall) {
         // console.log('i am touching a Wall', obj.id);
@@ -110,10 +115,12 @@ export class NPC extends Character {
   }
 
   set impassible(val) {
+    console.assert(typeof val === 'boolean');
     this._impassible = val;
   }
 
   isSeeing(obj) {
+    console.assert(obj != null);
     // console.log(this.tempRectArea);
     // console.log(this.tempRectArea.absolutePosition());
 
@@ -125,6 +132,7 @@ export class NPC extends Character {
   }
 
   checkPlayerDetection(player) {
+    console.assert(player instanceof Player);
     if (this.isSeeing(player) && player instanceof Player) {
       // console.log('i see the player');
       return true;

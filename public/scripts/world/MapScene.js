@@ -40,6 +40,7 @@ export class MapScene extends Scene {
   }
 
   switchFrom(data) {
+    console.assert(data != null);
     // Doesn't actually unbind yet, bound functions are anonymous
     // check removeControlBindings in MapControls
     this.controls.removeControlBindings();
@@ -49,6 +50,7 @@ export class MapScene extends Scene {
   }
 
   switchTo(data) {
+    console.assert(data != null);
     const stage = data.stage;
     stage.add(this.layer);
     this.controls.addControlBindings();
