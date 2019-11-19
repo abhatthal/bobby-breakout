@@ -10,11 +10,13 @@ export class Character extends Entity {
     this.enableFace = (data.enableFace) ? data.enableFace : false;
     // Draw a face using fork off cool-ascii-faces web service
     // https://github.com/abhatthal/cool-face-service
-    const text = httpGet('https://fathomless-temple-39382.herokuapp.com/?max_face_length=10');
+    const text = httpGet('https://fathomless-temple-39382.herokuapp.com/?max_face_length=6');
     this.face = new Konva.Text({
-      x: -18,
-      y: -10,
-      text: (text.length < 12) ? text : '( ﾟヮﾟ)', // ensure we get a face that fits
+      x: -15,
+      y: 0,
+      width: 90,
+      height: 90,
+      text: (text.length < 6) ? text : '( ﾟヮﾟ)', // ensure we get a face that fits
       fontSize: 16,
       fill: '#555',
       padding: 20,
