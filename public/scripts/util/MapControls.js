@@ -7,14 +7,14 @@ export class MapControls extends Controls {
     super(data);
     this.tooltips = data.tooltips;
 
-    this._readyToInteract = false;
-    this._inFightScene = false;
+    this._readyToInteract = undefined;
     this._atEndPoint = false;
     this._inInventoryWindow = false;
   }
 
   addControlBindings() {
     const self = this;
+    this.keys = [];
 
     this.handleKeyUpMethod = this.handleKeyUpMethod || function(event) {
       self.handleKeyUp(event);
@@ -29,6 +29,7 @@ export class MapControls extends Controls {
 
   removeControlBindings() {
     const self = this;
+    this.keys = [];
 
     this.handleKeyUpMethod = this.handleKeyUpMethod || function(event) {
       self.handleKeyUp(event);
@@ -94,10 +95,10 @@ export class MapControls extends Controls {
         // layer.add(tooltip.render);
 
         this.layer.draw();
-        this._readyToInteract = true;
+        this._readyToInteract = node;
       } else {
         this.tooltips.interaction.remove();
-        this._readyToInteract = false;
+        this._readyToInteract = undefined;
       }
     });
     // TODO: move to checkPointCollision()
@@ -148,7 +149,7 @@ export class MapControls extends Controls {
         location.reload();
       } else if (this._readyToInteract) {
         const game = Game.getInstance();
-        game.switchToFight();
+        game.switchToFight(this._readyToInteract, this.map);
       }
     }
     // I to open inventory window

@@ -6,7 +6,7 @@ export class Tooltip {
     this.y = data.y;
     this.width = (data.width) ? data.width : 160; // default to 160 if not specified
     this.id = genID();
-    this.text = data.text;
+    this._text = data.text;
 
     this.primaryColor = '#555';
     this.secondaryColor = '#ddd';
@@ -99,5 +99,16 @@ export class Tooltip {
 
   set y(val) {
     this._y = val;
+  }
+
+  set text(val) {
+    this._text = val;
+    this.tipText.text(this.text);
+    this.tipBox.height(this.tipText.height());
+    this.tipBox.width(this.tipText.width());
+  }
+
+  get text() {
+    return this._text;
   }
 }

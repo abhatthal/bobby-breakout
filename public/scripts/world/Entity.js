@@ -73,6 +73,14 @@ export class Entity {
     return this._bboxArea;
   }
 
+  get hp() {
+    return this._hp;
+  }
+
+  get dmg() {
+    return this._dmg;
+  }
+
   set x(val) {
     console.assert(typeof val === 'number');
     this._x = val;
@@ -96,5 +104,13 @@ export class Entity {
   set bboxArea(area) {
     console.assert(area != null);
     this._bboxArea = area;
+  }
+
+  set hp(val) {
+    this._hp = val;
+  }
+
+  set dmg(val) {
+    this._dmg = val;
   }
 }
