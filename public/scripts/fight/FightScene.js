@@ -1,5 +1,5 @@
 import {Scene} from '../Scene.js';
-import {Tooltip} from '../util/Tooltip.js';
+import {Tooltip} from '../util/ToolTip.js';
 import {FightControls} from './FightControls.js';
 
 export class FightScene extends Scene {

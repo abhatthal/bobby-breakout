@@ -1,6 +1,6 @@
 import {Scene} from '../Scene.js';
 import {Map} from './Map.js';
-import {Tooltip} from '../util/Tooltip.js';
+import {Tooltip} from '../util/ToolTip.js';
 import {MapControls} from '../util/MapControls.js';
 
 export class MapScene extends Scene {
