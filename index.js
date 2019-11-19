@@ -36,11 +36,11 @@ server.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 function createlogin(req, res) {
   console.log('post login info');
 
-  const pool = new pg.Client(conString);
-  pool.connect(function(isErr) {
+  const pool = new pg.Pool({connectionString: conString});
+    pool.connect((isErr, client, done) => {
     if (isErr) {
       console.log('connect error:' + isErr.message);
-      client.end();
+      done();
       return;
     } else { // connected
       console.log('db connected');
@@ -49,7 +49,7 @@ function createlogin(req, res) {
       pool.query(querycheck, [uname], function(err, result) {
         if (err) {
           console.log(err);
-          pool.end();
+          done();
           return;
         } else { // query success
           if (result.rows.length<1 ) {
@@ -66,10 +66,12 @@ function createlogin(req, res) {
                 console.log('acct created');
                 res.status(200).redirect('/login');
               }
+              done();
             });
           } else { // wrong psw
             console.log(' account taken!');
             res.status(405).redirect('back');
+            done();
           }
         }
       });
@@ -80,11 +82,11 @@ function createlogin(req, res) {
 function checklogin(req, res) {
   console.log('post login info');
 
-  const pool = new pg.Client(conString);
-  pool.connect(function(isErr) {
+  const pool = new pg.Pool({connectionString: conString});
+    pool.connect((isErr, client, done) => {
     if (isErr) {
       console.log('connect error:' + isErr.message);
-      pool.end();
+      done();
       return;
     } else { // connected
       console.log('db connected');
@@ -94,6 +96,7 @@ function checklogin(req, res) {
       pool.query(querycheck, [loginuname], function(err, result) {
         if (err) {
           console.log(err);
+          done();
           return;
         } else { // query success
           if (result.rows.length < 1) {
@@ -111,6 +114,7 @@ function checklogin(req, res) {
             console.log('password incorrect or account not exist!');
             res.status(405).redirect('back');
           }
+          done();
         }
       });
     }
@@ -126,41 +130,43 @@ io.on('connection', function(client) {
 
   client.on('statsSent', function(data) {
     console.log(data);
-    const pool = new pg.Client(conString);
-    pool.connect(function(isErr) {
+    const pool = new pg.Pool({connectionString: conString});
+    pool.connect((isErr, client, done) => {
       if (isErr) {
         console.log('connect error:' + isErr.message);
-        client.end();
+        done();
         return;
       } else { // connected
         console.log('db connected');
         const querycheck = `SELECT * FROM stats WHERE userid='${data.username}'`;
-        pool.query(querycheck, function(err, result) {
+        client.query(querycheck, function(err, result) {
           if (err) {
             console.log(err);
-            pool.end();
+            done();
             return;
           } else { // query success
             if (result.rows.length < 1) {
               // User doesn't exist
               console.log("User doesn't exist");
               const queryCreate = `INSERT INTO stats (userid, walkedsteps, playtime) VALUES ('${data.username}', ${data.value}, 0)`;
-              pool.query(queryCreate, function(err, result) {
+              client.query(queryCreate, function(err, result) {
                 if (err) {
                   console.log(err + ' fail to create');
                 } else {
                   console.log('Stats account created');
                 }
+                done();
               });
             } else { 
               // User exists
               const queryUpdate = `UPDATE stats SET walkedsteps=${data.value} WHERE userID='${data.username}'`
-              pool.query(queryUpdate, function(err, result) {
+              client.query(queryUpdate, function(err, result) {
                 if (err) {
                   console.log(err + ' fail to update');
                 } else {
                   console.log('Stats updated');
                 }
+                done();
               });
             }
           }
