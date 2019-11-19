@@ -10,6 +10,7 @@ export class InventoryControls extends Controls {
 
   addControlBindings() {
     const self = this;
+    this.keys = [];
 
     this.handleKeyUpMethod = this.handleKeyUpMethod || function(event) {
       self.handleKeyUp(event);
@@ -24,6 +25,7 @@ export class InventoryControls extends Controls {
 
   removeControlBindings() {
     const self = this;
+    this.keys = [];
 
     this.handleKeyUpMethod = this.handleKeyUpMethod || function(event) {
       self.handleKeyUp(event);

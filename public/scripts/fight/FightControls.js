@@ -9,11 +9,12 @@ export class FightControls extends Controls {
     this.player = data.player;
     this.npc = data.npc;
     this.map = data.map;
-    console.log(this.map)
+    console.log(this.map);
   }
 
   addControlBindings() {
     const self = this;
+    this.keys = [];
 
     this.handleKeyUpMethod = this.handleKeyUpMethod || function(event) {
       self.handleKeyUp(event);
@@ -28,6 +29,7 @@ export class FightControls extends Controls {
 
   removeControlBindings() {
     const self = this;
+    this.keys = [];
 
     this.handleKeyUpMethod = this.handleKeyUpMethod || function(event) {
       self.handleKeyUp(event);

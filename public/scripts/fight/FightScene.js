@@ -26,6 +26,27 @@ export class FightScene extends Scene {
         height: 50,
         text: 'A1 Z',
       }),
+      skillA2Tooltip: new Tooltip({
+        x: 450,
+        y: 400,
+        width: 100,
+        height: 50,
+        text: 'A2 X',
+      }),
+      skillA3Tooltip: new Tooltip({
+        x: 600,
+        y: 400,
+        width: 100,
+        height: 50,
+        text: 'A3 C',
+      }),
+      skillA4Tooltip: new Tooltip({
+        x: 750,
+        y: 400,
+        width: 100,
+        height: 50,
+        text: 'A4 V',
+      }),
       escapeTooltip: new Tooltip({
         x: 300,
         y: 320,
@@ -151,32 +172,9 @@ export class FightScene extends Scene {
     this.tooltips['enemyTooltip'].text = enemyStatText;
     this.fightLayer.add(this.tooltips['skillA1Tooltip'].renderBox, this.tooltips['skillA1Tooltip'].renderText);
 
-    const skillA2Tooltip = new Tooltip({
-      x: 450,
-      y: 400,
-      width: 100,
-      height: 50,
-      text: 'A2 X',
-    });
-    
-    const skillA3Tooltip = new Tooltip({
-      x: 600,
-      y: 400,
-      width: 100,
-      height: 50,
-      text: 'A3 C',
-    });
-    
-    const skillA4Tooltip = new Tooltip({
-      x: 750,
-      y: 400,
-      width: 100,
-      height: 50,
-      text: 'A4 V',
-    });
-    this.fightLayer.add(skillA2Tooltip.renderBox, skillA2Tooltip.renderText);
-    this.fightLayer.add(skillA3Tooltip.renderBox, skillA3Tooltip.renderText);
-    this.fightLayer.add(skillA4Tooltip.renderBox, skillA4Tooltip.renderText);
+    this.fightLayer.add(this.tooltips['skillA2Tooltip'].renderBox, this.tooltips['skillA2Tooltip'].renderText);
+    this.fightLayer.add(this.tooltips['skillA3Tooltip'].renderBox, this.tooltips['skillA3Tooltip'].renderText);
+    this.fightLayer.add(this.tooltips['skillA4Tooltip'].renderBox, this.tooltips['skillA4Tooltip'].renderText);
     
     this.fightLayer.add(this.tooltips['playerTooltip'].renderBox, this.tooltips['playerTooltip'].renderText);
     this.fightLayer.add(this.tooltips['enemyTooltip'].renderBox, this.tooltips['enemyTooltip'].renderText);
