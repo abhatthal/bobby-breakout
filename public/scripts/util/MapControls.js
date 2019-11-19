@@ -151,28 +151,12 @@ export class MapControls extends Controls {
       } else if (this._readyToInteract) {
         const game = Game.getInstance();
         game.switchToFight();
-        this._inFightScene = true;
       }
     }
     // I to open inventory window
-    // For debugging purposes, a key to add an item
-    if (this.keys[90]) {
-      const item = new Item({
-        name: 'Sword',
-        info: 'looool',
-      });
-      playerInventory.add(item);
-    }
     if (this.keys[73]) {
-      if (this._inInventoryWindow) {
-        playerInventory.layer.remove();
-        stage.add(this.layer);
-        this._inInventoryWindow = false;
-      } else {
-        this.layer.remove();
-        stage.add(playerInventory.layer);
-        this._inInventoryWindow = true;
-      }
+      const game = Game.getInstance();
+      game.switchToInventory();
     }
     // Escape or P for pausing (to menu)
     if (this.keys[27] || this.keys[80]) {

@@ -60,6 +60,14 @@ export class Player extends Character {
     super(data);
   }
 
+  set inventory(inv) {
+    this._inventory = inv;
+  }
+
+  get inventory() {
+    return this._inventory;
+  }
+
   checkCollision(obj) { // block array of Environment objects
     if (this.isColliding(obj) ) {
       if (obj instanceof Wall) {
