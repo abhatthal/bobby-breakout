@@ -128,13 +128,13 @@ export class MapControls extends Controls {
     // Down arrow or W for moving sprite down
     if (this.keys[40] || this.keys[83]) {
       // this.player.move(DIRECTION.UP);
-      this.map.spawnArray.forEach((node) => {
+      this.map.mapArray.forEach((node) => {
         node.move(DIRECTION.DOWN);
       });
     } else if (this.keys[38] || this.keys[87]) {
       // Up arrow or S to move sprite up
       // this.player.move(DIRECTION.DOWN);
-      this.map.spawnArray.forEach((node) => {
+      this.map.mapArray.forEach((node) => {
         node.move(DIRECTION.UP);
       });
     }
