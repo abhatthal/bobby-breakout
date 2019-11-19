@@ -46,22 +46,39 @@ export class FightControls extends Controls {
     if (this.keys[32] || this.keys[69]) {
       const game = Game.getInstance();
       game.switchToMap();
-      this._inFightScene = false;
     }
+  }
 
-    // during fight and key pressed
-    console.log(player.skillA1);
-    fightLoop(player, npc);
-    if (!inFightScene) {
-      fightLayer.remove();
-      stage.add(layer);
-      if (npc.hp <= 0) {
-        alert('YOU beat an enemy!');
-        npcArray.pop(npc);
-      } else if (player.hp <= 0) {
-        alert('YOU Fail, retry?');
-        location.reload();
-      }
+  doKeyfight(keys) {    
+    // press Q for normal hit
+    // normalattack.hpchange(npc, 0);
+    // player.skillA1.hpchange(npc, 0);
+    // npc.hp -= 50;
+
+    // console.log(player.skillA1);
+
+    player.skillA1.hpChange(npc, -50);
+
+    // alert(player.skillA1.descripttion);
+    // npc.skillA1.hpchange(-50);
+    console.log(npc.hp);
+  }
+
+  fightLoop(subject, opponent) {
+    // assume player act first
+    if (subject.fightSpeed >= opponent.fightSpeed) {
+      this.doKeyfight(this.keys, opponent);
+      this.enemyfight(opponent, subject);
+    } else {
+      this.enemyfight(opponent, subject);
+      this.doKeyfight(this.keys, opponent);
     }
+    this.fightSceneLoad(player, npc);
+  }
+
+  // Enemy fight strategy
+  enemyfight(opponent, subject) {
+    // alert(opponent.hp, subject.hp);
+    // opponent.skillA1.hpchange(subject, 0);
   }
 }

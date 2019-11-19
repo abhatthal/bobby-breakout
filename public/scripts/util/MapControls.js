@@ -7,8 +7,7 @@ export class MapControls extends Controls {
     super(data);
     this.tooltips = data.tooltips;
 
-    this._readyToInteract = false;
-    this._inFightScene = false;
+    this._readyToInteract = undefined;
     this._atEndPoint = false;
     this._inInventoryWindow = false;
   }
@@ -96,10 +95,10 @@ export class MapControls extends Controls {
         // layer.add(tooltip.render);
 
         this.layer.draw();
-        this._readyToInteract = true;
+        this._readyToInteract = node;
       } else {
         this.tooltips.interaction.remove();
-        this._readyToInteract = false;
+        this._readyToInteract = undefined;
       }
     });
     // TODO: move to checkPointCollision()
@@ -150,7 +149,7 @@ export class MapControls extends Controls {
         location.reload();
       } else if (this._readyToInteract) {
         const game = Game.getInstance();
-        game.switchToFight();
+        game.switchToFight(this._readyToInteract);
       }
     }
     // I to open inventory window

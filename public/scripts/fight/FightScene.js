@@ -1,7 +1,7 @@
 import {Scene} from '../Scene.js';
 import {Tooltip} from '../util/Tooltip.js';
 import {FightControls} from './FightControls.js';
-import * as skilldefault from './skilldefault.js';
+import * as skilldefault from '../skilldefault.js';
 
 export class FightScene extends Scene {
   constructor(data) {
@@ -30,6 +30,20 @@ export class FightScene extends Scene {
         width: 550,
         height: 150,
         text: 'Q to normal attack; E to escape fight',
+      }),
+      playerTooltip: new Tooltip({
+        x: 20,
+        y: 130,
+        width: 150,
+        height: 300,
+        text: '',
+      }),
+      enemyTooltip: new Tooltip({
+        x: 820,
+        y: 30,
+        width: 150,
+        height: 300,
+        text: '',
       }),
     };
     
@@ -100,7 +114,8 @@ export class FightScene extends Scene {
 
   switchTo(data) {
     data.stage.add(this.fightLayer);
-    this.fightSceneLoad(player, npc);
+    this.fightSceneLoad(data.player, data.npc);
+    this.fightLoop(data.player, data.npc);
     this.controls.addControlBindings();
   }
 
@@ -108,86 +123,46 @@ export class FightScene extends Scene {
     const playerStatText = 'Bobby here! \nsmash all ppl \nblocking your way\n' + player.hp; //
     const enemyStatText = 'Enemy: \ncome fight bobby\n\n' + npc.hp;
     console.log(playerStatText);
-    const playerTooltip = new Tooltip({
-      x: 20,
-      y: 130,
-      width: 150,
-      height: 300,
-      text: playerStatText,
-    });
-  
-    const enemyTooltip = new Tooltip({
-      x: 820,
-      y: 30,
-      width: 150,
-      height: 300,
-      text: enemyStatText,
-    });
-    fightLayer.add(skillA1Tooltip.renderBox, skillA1Tooltip.renderText);
+    this.tooltips['playerTooltip'].text = playerStatText;
+    this.tooltips['enemyTooltip'].text = enemyStatText;
+    this.fightLayer.add(this.tooltips['skillA1Tooltip'].renderBox, this.tooltips['skillA1Tooltip'].renderText);
     /*
     fightLayer.add(skillA2Tooltip.renderBox, skillA2Tooltip.renderText);
     fightLayer.add(skillA3Tooltip.renderBox, skillA3Tooltip.renderText);
     fightLayer.add(skillA4Tooltip.renderBox, skillA4Tooltip.renderText);
     */
-    fightLayer.add(playerTooltip.renderBox, playerTooltip.renderText);
-    fightLayer.add(enemyTooltip.renderBox, enemyTooltip.renderText);
-    fightLayer.add(fightTooltip.renderBox, fightTooltip.renderText);
-    fightLayer.add(escapeTooltip.renderBox, escapeTooltip.renderText);
-    fightLayer.draw();
+    this.fightLayer.add(this.tooltips['playerTooltip'].renderBox, this.tooltips['playerTooltip'].renderText);
+    this.fightLayer.add(this.tooltips['enemyTooltip'].renderBox, this.tooltips['enemyTooltip'].renderText);
+    this.fightLayer.add(this.tooltips['fightTooltip'].renderBox, this.tooltips['fightTooltip'].renderText);
+    this.fightLayer.add(this.tooltips['escapeTooltip'].renderBox, this.tooltips['escapeTooltip'].renderText);
+    this.fightLayer.draw();
   }
 
-  doKeyfight(keys) {
-    // trigger escape with E
-    if (keys[32] || keys[69]) {
-      fightLayer.remove();
-      stage.add(layer);
-      inFightScene = false;
-    } else if (keys[81]) {
+  doKeyfight(subject, opponent) {    
     // press Q for normal hit
     // normalattack.hpchange(npc, 0);
-      // player.skillA1.hpchange(npc, 0);
-      // npc.hp -= 50;
+    // player.skillA1.hpchange(npc, 0);
+    // npc.hp -= 50;
 
-      // console.log(player.skillA1);
+    // console.log(player.skillA1);
 
-      player.skillA1.hpChange(npc, -50);
+    subject.skillA1.hpChange(opponent, -50);
 
-      // alert(player.skillA1.descripttion);
-      // npc.skillA1.hpchange(-50);
-      console.log(npc.hp);
-    }
+    // alert(player.skillA1.descripttion);
+    // npc.skillA1.hpchange(-50);
+    console.log(opponent.hp);
   }
 
   fightLoop(subject, opponent) {
     // assume player act first
     if (subject.fightSpeed >= opponent.fightSpeed) {
-      if (inFightScene) {
-        doKeyfight(keys, opponent);
-        if (opponent.hp <= 0) {
-          inFightScene = false;
-        }
-      }
-      if (inFightScene) {
-        enemyfight(opponent, subject);
-        if (subject.hp <= 0) {
-          inFightScene = false;
-        }
-      }
+      this.doKeyfight(subject, opponent);
+      this.enemyfight(opponent, subject);
     } else {
-      if (inFightScene) {
-        enemyfight(opponent, subject);
-        if (subject.hp <= 0) {
-          inFightScene = false;
-        }
-      }
-      if (inFightScene) {
-        doKeyfight(keys, opponent);
-        if (opponent.hp <= 0) {
-          inFightScene = false;
-        }
-      }
+      this.enemyfight(opponent, subject);
+      this.doKeyfight(subject, opponent);
     }
-    fightSceneLoad(player, npc);
+    this.fightSceneLoad(subject, opponent);
   }
 
   // Enemy fight strategy
