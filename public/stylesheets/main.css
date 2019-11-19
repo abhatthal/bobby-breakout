@@ -74,12 +74,6 @@ body {
   color: #09f;
 }
 
-#premium_content {
-  width: 15%;
-  float: left;
-  margin-left: 60px;
-}
-
 /* Example from Konva Demos */
 .menu {
   display: none;
