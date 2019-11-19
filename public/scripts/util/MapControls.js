@@ -127,18 +127,24 @@ export class MapControls extends Controls {
   doKeyDown() {
     // Down arrow or W for moving sprite down
     if (this.keys[40] || this.keys[83]) {
-      this.player.move(DIRECTION.UP);
+      // this.player.move(DIRECTION.UP);
+      this.map.spawnArray.forEach((node) => {
+        node.move(DIRECTION.DOWN);
+      });
     } else if (this.keys[38] || this.keys[87]) {
       // Up arrow or S to move sprite up
-      this.player.move(DIRECTION.DOWN);
+      // this.player.move(DIRECTION.DOWN);
+      this.map.spawnArray.forEach((node) => {
+        node.move(DIRECTION.UP);
+      });
     }
 
     // Left arrow or A for moving sprite left
     if (this.keys[37] || this.keys[65]) {
-      this.player.move(DIRECTION.LEFT);
+      // this.player.move(DIRECTION.LEFT);
     } else if (this.keys[39] || this.keys[68]) {
       // Right arrow or D to move sprite right
-      this.player.move(DIRECTION.RIGHT);
+      // this.player.move(DIRECTION.RIGHT);
     }
 
     // Space or E for interaction
