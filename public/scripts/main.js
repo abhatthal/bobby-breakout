@@ -12,6 +12,7 @@ userStats.updateStats({username: '232', walkedSteps: 100});
 // Set premium content visbility
 const premiumContainer = document.getElementById('premium_content');
 const url = new URL(window.location.href);
+const username = url.searchParams.get('username');
 const isPremium = url.searchParams.get('premium');
 
 if (isPremium === 'true') {
@@ -23,3 +24,4 @@ if (isPremium === 'true') {
 Game.initialize();
 const game = Game.getInstance();
 game.start();
+userStats.updateStats({userID: username, walkedSteps: 100});

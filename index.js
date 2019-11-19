@@ -97,16 +97,16 @@ function checklogin(req, res) {
           console.log(err);
           return;
         } else { // query success
-          if (result.rows.length<1 ) {
+          if (result.rows.length < 1) {
             console.log('password incorrect or account not exist!');
             res.status(404).redirect('back');
           } else if (result.rows[0].password === loginpsw) {
             // account exist and psw correct
             console.log(result.rows[0].premium);
             if (result.rows[0].premium) {
-              res.status(200).redirect('/main?premium=true');
+              res.status(200).redirect('/main?premium=true&username=' + loginuname);
             } else {
-              res.status(200).redirect('/main?premium=false');
+              res.status(200).redirect('/main?premium=false&username=' + loginuname);
             }
           } else { // wrong psw
             console.log('password incorrect or account not exist!');
@@ -127,6 +127,47 @@ io.on('connection', function(client) {
 
   client.on('statsSent', function(data) {
     console.log(data);
+    const pool = new pg.Client(conString);
+    pool.connect(function(isErr) {
+      if (isErr) {
+        console.log('connect error:' + isErr.message);
+        client.end();
+        return;
+      } else { // connected
+        console.log('db connected');
+        const querycheck = `SELECT * FROM stats WHERE userid='${data.username}'`;
+        pool.query(querycheck, function(err, result) {
+          if (err) {
+            console.log(err);
+            pool.end();
+            return;
+          } else { // query success
+            if (result.rows.length < 1) {
+              // User doesn't exist
+              console.log("User doesn't exist");
+              const queryCreate = `INSERT INTO stats (userid, walkedsteps, playtime) VALUES ('${data.username}', ${data.value}, 0)`;
+              pool.query(queryCreate, function(err, result) {
+                if (err) {
+                  console.log(err + ' fail to create');
+                } else {
+                  console.log('Stats account created');
+                }
+              });
+            } else { 
+              // User exists
+              const queryUpdate = `UPDATE stats SET walkedsteps=${data.value} WHERE userID='${data.username}'`
+              pool.query(queryUpdate, function(err, result) {
+                if (err) {
+                  console.log(err + ' fail to update');
+                } else {
+                  console.log('Stats updated');
+                }
+              });
+            }
+          }
+        });
+      }
+    });
   });
 });
 

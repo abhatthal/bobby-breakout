@@ -14,7 +14,7 @@ export class Stats {
     walkedSteps = this.walkedSteps,
     playTime = this.playTime,
   } = {}) {
-    statsData = {username: userID, type: 'walkedSteps', value: walkedSteps};
+    const statsData = {username: userID, type: 'walkedSteps', value: walkedSteps};
     const socket = io.connect();
     socket.on('connect', function() {
       socket.emit('statsSent', statsData);
