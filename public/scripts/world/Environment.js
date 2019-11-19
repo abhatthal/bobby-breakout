@@ -11,6 +11,7 @@ export class Environment extends Entity {
   }
 
   set impassible(val) {
+    console.assert(typeof val === 'boolean');
     this._impassible = val;
   }
 }

@@ -1,28 +1,54 @@
+*{
+  box-sizing: border-box;
+}
+
 body {
   font: normal 75%/1.5 Open Sans,Arial,sans-serif;
   background-color: #ECECEC;
+  height: 100%;
+  margin: 0;
 }
 
-#title {
-  text-align: center;
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 1em;
 }
 
-#gameArea {
-  width: 100%;
+.header {
+  display: flex;
+  height: 50px;
 }
 
-#container {
-  width: 1000px;
-  height: 500px;
-  margin: auto;
-  border: solid;
-  border-width: 5px;
+.main {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
 }
 
-#info {
-  position: absolute;
-  left: 460;
-  margin-top: 10px;
+.game {
+  width: 90%;
+  border: 2px solid black;
+}
+
+#logoutbtn {
+  display: flex;
+  justify-content: center;
+  margin: 10px auto;
+}
+
+.info{
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(218, 218, 218);
+  width: 20%;
+  padding-left: 1em;
+  padding-right: 0.5em;
+}
+
+#premium_benefits{
+  list-style-type: none;
 }
 
 .controls {
@@ -47,8 +73,25 @@ body {
   font-weight: bold;
   color: #09f;
 }
-#premium_content {
-  width: 15%;
-  float: left;
-  margin-left: 180px;
+
+/* Example from Konva Demos */
+.menu {
+  display: none;
+  position: absolute;
+  width: 80px;
+  background-color: white;
+  box-shadow: 0 0 5px grey;
+  border-radius: 3px;
+}
+
+.menu button {
+  width: 100%;
+  background-color: white;
+  border: none;
+  margin: 0;
+  padding: 10px;
+}
+
+.menu button:hover {
+  background-color: lightgray;
 }

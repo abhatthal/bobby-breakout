@@ -1,31 +1,37 @@
 const express = require('express');
 const path = require('path');
+const app = express();
+
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 const PORT = process.env.PORT || 5000;
+
+const bodyParser = require('body-parser');
 
 // //////////////////
 // Lang: Have set conncetion on db inside function
 // lang local test
-var pg = require('pg');
-var conString = "postgres://vyqzrennssqgdm:5427cde89c19c7c04595851cca03f048cce351ed5ce02df1f19e4ff075effa20@ec2-174-129-253-162.compute-1.amazonaws.com:5432/dchmahd956dtm0";
-///////////////////
+const pg = require('pg');
+// eslint-disable-next-line max-len
+const conString = 'postgres://vyqzrennssqgdm:5427cde89c19c7c04595851cca03f048cce351ed5ce02df1f19e4ff075effa20@ec2-174-129-253-162.compute-1.amazonaws.com:5432/dchmahd956dtm0?ssl=true';
+// /////////////////
 
-
-
-const app = express();
-const bodyParser = require('body-parser');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: false}));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-// app.get('/', (req, res) => res.render('pages/index'));
-// using sendFile until we conv main.html to index.ejs
-app.get('/', function(req, res) {
-  res.sendFile(path.join(path.join(__dirname, 'public'), 'login.html'));
-});
+
+app.get('/', (req, res) => res.render('pages/login'));
+app.get('/register', (req, res) => res.render('pages/register'));
+app.get('/login', (req, res) => res.render('pages/login'));
+app.get('/main', (req, res) => res.render('pages/levels/main'));
+
 app.post('/login', (req, res) => checklogin(req, res));
 app.post('/register', (req, res) => createlogin(req, res));
-app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+
+// app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+server.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 function createlogin(req, res) {
   console.log('post login info');
@@ -58,7 +64,7 @@ function createlogin(req, res) {
                 console.log(err + 'fail to create');
               } else {
                 console.log('acct created');
-                res.status(200).redirect('/login.html');
+                res.status(200).redirect('/login');
               }
             });
           } else { // wrong psw
@@ -90,15 +96,16 @@ function checklogin(req, res) {
           console.log(err);
           return;
         } else { // query success
-          if (result.rows.length<1 ) {
+          if (result.rows.length < 1) {
             console.log('password incorrect or account not exist!');
             res.status(404).redirect('back');
-          } else if (result.rows[0].password === loginpsw) { // account exist and psw correct
+          } else if (result.rows[0].password === loginpsw) {
+            // account exist and psw correct
             console.log(result.rows[0].premium);
             if (result.rows[0].premium) {
-              res.status(200).redirect('/main.html?premium=true');
+              res.status(200).redirect('/main?premium=true&username=' + loginuname);
             } else {
-              res.status(200).redirect('/main.html?premium=false');
+              res.status(200).redirect('/main?premium=false&username=' + loginuname);
             }
           } else { // wrong psw
             console.log('password incorrect or account not exist!');
@@ -113,4 +120,54 @@ function checklogin(req, res) {
   });
   return;
 }
+
+io.on('connection', function(client) {
+  console.log('Client connected...');
+
+  client.on('statsSent', function(data) {
+    console.log(data);
+    const pool = new pg.Client(conString);
+    pool.connect(function(isErr) {
+      if (isErr) {
+        console.log('connect error:' + isErr.message);
+        client.end();
+        return;
+      } else { // connected
+        console.log('db connected');
+        const querycheck = `SELECT * FROM stats WHERE userid='${data.username}'`;
+        pool.query(querycheck, function(err, result) {
+          if (err) {
+            console.log(err);
+            pool.end();
+            return;
+          } else { // query success
+            if (result.rows.length < 1) {
+              // User doesn't exist
+              console.log("User doesn't exist");
+              const queryCreate = `INSERT INTO stats (userid, walkedsteps, playtime) VALUES ('${data.username}', ${data.value}, 0)`;
+              pool.query(queryCreate, function(err, result) {
+                if (err) {
+                  console.log(err + ' fail to create');
+                } else {
+                  console.log('Stats account created');
+                }
+              });
+            } else { 
+              // User exists
+              const queryUpdate = `UPDATE stats SET walkedsteps=${data.value} WHERE userID='${data.username}'`
+              pool.query(queryUpdate, function(err, result) {
+                if (err) {
+                  console.log(err + ' fail to update');
+                } else {
+                  console.log('Stats updated');
+                }
+              });
+            }
+          }
+        });
+      }
+    });
+  });
+});
+
 

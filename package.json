@@ -1,5 +1,5 @@
 {
-  "name": "cmpt276",
+  "name": "bobby-breakout",
   "description": "",
   "engines": {
     "node": "10.x"
@@ -17,7 +17,9 @@
     "konva": "^4.0.16",
     "nodemon": "^1.19.3",
     "pg": "^7.12.1",
-    "session-file-store": "^1.3.1"
+    "session-file-store": "^1.3.1",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
     "eslint": "^6.6.0",
@@ -27,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/abhatthal/CMPT276.git"
+    "url": "git+https://github.com/abhatthal/Bobby-Breakout.git"
   },
   "keywords": [
     "node",
@@ -35,9 +37,9 @@
     "express"
   ],
   "bugs": {
-    "url": "https://github.com/abhatthal/CMPT276/issues"
+    "url": "https://github.com/abhatthal/Bobby-Breakout/issues"
   },
-  "homepage": "https://github.com/abhatthal/CMPT276#readme",
+  "homepage": "https://github.com/abhatthal/Bobby-Breakout#readme",
   "version": "1.0.0",
   "author": "",
   "license": "ISC"

@@ -1,3 +1,6 @@
+/* eslint-disable max-len */
+/* eslint-disable linebreak-style */
+/* eslint-disable require-jsdoc */
 // generates random string of length 16
 export function genID() {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
@@ -31,10 +34,17 @@ export async function loadImage(imageUrl) {
   return img;
 }
 
-export function DegreesToRadians(degree) {
+export function degreesToRadians(degree) {
   return degree * Math.PI/180;
 }
 
-export function RadiansToDegrees(radians) {
+export function radiansToDegrees(radians) {
   return radians * 180/Math.PI;
+}
+
+export function httpGet(theUrl) {
+  const xmlHttp = new XMLHttpRequest();
+  xmlHttp.open('GET', theUrl, false); // false for synchronous request
+  xmlHttp.send(null);
+  return xmlHttp.responseText;
 }

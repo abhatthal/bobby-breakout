@@ -1,5 +1,5 @@
 import {BoundingBox} from './BoundingBox.js';
-import {genID, loadImage} from './helper_functions.js';
+import {genID, loadImage} from '../util/helper_functions.js';
 
 export class Entity {
   constructor(data) {
@@ -9,9 +9,11 @@ export class Entity {
     this.x = data.x;
     this.y = data.y;
     this.id = genID();
+    this.hp = (data.hp) ? data.hp : null;
+    this.dmg = (data.dmg) ? data.dmg : null;
 
+    let imageObj;
     if (data.image) {
-      var imageObj;
       const promise = loadImage(data.image);
       promise.then(function(result) {
         // console.log(result);
@@ -40,6 +42,7 @@ export class Entity {
   } // end constructor
 
   isColliding(obj) {
+    console.assert(obj != null);
     return !(obj.x > this.x + this.width ||
          obj.x + obj.width < this.x ||
          obj.y > this.y + this.height ||
@@ -70,23 +73,44 @@ export class Entity {
     return this._bboxArea;
   }
 
+  get hp() {
+    return this._hp;
+  }
+
+  get dmg() {
+    return this._dmg;
+  }
+
   set x(val) {
+    console.assert(typeof val === 'number');
     this._x = val;
   }
 
   set y(val) {
+    console.assert(typeof val === 'number');
     this._y = val;
   }
 
   set height(height) {
+    console.assert(typeof height === 'number');
     this._height = height;
   }
 
   set width(width) {
+    console.assert(typeof width === 'number');
     this._width = width;
   }
 
   set bboxArea(area) {
+    console.assert(area != null);
     this._bboxArea = area;
+  }
+
+  set hp(val) {
+    this._hp = val;
+  }
+
+  set dmg(val) {
+    this._dmg = val;
   }
 }

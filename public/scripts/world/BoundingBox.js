@@ -1,7 +1,9 @@
-import {DegreesToRadians} from './helper_functions.js';
+import {degreesToRadians} from '../util/helper_functions.js';
 
 export class BoundingBox {
   constructor(group, shape, isVisible) {
+    console.assert(shape != null);
+    console.assert(group != null);
     this.boundingArea = shape.getClientRect({relativeTo: group});
     this.box = new Konva.Rect({
       x: this.boundingArea.x,
@@ -20,6 +22,8 @@ export class BoundingBox {
 
 export class VisionCone {
   constructor(group, shape) {
+    console.assert(shape != null);
+    console.assert(group != null);
     this.boundingArea = shape.getClientRect({relativeTo: group}); // edge of parent
     this.cone = new Konva.Wedge({
       x: this.boundingArea.x + this.boundingArea.width / 2,
@@ -51,8 +55,10 @@ export class VisionCone {
       points: [
         this.startPoints.x,
         this.startPoints.y,
-        this.startPoints.x + this.cone.getAttr('radius') * Math.cos( DegreesToRadians(this.cone.getAttr('rotation')) ),
-        this.startPoints.y + this.cone.getAttr('radius') * Math.sin( DegreesToRadians(this.cone.getAttr('rotation')) ),
+        this.startPoints.x +
+          this.cone.getAttr('radius') * Math.cos( degreesToRadians(this.cone.getAttr('rotation')) ),
+        this.startPoints.y +
+          this.cone.getAttr('radius') * Math.sin( degreesToRadians(this.cone.getAttr('rotation')) ),
       ],
       stroke: 'red',
       strokeWidth: 4,
@@ -62,8 +68,12 @@ export class VisionCone {
       points: [
         this.startPoints.x,
         this.startPoints.y,
-        this.startPoints.x + this.cone.getAttr('radius') * Math.cos( DegreesToRadians(this.cone.getAttr('rotation') + this.cone.getAttr('angle')/2) ),
-        this.startPoints.y + this.cone.getAttr('radius') * Math.sin( DegreesToRadians(this.cone.getAttr('rotation') + this.cone.getAttr('angle')/2) ),
+        this.startPoints.x +
+          this.cone.getAttr('radius') * Math.cos( degreesToRadians(this.cone.getAttr('rotation') +
+          this.cone.getAttr('angle')/2) ),
+        this.startPoints.y +
+          this.cone.getAttr('radius') * Math.sin( degreesToRadians(this.cone.getAttr('rotation') +
+          this.cone.getAttr('angle')/2) ),
       ],
       stroke: 'red',
       strokeWidth: 4,
@@ -73,8 +83,12 @@ export class VisionCone {
       points: [
         this.startPoints.x,
         this.startPoints.y,
-        this.startPoints.x + this.cone.getAttr('radius') * Math.cos( DegreesToRadians(this.cone.getAttr('rotation') + this.cone.getAttr('angle')) ),
-        this.startPoints.y + this.cone.getAttr('radius') * Math.sin( DegreesToRadians(this.cone.getAttr('rotation') + this.cone.getAttr('angle')) ),
+        this.startPoints.x +
+          this.cone.getAttr('radius') * Math.cos( degreesToRadians(this.cone.getAttr('rotation') +
+          this.cone.getAttr('angle')) ),
+        this.startPoints.y +
+          this.cone.getAttr('radius') * Math.sin( degreesToRadians(this.cone.getAttr('rotation') +
+          this.cone.getAttr('angle')) ),
       ],
       stroke: 'red',
       strokeWidth: 4,

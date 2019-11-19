@@ -2,42 +2,27 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Login by Lang</title>
-
+  <title>Prepare to game with Bobby</title>
+  <script src="scripts/login.js" defer type="module"></script>
 </head>
 <body>
   <h2>Welcome To Bobby Breakout</h2>
-  <button onclick="document.getElementById('loginbox').style.display='block'" style="width:auto;">Login</button>
+  <img src="assets/bobby.jpg" alt="Bobby Photograph">
+  <br><br><br>
 
-  <div id="loginbox" class="modal">
+  <div class="loginbox">
+    <form class="form" method="POST" action="/login">
+        <label>Username</label>
+        <input type="text" placeholder="Enter Username" name="loginuname" required>
 
-    <form class="modal-content animate" action="/action_page.php" method="post">
-      <div class="imgcontainer">
-        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-        <img src="img_avatar2.png" alt="Avatar" class="avatar">
-      </div>
+        <label>Password</label>
+        <input type="password" placeholder="Enter Password" name="loginpsw" required>
 
-      <div class="container">
-        <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="uname" required>
-
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
-
-        <button type="submit">Login</button>
-        <label>
-          <input type="checkbox" checked="checked" name="remember"> Remember me
-        </label>
-      </div>
-
-      <div class="container" style="background-color:#f1f1f1">
-        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-        <span class="psw">Forgot <a href="#">password?</a></span>
-      </div>
+        <button type="submit" id="loginbtn">Login</button>
     </form>
+    <p><b>Don't have an account yet?</b></p>
+    <button id="goregisterbtn">Go Register</button>
   </div>
-
-
 
 </body>
 </html>

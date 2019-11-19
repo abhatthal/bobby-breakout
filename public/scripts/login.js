@@ -1,5 +1,3 @@
-
-
 console.log('test');
 
 // var checklogin = document.getElementById('loginbtn');
@@ -26,5 +24,5 @@ checklogin.onclick = function(){
 }
 */
 goreg.onclick = function() {
-  window.location.href='register.html';
+  window.location.href='register';
 };
