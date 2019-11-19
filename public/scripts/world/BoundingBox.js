@@ -2,6 +2,8 @@ import {degreesToRadians} from '../util/helper_functions.js';
 
 export class BoundingBox {
   constructor(group, shape, isVisible) {
+    console.assert(shape != null);
+    console.assert(group != null);
     this.boundingArea = shape.getClientRect({relativeTo: group});
     this.box = new Konva.Rect({
       x: this.boundingArea.x,
@@ -20,6 +22,8 @@ export class BoundingBox {
 
 export class VisionCone {
   constructor(group, shape) {
+    console.assert(shape != null);
+    console.assert(group != null);
     this.boundingArea = shape.getClientRect({relativeTo: group}); // edge of parent
     this.cone = new Konva.Wedge({
       x: this.boundingArea.x + this.boundingArea.width / 2,

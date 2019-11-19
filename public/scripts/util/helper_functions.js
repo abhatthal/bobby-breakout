@@ -1,3 +1,6 @@
+/* eslint-disable max-len */
+/* eslint-disable linebreak-style */
+/* eslint-disable require-jsdoc */
 // generates random string of length 16
 export function genID() {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
