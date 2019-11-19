@@ -1,5 +1,5 @@
 import {BoundingBox} from './BoundingBox.js';
-import {genID, loadImage} from './helper_functions.js';
+import {genID, loadImage} from '../util/helper_functions.js';
 
 export class Entity {
   constructor(data) {

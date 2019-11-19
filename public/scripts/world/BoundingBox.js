@@ -1,4 +1,4 @@
-import {degreesToRadians} from './helper_functions.js';
+import {degreesToRadians} from '../util/helper_functions.js';
 
 export class BoundingBox {
   constructor(group, shape, isVisible) {

@@ -1,5 +1,5 @@
 import {Entity} from './Entity.js';
-import {DIRECTION, httpGet} from './helper_functions.js';
+import {DIRECTION, httpGet} from '../util/helper_functions.js';
 import {VisionCone} from './BoundingBox.js';
 import {Wall} from './Wall.js';
 // import {Skills} from './Skills.js';
@@ -78,6 +78,14 @@ export class Character extends Entity {
 export class Player extends Character {
   constructor(data) {
     super(data);
+  }
+
+  set inventory(inv) {
+    this._inventory = inv;
+  }
+
+  get inventory() {
+    return this._inventory;
   }
 
   checkCollision(obj) { // block array of Environment objects
