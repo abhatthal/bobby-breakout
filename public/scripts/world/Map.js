@@ -48,7 +48,6 @@ export class Map {
     });
     layer.add(block2.render);
 
-
     // borders for stage
     const stageTop = new Wall({
       x: 0,
@@ -89,7 +88,6 @@ export class Map {
       name: 'wall',
     });
     layer.add(stageRight.render);
-
 
     const npc = new NPC({
       x: 400,
