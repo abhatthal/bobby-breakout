@@ -10,7 +10,7 @@ export class MapScene extends Scene {
 
     this.map = new Map({layer: this.layer, stage: data.stage});
 
-    this.tooltips={
+    this.tooltips = {
       interaction: new Tooltip({
         x: 0,
         y: 0,
@@ -39,7 +39,7 @@ export class MapScene extends Scene {
     return this._layer;
   }
 
-  switchFrom() {
+  switchFrom(data) {
     // Doesn't actually unbind yet, bound functions are anonymous
     // check removeControlBindings in MapControls
     this.controls.removeControlBindings();
@@ -51,7 +51,6 @@ export class MapScene extends Scene {
   switchTo(data) {
     const stage = data.stage;
     stage.add(this.layer);
-
     this.controls.addControlBindings();
   }
 }

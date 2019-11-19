@@ -11,38 +11,36 @@ export class MapControls extends Controls {
     this._inFightScene = false;
     this._atEndPoint = false;
     this._inInventoryWindow = false;
-
-    this.eventListeners = [];
   }
 
   addControlBindings() {
-    if (this.isBound === false) {
-      this.isBound = true;
-      console.log('binding stuff');
-      const self = this;
-      this.container.addEventListener('keyup', function(event) {
-        self.handleKeyUp(event);
-      });
-      this.container.addEventListener('keydown', function(event) {
-        self.handleKeyDownLogic(event);
-      });
-    } else {
-      console.log('already bound!');
-      return;
-    }
+    console.log('binding stuff');
+    const self = this;
+
+    this.handleKeyUpMethod = this.handleKeyUpMethod || function(event) {
+      self.handleKeyUp(event);
+    };
+    this.handleKeyDownMethod = this.handleKeyDownMethod || function(event) {
+      self.handleKeyDownLogic(event);
+    };
+
+    this.container.addEventListener('keyup', this.handleKeyUpMethod);
+    this.container.addEventListener('keydown', this.handleKeyDownMethod);
   }
 
   removeControlBindings() {
-    // TODO: unbind controls, isn't actually unbinding the functions since they're anonymous
     console.log('unbinding stuff');
     const self = this;
-    this.container.removeEventListener('keyup', function(event) {
+
+    this.handleKeyUpMethod = this.handleKeyUpMethod || function(event) {
       self.handleKeyUp(event);
-    });
-    this.container.removeEventListener('keydown', function(event) {
+    };
+    this.handleKeyDownMethod = this.handleKeyDownMethod || function(event) {
       self.handleKeyDownLogic(event);
-    });
-    return;
+    };
+
+    this.container.removeEventListener('keyup', this.handleKeyUpMethod);
+    this.container.removeEventListener('keydown', this.handleKeyDownMethod);
   }
 
   handleKeyUp(event) {
@@ -150,10 +148,6 @@ export class MapControls extends Controls {
       if (this._atEndPoint) {
         alert('YOU WIN! Play again?');
         location.reload();
-      } else if (this._inFightScene) {
-        const game = Game.getInstance();
-        game.switchToMap();
-        this._inFightScene = false;
       } else if (this._readyToInteract) {
         const game = Game.getInstance();
         game.switchToFight();
