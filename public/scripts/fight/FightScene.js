@@ -120,6 +120,7 @@ export class FightScene extends Scene {
   }
 
   switchFrom(data) {
+    console.assert(data != null);
     this.controls.removeControlBindings();
     this.fightLayer.remove();
   }
@@ -134,6 +135,7 @@ export class FightScene extends Scene {
       map: data.map,
       npc: data.npc,
     });
+    console.assert(data != null);
     data.stage.add(this.fightLayer);
     this.fightSceneLoad(data.player, data.npc);
     // this.fightLoop(data.player, data.npc);

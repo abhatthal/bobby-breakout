@@ -26,7 +26,6 @@ app.get('/', (req, res) => res.render('pages/login'));
 app.get('/register', (req, res) => res.render('pages/register'));
 app.get('/login', (req, res) => res.render('pages/login'));
 app.get('/main', (req, res) => res.render('pages/levels/main'));
-app.get('/bb-test', (req, res) => res.render('pages/levels/bb-test'));
 
 app.post('/login', (req, res) => checklogin(req, res));
 app.post('/register', (req, res) => createlogin(req, res));
@@ -125,15 +124,9 @@ function checklogin(req, res) {
 io.on('connection', function(client) {
   console.log('Client connected...');
 
-  client.on('userID', function(data) {
-    console.log(data);
-  });
-
-  client.on('walkedSteps', function(data) {
-    console.log(data);
-  });
-
-  client.on('playTime', function(data) {
+  client.on('statsSent', function(data) {
     console.log(data);
   });
 });
+
+

@@ -28,6 +28,7 @@ export class Game {
       image: 'assets/bobby.jpg',
       colour: 'grey',
       hp: 100,
+      enableFace: true,
     });
 
     const container = this.stage.container();

@@ -9,6 +9,14 @@ export class InventoryScene extends Scene {
     data.player.inventory = this.playerInventory;
     this.layer = this.playerInventory.layer;
 
+    // Assert inventory and equipped is empty
+    for (let i = 0; i < this.playerInventory.inventory_num; i++) {
+      console.assert(this.playerInventory.inventory_icon[i].name() === 'empty');
+    };
+    for (let i = 0; i < this.playerInventory.equipped_num; i++) {
+      console.assert(this.playerInventory.equipped_icon[i].name() === 'empty');
+    };
+
     // Tooltip for inventory
     this.tooltips = {};
 
@@ -67,11 +75,13 @@ export class InventoryScene extends Scene {
   }
 
   switchFrom(data) {
+    console.assert(data != null);
     this.controls.removeControlBindings();
     this.layer.remove();
   }
 
   switchTo(data) {
+    console.assert(data != null);
     data.stage.add(this.playerInventory.layer);
     this.controls.addControlBindings();
   }

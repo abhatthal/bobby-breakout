@@ -94,11 +94,12 @@ export class Map {
     const npc = new NPC({
       x: 400,
       y: 50,
-      width: 40,
-      height: 40,
+      width: 60,
+      height: 60,
       colour: 'yellow',
       impassible: true,
       hp: 100,
+      enableFace: true,
     });
     // npc.isSeeing(player);
     layer.add(npc.render);

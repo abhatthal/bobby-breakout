@@ -42,6 +42,7 @@ export class Entity {
   } // end constructor
 
   isColliding(obj) {
+    console.assert(obj != null);
     return !(obj.x > this.x + this.width ||
          obj.x + obj.width < this.x ||
          obj.y > this.y + this.height ||
@@ -81,22 +82,27 @@ export class Entity {
   }
 
   set x(val) {
+    console.assert(typeof val === 'number');
     this._x = val;
   }
 
   set y(val) {
+    console.assert(typeof val === 'number');
     this._y = val;
   }
 
   set height(height) {
+    console.assert(typeof height === 'number');
     this._height = height;
   }
 
   set width(width) {
+    console.assert(typeof width === 'number');
     this._width = width;
   }
 
   set bboxArea(area) {
+    console.assert(area != null);
     this._bboxArea = area;
   }
 
