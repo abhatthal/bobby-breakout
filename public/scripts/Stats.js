@@ -8,16 +8,16 @@ export class Stats {
     // TODO: add at least 3 more metrics
   }
   // updates the database based on passed in stats
+
   updateStats({
     userID = this.userID,
     walkedSteps = this.walkedSteps,
     playTime = this.playTime,
   } = {}) {
+    statsData = {username: userID, type: 'walkedSteps', value: walkedSteps};
     const socket = io.connect();
     socket.on('connect', function() {
-      socket.emit('userID', userID);
-      socket.emit('walkedSteps', walkedSteps);
-      socket.emit('playTime', playTime);
+      socket.emit('statsSent', statsData);
     });
   }
 

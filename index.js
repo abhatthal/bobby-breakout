@@ -125,15 +125,9 @@ function checklogin(req, res) {
 io.on('connection', function(client) {
   console.log('Client connected...');
 
-  client.on('userID', function(data) {
-    console.log(data);
-  });
-
-  client.on('walkedSteps', function(data) {
-    console.log(data);
-  });
-
-  client.on('playTime', function(data) {
+  client.on('statsSent', function(data) {
     console.log(data);
   });
 });
+
+

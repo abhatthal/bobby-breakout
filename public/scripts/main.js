@@ -5,7 +5,7 @@ import {Stats} from './Stats.js';
 const userStats = new Stats({
   userID: 12,
 });
-userStats.updateStats({walkedSteps: 5});
+userStats.updateStats({username: '232', walkedSteps: 100});
 // TESTING USER STATS
 
 
