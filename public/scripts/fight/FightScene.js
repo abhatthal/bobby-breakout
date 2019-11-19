@@ -1,5 +1,5 @@
 import {Scene} from '../Scene.js';
-import {Tooltip} from '../util/Tooltip.js';
+import {Tooltip} from '../util/ToolTip.js';
 import {FightControls} from './FightControls.js';
 
 export class FightScene extends Scene {
@@ -32,11 +32,13 @@ export class FightScene extends Scene {
   }
 
   switchFrom(data) {
+    console.assert(data != null);
     this.controls.removeControlBindings();
     this.fightLayer.remove();
   }
 
   switchTo(data) {
+    console.assert(data != null);
     data.stage.add(this.fightLayer);
     this.controls.addControlBindings();
   }

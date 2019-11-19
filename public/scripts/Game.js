@@ -23,11 +23,12 @@ export class Game {
     this.player = new Player({
       x: 40,
       y: this.stage.height() - 80,
-      width: 40,
-      height: 40,
+      width: 60,
+      height: 60,
       image: 'assets/bobby.jpg',
       colour: 'grey',
       hp: 100,
+      enableFace: true,
     });
 
     const container = this.stage.container();

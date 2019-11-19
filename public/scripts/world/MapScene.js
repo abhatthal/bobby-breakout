@@ -1,6 +1,6 @@
 import {Scene} from '../Scene.js';
 import {Map} from './Map.js';
-import {Tooltip} from '../util/Tooltip.js';
+import {Tooltip} from '../util/ToolTip.js';
 import {MapControls} from '../util/MapControls.js';
 
 export class MapScene extends Scene {
@@ -40,6 +40,7 @@ export class MapScene extends Scene {
   }
 
   switchFrom(data) {
+    console.assert(data != null);
     // Doesn't actually unbind yet, bound functions are anonymous
     // check removeControlBindings in MapControls
     this.controls.removeControlBindings();
@@ -49,6 +50,7 @@ export class MapScene extends Scene {
   }
 
   switchTo(data) {
+    console.assert(data != null);
     const stage = data.stage;
     stage.add(this.layer);
     this.controls.addControlBindings();
