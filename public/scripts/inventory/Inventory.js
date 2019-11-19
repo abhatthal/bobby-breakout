@@ -104,7 +104,8 @@ export class Inventory {
       return;
     }
     let shape;
-    for (let i = 0; i < this.inventory_size; i++) {
+    let i = 0;
+    for (; i < this.inventory_size; i++) {
       if (this.inventory_icon[i].name() === 'empty') {
         shape = this.inventory_icon[i];
         break;
@@ -178,7 +179,8 @@ export class Inventory {
     }
 
     let shape;
-    for (let i = 0; i < this.equipped_size; i++) {
+    let i = 0;
+    for (; i < this.equipped_size; i++) {
       if (this.equipped_icon[i].name() === 'empty') {
         shape = this.equipped_icon[i];
         break;
