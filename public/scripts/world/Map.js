@@ -116,6 +116,11 @@ export class Map {
     this.spawnArray.push(startPoint);
     this.spawnArray.push(endPoint);
 
+    this.mapArray = [];
+    this.mapArray.push(...this.blockArray);
+    this.mapArray.push(...this.spawnArray);
+    this.mapArray.push(...this.npcArray);
+
     layer.draw();
   }
 }
