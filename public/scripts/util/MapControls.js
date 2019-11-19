@@ -142,9 +142,15 @@ export class MapControls extends Controls {
     // Left arrow or A for moving sprite left
     if (this.keys[37] || this.keys[65]) {
       // this.player.move(DIRECTION.LEFT);
+      this.map.mapArray.forEach((node) => {
+        node.move(DIRECTION.RIGHT);
+      });
     } else if (this.keys[39] || this.keys[68]) {
       // Right arrow or D to move sprite right
       // this.player.move(DIRECTION.RIGHT);
+      this.map.mapArray.forEach((node) => {
+        node.move(DIRECTION.LEFT);
+      });
     }
 
     // Space or E for interaction
