@@ -44,10 +44,10 @@ export class Game {
     this.current_scene.switchTo({stage: this.stage, player: this.player});
   }
 
-  switchToFight(npc) {
+  switchToFight(npc, map) {
     this.current_scene.switchFrom({stage: this.stage, player: this.player});
     this.current_scene = this.fightScene;
-    this.current_scene.switchTo({stage: this.stage, player: this.player, npc: npc});
+    this.current_scene.switchTo({stage: this.stage, player: this.player, npc: npc, map: map});
   }
 
   switchToMap() {

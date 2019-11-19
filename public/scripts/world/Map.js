@@ -98,6 +98,7 @@ export class Map {
       height: 40,
       colour: 'yellow',
       impassible: true,
+      hp: 100,
     });
     // npc.isSeeing(player);
     layer.add(npc.render);
