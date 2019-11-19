@@ -10,6 +10,7 @@ export class MapControls extends Controls {
     this._readyToInteract = undefined;
     this._atEndPoint = false;
     this._inInventoryWindow = false;
+    this._isColliding = false;
   }
 
   addControlBindings() {
@@ -129,13 +130,13 @@ export class MapControls extends Controls {
     if (this.keys[40] || this.keys[83]) {
       // this.player.move(DIRECTION.UP);
       this.map.mapArray.forEach((node) => {
-        node.move(DIRECTION.DOWN);
+        node.scroll(DIRECTION.DOWN);
       });
     } else if (this.keys[38] || this.keys[87]) {
       // Up arrow or S to move sprite up
       // this.player.move(DIRECTION.DOWN);
       this.map.mapArray.forEach((node) => {
-        node.move(DIRECTION.UP);
+        node.scroll(DIRECTION.UP);
       });
     }
 
@@ -143,13 +144,13 @@ export class MapControls extends Controls {
     if (this.keys[37] || this.keys[65]) {
       // this.player.move(DIRECTION.LEFT);
       this.map.mapArray.forEach((node) => {
-        node.move(DIRECTION.RIGHT);
+        node.scroll(DIRECTION.RIGHT);
       });
     } else if (this.keys[39] || this.keys[68]) {
       // Right arrow or D to move sprite right
       // this.player.move(DIRECTION.RIGHT);
       this.map.mapArray.forEach((node) => {
-        node.move(DIRECTION.LEFT);
+        node.scroll(DIRECTION.LEFT);
       });
     }
 

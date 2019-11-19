@@ -130,6 +130,8 @@ export class NPC extends Character {
     this.feelers.forEach((feeler) => {
       this.group.add(feeler);
     });
+
+    this.scrollSpeed = 5;
   }
 
   get impassible() {
@@ -160,6 +162,27 @@ export class NPC extends Character {
       return true;
     } else {
       return false;
+    }
+  }
+
+  scroll(dir) {
+    switch (dir) {
+      case DIRECTION.LEFT:
+        this.x += this.scrollSpeed * DIRECTION.UNIT_LEFT;
+        this.group.x(this.x);
+        break;
+      case DIRECTION.RIGHT:
+        this.x += this.scrollSpeed * DIRECTION.UNIT_RIGHT;
+        this.group.x(this.x);
+        break;
+      case DIRECTION.UP:
+        this.y += this.scrollSpeed * DIRECTION.UNIT_UP;
+        this.group.y(this.y);
+        break;
+      case DIRECTION.DOWN:
+        this.y += this.scrollSpeed * DIRECTION.UNIT_DOWN;
+        this.group.y(this.y);
+        break;
     }
   }
 }
