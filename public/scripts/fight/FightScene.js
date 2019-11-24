@@ -9,7 +9,7 @@ export class FightScene extends Scene {
     this.fightLayer = new Konva.Layer();
 
     this.player = data.player;
-    
+
     // Tooltip for fight
     this.tooltips = {
       fightTooltip: new Tooltip({
@@ -77,7 +77,7 @@ export class FightScene extends Scene {
         width: data.stage.width()*3/5,
         height: 50,
         stroke: 'black',
-        strokeWidth: 2
+        strokeWidth: 2,
       }),
       skillsTab: new Konva.Rect({
         x: data.stage.width()/2 - data.stage.width()*2/3/2,
@@ -94,7 +94,7 @@ export class FightScene extends Scene {
         height: 50,
         stroke: 'black',
         strokeWidth: 2,
-        text: 'Q'
+        text: 'Q',
       }),
       skill2: new Konva.Rect({
         x: data.stage.width()/2 - data.stage.width()*2/3/2 + 50 + 100 + 10,
@@ -103,7 +103,7 @@ export class FightScene extends Scene {
         height: 50,
         stroke: 'black',
         strokeWidth: 2,
-        text: 'N/A'
+        text: 'N/A',
       }),
       skill3: new Konva.Rect({
         x: data.stage.width()/2 - data.stage.width()*2/3/2 + 50 + 100 + 10 + 100 + 10,
@@ -112,9 +112,9 @@ export class FightScene extends Scene {
         height: 50,
         stroke: 'black',
         strokeWidth: 2,
-        text: 'N/A'
+        text: 'N/A',
       }),
-    }
+    };
 
     this.uiEntities = {
       player: new Konva.Rect({
@@ -122,16 +122,16 @@ export class FightScene extends Scene {
         y: data.stage.height()*4.75/10,
         width: 80,
         height: 80,
-        fill: 'grey'
+        fill: 'grey',
       }),
       enemy: new Konva.Rect({
         x: data.stage.width()*6.5/10,
         y: data.stage.height()*3/10,
         width: 40,
         height: 40,
-        fill: 'yellow'
-      })
-    }
+        fill: 'yellow',
+      }),
+    };
 
     this.controls;
 
@@ -170,16 +170,40 @@ export class FightScene extends Scene {
     console.log(playerStatText);
     this.tooltips['playerTooltip'].text = playerStatText;
     this.tooltips['enemyTooltip'].text = enemyStatText;
-    this.fightLayer.add(this.tooltips['skillA1Tooltip'].renderBox, this.tooltips['skillA1Tooltip'].renderText);
+    this.fightLayer.add(
+        this.tooltips['skillA1Tooltip'].renderBox,
+        this.tooltips['skillA1Tooltip'].renderText,
+    );
 
-    this.fightLayer.add(this.tooltips['skillA2Tooltip'].renderBox, this.tooltips['skillA2Tooltip'].renderText);
-    this.fightLayer.add(this.tooltips['skillA3Tooltip'].renderBox, this.tooltips['skillA3Tooltip'].renderText);
-    this.fightLayer.add(this.tooltips['skillA4Tooltip'].renderBox, this.tooltips['skillA4Tooltip'].renderText);
-    
-    this.fightLayer.add(this.tooltips['playerTooltip'].renderBox, this.tooltips['playerTooltip'].renderText);
-    this.fightLayer.add(this.tooltips['enemyTooltip'].renderBox, this.tooltips['enemyTooltip'].renderText);
-    this.fightLayer.add(this.tooltips['fightTooltip'].renderBox, this.tooltips['fightTooltip'].renderText);
-    this.fightLayer.add(this.tooltips['escapeTooltip'].renderBox, this.tooltips['escapeTooltip'].renderText);
+    this.fightLayer.add(
+        this.tooltips['skillA2Tooltip'].renderBox,
+        this.tooltips['skillA2Tooltip'].renderText,
+    );
+    this.fightLayer.add(
+        this.tooltips['skillA3Tooltip'].renderBox,
+        this.tooltips['skillA3Tooltip'].renderText,
+    );
+    this.fightLayer.add(
+        this.tooltips['skillA4Tooltip'].renderBox,
+        this.tooltips['skillA4Tooltip'].renderText,
+    );
+
+    this.fightLayer.add(
+        this.tooltips['playerTooltip'].renderBox,
+        this.tooltips['playerTooltip'].renderText,
+    );
+    this.fightLayer.add(
+        this.tooltips['enemyTooltip'].renderBox,
+        this.tooltips['enemyTooltip'].renderText,
+    );
+    this.fightLayer.add(
+        this.tooltips['fightTooltip'].renderBox,
+        this.tooltips['fightTooltip'].renderText,
+    );
+    this.fightLayer.add(
+        this.tooltips['escapeTooltip'].renderBox,
+        this.tooltips['escapeTooltip'].renderText,
+    );
     // #endregion
 
     // #region new ui
@@ -190,10 +214,9 @@ export class FightScene extends Scene {
     //   this.uiStuff['skill2'],
     //   this.uiStuff['skill3'],
     //   this.uiEntities['player'],
-    //   this.uiEntities['enemy']      
+    //   this.uiEntities['enemy']
     // );
     // #endregion
     this.fightLayer.draw();
   }
 }
-  

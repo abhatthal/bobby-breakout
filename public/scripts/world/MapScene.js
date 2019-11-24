@@ -54,6 +54,6 @@ export class MapScene extends Scene {
     const stage = data.stage;
     stage.add(this.layer);
     this.controls.addControlBindings();
-    this.layer.draw()
+    this.layer.draw();
   }
 }

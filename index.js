@@ -37,7 +37,7 @@ function createlogin(req, res) {
   console.log('post login info');
 
   const pool = new pg.Pool({connectionString: conString});
-    pool.connect((isErr, client, done) => {
+  pool.connect((isErr, client, done) => {
     if (isErr) {
       console.log('connect error:' + isErr.message);
       done();
@@ -83,7 +83,7 @@ function checklogin(req, res) {
   console.log('post login info');
 
   const pool = new pg.Pool({connectionString: conString});
-    pool.connect((isErr, client, done) => {
+  pool.connect((isErr, client, done) => {
     if (isErr) {
       console.log('connect error:' + isErr.message);
       done();
@@ -147,7 +147,8 @@ io.on('connection', function(client) {
           } else { // query success
             if (result.rows.length < 1) {
               // User doesn't exist
-              console.log("User doesn't exist");
+              console.log('User doesnt exist');
+              // eslint-disable-next-line max-len
               const queryCreate = `INSERT INTO stats (userid, walkedsteps, playtime) VALUES ('${data.username}', ${data.value}, 0)`;
               client.query(queryCreate, function(err, result) {
                 if (err) {
@@ -157,9 +158,10 @@ io.on('connection', function(client) {
                 }
                 done();
               });
-            } else { 
+            } else {
               // User exists
-              const queryUpdate = `UPDATE stats SET walkedsteps=${data.value} WHERE userID='${data.username}'`
+              // eslint-disable-next-line max-len
+              const queryUpdate = `UPDATE stats SET walkedsteps=${data.value} WHERE userID='${data.username}'`;
               client.query(queryUpdate, function(err, result) {
                 if (err) {
                   console.log(err + ' fail to update');
