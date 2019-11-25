@@ -9,27 +9,33 @@ body {
   margin: 0;
 }
 
-.app{
+.app {
   display: flex;
   flex-direction: column;
   min-height: 100%;
   padding: 1em;
 }
 
-.header{
+.header {
   display: flex;
   height: 50px;
 }
 
-.main{
+.main {
   display: flex;
   flex-direction: row;
   flex: 1;
 }
 
-.game{
+.game {
   width: 90%;
   border: 2px solid black;
+}
+
+#logoutbtn {
+  display: flex;
+  justify-content: center;
+  margin: 10px auto;
 }
 
 .info{
@@ -66,12 +72,6 @@ body {
   font-size: 87.50250000000001%;
   font-weight: bold;
   color: #09f;
-}
-
-#premium_content {
-  width: 15%;
-  float: left;
-  margin-left: 60px;
 }
 
 /* Example from Konva Demos */

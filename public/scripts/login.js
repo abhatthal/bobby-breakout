@@ -1,5 +1,3 @@
-
-
 console.log('test');
 
 // var checklogin = document.getElementById('loginbtn');

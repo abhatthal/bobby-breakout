@@ -26,7 +26,6 @@ app.get('/', (req, res) => res.render('pages/login'));
 app.get('/register', (req, res) => res.render('pages/register'));
 app.get('/login', (req, res) => res.render('pages/login'));
 app.get('/main', (req, res) => res.render('pages/levels/main'));
-app.get('/bb-test', (req, res) => res.render('pages/levels/bb-test'));
 
 app.post('/login', (req, res) => checklogin(req, res));
 app.post('/register', (req, res) => createlogin(req, res));
@@ -37,11 +36,11 @@ server.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 function createlogin(req, res) {
   console.log('post login info');
 
-  const pool = new pg.Client(conString);
-  pool.connect(function(isErr) {
+  const pool = new pg.Pool({connectionString: conString});
+  pool.connect((isErr, client, done) => {
     if (isErr) {
       console.log('connect error:' + isErr.message);
-      client.end();
+      done();
       return;
     } else { // connected
       console.log('db connected');
@@ -50,7 +49,7 @@ function createlogin(req, res) {
       pool.query(querycheck, [uname], function(err, result) {
         if (err) {
           console.log(err);
-          pool.end();
+          done();
           return;
         } else { // query success
           if (result.rows.length<1 ) {
@@ -67,10 +66,12 @@ function createlogin(req, res) {
                 console.log('acct created');
                 res.status(200).redirect('/login');
               }
+              done();
             });
           } else { // wrong psw
             console.log(' account taken!');
             res.status(405).redirect('back');
+            done();
           }
         }
       });
@@ -81,11 +82,11 @@ function createlogin(req, res) {
 function checklogin(req, res) {
   console.log('post login info');
 
-  const pool = new pg.Client(conString);
-  pool.connect(function(isErr) {
+  const pool = new pg.Pool({connectionString: conString});
+  pool.connect((isErr, client, done) => {
     if (isErr) {
       console.log('connect error:' + isErr.message);
-      pool.end();
+      done();
       return;
     } else { // connected
       console.log('db connected');
@@ -95,23 +96,25 @@ function checklogin(req, res) {
       pool.query(querycheck, [loginuname], function(err, result) {
         if (err) {
           console.log(err);
+          done();
           return;
         } else { // query success
-          if (result.rows.length<1 ) {
+          if (result.rows.length < 1) {
             console.log('password incorrect or account not exist!');
             res.status(404).redirect('back');
           } else if (result.rows[0].password === loginpsw) {
             // account exist and psw correct
             console.log(result.rows[0].premium);
             if (result.rows[0].premium) {
-              res.status(200).redirect('/main?premium=true');
+              res.status(200).redirect('/main?premium=true&username=' + loginuname);
             } else {
-              res.status(200).redirect('/main?premium=false');
+              res.status(200).redirect('/main?premium=false&username=' + loginuname);
             }
           } else { // wrong psw
             console.log('password incorrect or account not exist!');
             res.status(405).redirect('back');
           }
+          done();
         }
       });
     }
@@ -125,15 +128,54 @@ function checklogin(req, res) {
 io.on('connection', function(client) {
   console.log('Client connected...');
 
-  client.on('userID', function(data) {
+  client.on('statsSent', function(data) {
     console.log(data);
-  });
-
-  client.on('walkedSteps', function(data) {
-    console.log(data);
-  });
-
-  client.on('playTime', function(data) {
-    console.log(data);
+    const pool = new pg.Pool({connectionString: conString});
+    pool.connect((isErr, client, done) => {
+      if (isErr) {
+        console.log('connect error:' + isErr.message);
+        done();
+        return;
+      } else { // connected
+        console.log('db connected');
+        const querycheck = `SELECT * FROM stats WHERE userid='${data.username}'`;
+        client.query(querycheck, function(err, result) {
+          if (err) {
+            console.log(err);
+            done();
+            return;
+          } else { // query success
+            if (result.rows.length < 1) {
+              // User doesn't exist
+              console.log('User doesnt exist');
+              // eslint-disable-next-line max-len
+              const queryCreate = `INSERT INTO stats (userid, walkedsteps, playtime) VALUES ('${data.username}', ${data.value}, 0)`;
+              client.query(queryCreate, function(err, result) {
+                if (err) {
+                  console.log(err + ' fail to create');
+                } else {
+                  console.log('Stats account created');
+                }
+                done();
+              });
+            } else {
+              // User exists
+              // eslint-disable-next-line max-len
+              const queryUpdate = `UPDATE stats SET walkedsteps=${data.value} WHERE userID='${data.username}'`;
+              client.query(queryUpdate, function(err, result) {
+                if (err) {
+                  console.log(err + ' fail to update');
+                } else {
+                  console.log('Stats updated');
+                }
+                done();
+              });
+            }
+          }
+        });
+      }
+    });
   });
 });
+
+

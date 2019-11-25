@@ -8,20 +8,22 @@ export class Stats {
     // TODO: add at least 3 more metrics
   }
   // updates the database based on passed in stats
+
   updateStats({
     userID = this.userID,
     walkedSteps = this.walkedSteps,
     playTime = this.playTime,
   } = {}) {
+    const statsData = {username: userID, type: 'walkedSteps', value: walkedSteps};
     const socket = io.connect();
     socket.on('connect', function() {
-      socket.emit('userID', userID);
-      socket.emit('walkedSteps', walkedSteps);
-      socket.emit('playTime', playTime);
+      socket.emit('statsSent', statsData);
     });
   }
 
   set walkedSteps(val) {
+    console.assert(typeof val === 'number');
+    console.assert(val > -1);
     this._walkedSteps += val;
   }
 
@@ -30,6 +32,8 @@ export class Stats {
   }
 
   set playTime(val) {
+    console.assert(typeof val === 'number');
+    console.assert(val > -1);
     this._playTime = val;
   }
 

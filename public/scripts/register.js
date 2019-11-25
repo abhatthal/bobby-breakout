@@ -1,5 +1,3 @@
-
-
 console.log('test');
 
 const golog = document.getElementById('gologinbtn');
