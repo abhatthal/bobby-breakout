@@ -4,7 +4,7 @@ import {VisionCone} from './BoundingBox.js';
 import {Wall} from './Wall.js';
 // import {Skills} from './Skills.js';
 // import * as defaultskill from './skilldefault.js';
-import {Inventory} from '../inventory/Inventory.js'
+import {Inventory} from '../inventory/Inventory.js';
 
 export class Character extends Entity {
   constructor(data) {

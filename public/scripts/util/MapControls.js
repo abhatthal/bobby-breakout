@@ -148,8 +148,10 @@ export class MapControls extends Controls {
         alert('YOU WIN! Play again?');
         location.reload();
       } else if (this._readyToInteract) {
-        const game = Game.getInstance();
-        game.switchToFight(this._readyToInteract, this.map);
+        if (this._readyToInteract.hp > 0) {
+          const game = Game.getInstance();
+          game.switchToFight(this._readyToInteract, this.map);
+        }
       }
     }
     // I to open inventory window

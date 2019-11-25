@@ -62,8 +62,7 @@ export class FightControls extends Controls {
   }
 
   doDamage(player, opponent) {
-    
-    if(opponent.hp >= 0){
+    if (opponent.hp >= 0) {
       player.skillA1.hpChange(opponent, -10);
       console.log(opponent.hp);
     }
@@ -72,13 +71,16 @@ export class FightControls extends Controls {
     // abstract this into a general function later that updates all things to do with ui?
     const enemyStatText = 'Enemy: \ncome fight bobby\n\n' + opponent.hp;
     this.tooltips['enemyTooltip'].text = enemyStatText;
-    this.layer.add(this.tooltips['enemyTooltip'].renderBox, this.tooltips['enemyTooltip'].renderText);
-    this.layer.draw()
+    this.layer.add(
+        this.tooltips['enemyTooltip'].renderBox,
+        this.tooltips['enemyTooltip'].renderText,
+    );
+    this.layer.draw();
   }
 
   fightLoop(subject, opponent) {
-    console.log(opponent.hp)
-    if (opponent.hp <= 0){
+    console.log(opponent.hp);
+    if (opponent.hp <= 0) {
       // remove enemy when dead. currently not working.
       // issue: doesn't rerender the current mapscene after going back to it
 
@@ -100,7 +102,6 @@ export class FightControls extends Controls {
       this.doDamage(subject, opponent);
     }
     // this.fightSceneLoad(subject, npc);
-
   }
 
   // Enemy fight strategy
