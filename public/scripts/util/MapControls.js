@@ -11,6 +11,13 @@ export class MapControls extends Controls {
     this._atEndPoint = false;
     this._inInventoryWindow = false;
     this._isColliding = false;
+
+    this._currMovementDir = {
+      up: false,
+      right: false,
+      down: false,
+      left: false,
+    };
   }
 
   addControlBindings() {
@@ -50,7 +57,9 @@ export class MapControls extends Controls {
   handleKeyDownLogic(event) {
     this.keys[event.keyCode] = true;
 
-    this.doKeyDown();
+    if (!this._isColliding) {
+      this.doKeyDown();
+    }
 
     // TODO: Reorganize this better in new class
     // TODO: move to checkMovementCollision();
@@ -62,6 +71,7 @@ export class MapControls extends Controls {
           this.doReverseMovement();
         }
         isColliding = true;
+        this._isColliding = true;
       }
     });
     if (isColliding) {
@@ -126,33 +136,47 @@ export class MapControls extends Controls {
   }
 
   doKeyDown() {
-    // Down arrow or W for moving sprite down
+    // Down arrow or S for moving sprite down
     if (this.keys[40] || this.keys[83]) {
+      this._currMovementDir.down = true;
       // this.player.move(DIRECTION.UP);
       this.map.mapArray.forEach((node) => {
         node.scroll(DIRECTION.DOWN);
       });
     } else if (this.keys[38] || this.keys[87]) {
-      // Up arrow or S to move sprite up
+      // Up arrow or W to move sprite up
+      this._currMovementDir.up = true;
       // this.player.move(DIRECTION.DOWN);
       this.map.mapArray.forEach((node) => {
         node.scroll(DIRECTION.UP);
       });
+    } else {
+      this._currMovementDir.up = false;
+      this._currMovementDir.down = false;
     }
 
     // Left arrow or A for moving sprite left
     if (this.keys[37] || this.keys[65]) {
+      this._currMovementDir.left = true;
       // this.player.move(DIRECTION.LEFT);
       this.map.mapArray.forEach((node) => {
         node.scroll(DIRECTION.RIGHT);
       });
     } else if (this.keys[39] || this.keys[68]) {
       // Right arrow or D to move sprite right
+      this._currMovementDir.right = true;
       // this.player.move(DIRECTION.RIGHT);
       this.map.mapArray.forEach((node) => {
         node.scroll(DIRECTION.LEFT);
       });
+    } else {
+      this._currMovementDir.left = false;
+      this._currMovementDir.right = false;
     }
+    console.log('up: ', this._currMovementDir.up,
+        '\nright: ', this._currMovementDir.right,
+        '\ndown: ', this._currMovementDir.down,
+        '\nleft: ', this._currMovementDir.left);
 
     // Space or E for interaction
     if (this.keys[32] || this.keys[69]) {
