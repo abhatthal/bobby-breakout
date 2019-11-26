@@ -48,8 +48,12 @@ export class InventoryControls extends Controls {
     // For debugging purposes, a key 'z' to add an item
     if (this.keys[90]) {
       const item = new Item({
-        name: 'Sword',
-        info: 'looool',
+        name: 'Plastic Sword',
+        info: 'This is the mighty plastic sword that Bobby picked up from the ground in front of his office',
+        type: 'weapon',
+        dmg: 15,
+        flavourText: 'It can\'t even cut paper...',
+        icon: '../../assets/sword.png',
       });
       this.player.inventory.add(item);
     }

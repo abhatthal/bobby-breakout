@@ -116,14 +116,50 @@ export class Inventory {
     this.inventory[i] = item;
 
     // Placeholder before adding item icons
-    shape.fill('green');
+    // shape.fill('green');
+    shape.fillPatternImage(item.icon);
     shape.name('filled');
+
+    const title = new Konva.Text({
+      x: 750,
+      y: 100,
+      text: `${item.name}`,
+      fontSize: 22,
+      fontStyle: 'bold',
+      fill: '#555',
+      padding: 20,
+      width: 220,
+      align: 'center',
+    });
 
     const info = new Konva.Text({
       x: 750,
-      y: 100,
-      text: `${item.name}\n\n${item.info}`,
+      y: 100 + title.height(),
+      text: `${item.info}`,
       fontSize: 18,
+      fill: '#555',
+      padding: 20,
+      width: 220,
+      align: 'center',
+    });
+    
+    const stats = new Konva.Text({
+      x: 750,
+      y: 100 + title.height() + info.height(),
+      text: `${(item.type === 'weapon') ? `Damage: ${item.dmg}`: `Healing: ${item.heal}`}`,
+      fontSize: 18,
+      fill: '#555',
+      padding: 20,
+      width: 220,
+      align: 'center',
+    });
+
+    const flavourText = new Konva.Text({
+      x: 750,
+      y: 100 + title.height() + info.height() + stats.height(),
+      text: `${item.flavourText}`,
+      fontStyle: 'italic',
+      fontSize: 15,
       fill: '#555',
       padding: 20,
       width: 220,
@@ -137,7 +173,7 @@ export class Inventory {
       strokeWidth: 5,
       fill: '#ddd',
       width: 225,
-      height: info.height(),
+      height: title.height() + info.height() + stats.height() + flavourText.height(),
       shadowColor: 'black',
       shadowBlur: 10,
       shadowOffsetX: 10,
@@ -151,13 +187,22 @@ export class Inventory {
       document.body.style.cursor = 'pointer';
       layer.add(infoBox);
       layer.add(info);
+      layer.add(title);
+      layer.add(stats);
+      layer.add(flavourText);
       info.show();
+      title.show();
+      stats.show();
+      flavourText.show();
       infoBox.show();
       layer.draw();
     });
     shape.on('mouseout', function() {
       document.body.style.cursor = 'default';
       info.hide();
+      title.hide();
+      stats.hide();
+      flavourText.hide();
       infoBox.hide();
       layer.draw();
     });
