@@ -127,6 +127,23 @@ export class MapControls extends Controls {
       }
     });
 
+    // CHECKPOINTS: spawn and end point
+    this.map.spawnArray.forEach((node) => {
+      if (this.player.checkCollision(node, playerSim)) {
+        if (node.name === 'start') {
+          // console.log('i am at the spawn', node.id);
+        } else if (node.name === 'end') {
+          // console.log('i am a winner', node.id);
+          this._atEndPoint = true;
+          this.layer.add(this.tooltips.completion.renderBox, this.tooltips.completion.renderText);
+          this.layer.draw();
+        }
+      } else {
+        this._atEndPoint = false;
+        this.tooltips.completion.remove();
+      }
+    });
+
     // change colour to show collision if they move in that direction
     if (isColliding) {
       this.player.shape.attrs.fill = 'orange';
@@ -142,28 +159,6 @@ export class MapControls extends Controls {
         node.scroll(oppositeDirection(playerMoveDirY));
       });
     }
-
-    // check if player is on spawn point or end points
-    // #region spawn point check stuff
-    // this.map.spawnArray.forEach((node) => {
-    //   this.player.checkCollision(node);
-    //   if (this.player.isColliding(node)) {
-    //     // trigger some interaction, for now, change colour
-    //     if (node.name === 'start') {
-    //       // console.log('i am at the spawn', node.id);
-    //     } else if (node.name === 'end') {
-    //       // console.log('i am a winner', node.id);
-    //       this._atEndPoint = true;
-    //       this.layer.add(this.tooltips.completion.renderBox,
-    //         this.tooltips.completion.renderText);
-    //       this.layer.draw();
-    //     }
-    //   } else {
-    //     this._atEndPoint = false;
-    //     this.tooltips.completion.remove();
-    //   }
-    // });
-    // #endregion
 
     event.preventDefault();
     this.layer.batchDraw();
