@@ -7,11 +7,24 @@ export class Achievements {
     this.layer = new Konva.Layer();
     this.Achievements_icon = [];
 
-    const AchievementsTitle = new Konva.Text({
+    const GamePaused = new Konva.Text({
       x: 0,
       y: 0,
-      text: 'Achievements',
+      text: 'Game Paused',
       fontSize: 40,
+      fill: '#555',
+      padding: 20,
+      width: 1050,
+      align: 'center',
+      fill: 'black',
+    });
+    this.layer.add(GamePaused);
+
+    const AchievementsTitle = new Konva.Text({
+      x: 0,
+      y: 50,
+      text: 'Achievements',
+      fontSize: 30,
       fill: '#555',
       padding: 20,
       width: 1050,
@@ -23,7 +36,7 @@ export class Achievements {
     for (let i = 0; i < this.Achievements_size; i++) {
       const shape = new Konva.Rect({
         x: 350 + (i % 5) * 80,
-        y: 100 + (parseInt(i / 5) * 80),
+        y: 120 + (parseInt(i / 5) * 80),
         width: 50,
         height: 50,
         fill: 'red',
@@ -34,7 +47,7 @@ export class Achievements {
       this.Achievements_icon.push(shape);
       this.layer.add(shape);
     }
-    
+
     // for (let i = 0; i < 4; i++) {
     //   const shape = new Konva.Rect({
     //     x: 390 + (i % 4) * 80,
