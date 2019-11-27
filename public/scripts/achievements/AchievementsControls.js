@@ -51,7 +51,7 @@ export class AchievementsControls extends Controls {
         name: 'Ya Nerd',
         info: 'ha *dabs*',
       });
-      this.player.inventory.add(achievement);
+      this.player.achievements.add(achievement);
     }
 
     // p for Achievements menu exit

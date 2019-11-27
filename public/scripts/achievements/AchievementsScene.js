@@ -58,7 +58,7 @@ export class AchievementsScene extends Scene {
 
     window.addEventListener('click', () => {
       // hide menu
-      AchievementsMenu.style.display = 'none';
+      // AchievementsMenu.style.display = 'none';
     });
   }
 
