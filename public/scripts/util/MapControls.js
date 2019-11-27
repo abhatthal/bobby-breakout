@@ -96,12 +96,34 @@ export class MapControls extends Controls {
     };
     // console.log(playerSim, newPos);
 
-    // check if simulated position will collide to any node
+    // BLOCKS: check if simulated position will collide to any node
     this.map.blockArray.forEach((node) => {
       if (this.player.checkCollision(node, playerSim)) {
-        console.log('will collide');
         willCollide = true;
         isColliding = true; // for visual indicator, change colour to red
+      }
+    });
+
+    // NPCS: check collision among them
+    this.map.npcArray.forEach((node) => {
+      if (this.player.checkCollision(node, playerSim)) {
+        willCollide = true;
+        isColliding = true; // for visual indicator, change colour to red
+      }
+
+      // check if player is w/in sight
+      if (node.isSeeing(this.player)) {
+        this.tooltips.interaction.moveTo({
+          X: node.x + 50,
+          y: node.y - 50,
+        });
+        this.layer.add(this.tooltips.interaction.renderBox, this.tooltips.interaction.renderText);
+        // TODO: check why we can't render tooltips as a group
+        this.layer.draw();
+        this._readyToInteract = true;
+      } else {
+        this.tooltips.interaction.remove();
+        this._readyToInteract = false;
       }
     });
 
@@ -150,11 +172,12 @@ export class MapControls extends Controls {
   doInteractionKeyDown() {
     // Space or E for interaction
     if (this.keys[32] || this.keys[69]) {
-      console.log(this._atEndPoint);
+      console.log('at endpoint? ', this._atEndPoint);
       if (this._atEndPoint) {
         alert('YOU WIN! Play again?');
         location.reload();
       } else if (this._readyToInteract) {
+        console.log('ready to interact with npc? ', this._readyToInteract);
         if (this._readyToInteract.hp > 0) {
           const game = Game.getInstance();
           game.switchToFight(this._readyToInteract, this.map);
