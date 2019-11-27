@@ -6,7 +6,7 @@ export class AchievementsScene extends Scene {
   constructor(data) {
     super(data);
     this.playerAchievements = new Achievements();
-    data.player.Achievements = this.playerAchievements;
+    data.player.achievements = this.playerAchievements;
     this.layer = this.playerAchievements.layer;
 
     // Assert Achievements and equipped is empty
