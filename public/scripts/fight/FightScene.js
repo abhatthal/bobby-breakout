@@ -212,6 +212,7 @@ export class FightScene extends Scene {
   switchFrom(data) {
     console.assert(data != null);
     this.controls.removeControlBindings();
+    this.fightLayer.off();
     this.fightLayer.remove();
   }
 
