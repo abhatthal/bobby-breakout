@@ -159,7 +159,7 @@ export class FightScene extends Scene {
   }
 
   heal(player, item) {
-    Player is full health
+    // Player is full health
     if (player.hp >= 100) {
       return;
     }
