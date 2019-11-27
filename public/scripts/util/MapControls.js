@@ -161,7 +161,10 @@ export class MapControls extends Controls {
     }
     // Escape or P for pausing (to menu)
     if (this.keys[27] || this.keys[80]) {
-      alert('Game Paused\nPress ok to continue');
+      // alert('Game Paused\nPress ok to continue');
+      // Show achievements menu
+      const game = Game.getInstance();
+      game.switchToAchievements(this._readyToInteract, this.map);
       this.keys[27] = false;
       this.keys[80] = false;
     }

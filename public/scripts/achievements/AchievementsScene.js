@@ -1,5 +1,6 @@
 import {Scene} from '../Scene.js';
 import {Achievements} from './Achievements.js';
+import {AchievementsControls} from './AchievementsControls.js';
 
 export class AchievementsScene extends Scene {
   constructor(data) {
@@ -58,7 +59,6 @@ export class AchievementsScene extends Scene {
     window.addEventListener('click', () => {
       // hide menu
       AchievementsMenu.style.display = 'none';
-      equippedMenu.style.display = 'none';
     });
   }
 
