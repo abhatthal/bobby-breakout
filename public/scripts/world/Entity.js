@@ -41,13 +41,6 @@ export class Entity {
     this.group.add(this.bboxArea);
   } // end constructor
 
-  isColliding(obj) {
-    console.assert(obj != null);
-    return !(obj.x > this.x + this.width ||
-         obj.x + obj.width < this.x ||
-         obj.y > this.y + this.height ||
-         obj.y + obj.height < this.y);
-  }
 
   get render() {
     return this.group;

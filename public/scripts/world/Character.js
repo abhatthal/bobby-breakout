@@ -1,5 +1,5 @@
 import {Entity} from './Entity.js';
-import {DIRECTION, httpGet} from '../util/helper_functions.js';
+import {DIRECTION, httpGet, isColliding} from '../util/helper_functions.js';
 import {VisionCone} from './BoundingBox.js';
 import {Wall} from './Wall.js';
 // import {Skills} from './Skills.js';
@@ -53,6 +53,26 @@ export class Character extends Entity {
     }
   }
 
+  simulateMove(dir) {
+    let newX = this.x;
+    let newY = this.y;
+    switch (dir) {
+      case DIRECTION.LEFT:
+        newX = this.x + this.speed * DIRECTION.UNIT_LEFT;
+        break;
+      case DIRECTION.RIGHT:
+        newX = this.x + this.speed * DIRECTION.UNIT_RIGHT;
+        break;
+      case DIRECTION.UP:
+        newY = this.y + this.speed * DIRECTION.UNIT_UP;
+        break;
+      case DIRECTION.DOWN:
+        newY = this.y + this.speed * DIRECTION.UNIT_DOWN;
+        break;
+    }
+    return [newX, newY];
+  }
+
   get speed() {
     return this._speed;
   }
@@ -94,9 +114,9 @@ export class Player extends Character {
     return this._inventory;
   }
 
-  checkCollision(obj) { // block array of Environment objects
+  checkCollision(obj, obj2) { // block array of Environment objects
     console.assert(obj != null);
-    if (this.isColliding(obj) ) {
+    if (isColliding(obj, obj2) ) {
       if (obj instanceof Wall) {
         // console.log('i am touching a Wall', obj.id);
         // bruno add the wall stuff here
