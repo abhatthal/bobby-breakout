@@ -5,6 +5,7 @@ export class Item {
     this.type = data.type;
     this.dmg = (data.dmg) ? data.dmg : 0;
     this.heal = (data.heal) ? data.heal : 0;
+    this.effect = (data.effect) ? data.effect : '';
     this.icon = (data.icon) ? data.icon : null;
     this.flavourText = (data.flavourText) ? data.flavourText : '';
 

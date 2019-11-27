@@ -14,7 +14,7 @@ export class InventoryScene extends Scene {
       console.assert(this.playerInventory.inventory_icon[i].name() === 'empty');
     };
     for (let i = 0; i < this.playerInventory.equipped_num; i++) {
-      console.assert(this.playerInventory.equipped_icon[i].name() === 'empty');
+      console.assert(this.playerInventory.equipped_icon[i].name() === 'equipped');
     };
 
     // Tooltip for inventory
