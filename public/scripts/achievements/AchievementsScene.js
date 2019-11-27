@@ -28,21 +28,10 @@ export class AchievementsScene extends Scene {
     });
 
     const AchievementsMenu = document.getElementById('AchievementsMenu');
-    const equippedMenu = document.getElementById('equippedMenu');
     let currentShape;
 
     document.getElementById('dropButton').addEventListener('click', () => {
       this.playerAchievements.drop(currentShape);
-    });
-
-    document.getElementById('equipButton').addEventListener('click', () => {
-      const index = this.playerAchievements.Achievements_icon.indexOf(currentShape);
-      this.playerAchievements.equip(this.playerAchievements.Achievements[index], currentShape);
-    });
-
-    document.getElementById('unequipButton').addEventListener('click', () => {
-      const index = this.playerAchievements.equipped_icon.indexOf(currentShape);
-      this.playerAchievements.unequip(this.playerAchievements.equipped[index], currentShape);
     });
 
     data.stage.on('contextmenu', function(e) {
@@ -52,8 +41,8 @@ export class AchievementsScene extends Scene {
         equippedMenu.style.display = 'none';
         AchievementsMenu.style.display = 'initial';
         const containerRect = data.stage.container().getBoundingClientRect();
-        // AchievementsMenu.style.top = containerRect.top + data.stage.getPointerPosition().y + 4 +'px';
-        // AchievementsMenu.style.left = containerRect.left + data.stage.getPointerPosition().x+4 + 'px';
+        AchievementsMenu.style.top = containerRect.top + data.stage.getPointerPosition().y + 4 +'px';
+        AchievementsMenu.style.left = containerRect.left + data.stage.getPointerPosition().x+4 + 'px';
       } else if (e.target.name() === 'equipped') {
         currentShape = e.target;
         AchievementsMenu.style.display = 'none';
