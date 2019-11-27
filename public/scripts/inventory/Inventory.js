@@ -1,3 +1,5 @@
+import {Item} from '../Item.js'
+
 export class Inventory {
   constructor() {
     this.equipped = [];
@@ -96,6 +98,45 @@ export class Inventory {
     }
 
     this.layer.draw();
+
+    let item = new Item({
+      name: 'Plastic Sword',
+      info: 'This is the mighty plastic sword that Bobby picked up from the ground in front of his office.',
+      type: 'weapon',
+      dmg: 15,
+      flavourText: 'It can\'t even cut paper...',
+      icon: '../../assets/sword.png',
+    });
+    this.equip(item);
+    item = new Item({
+      name: 'Positive Student Evaluations',
+      info: 'Nothing\'s better than the sweet sweet ecstacy of reading through your saved stash of your student\'s compliment.',
+      type: 'heal',
+      heal: 10,
+      effect: 'ego boost',
+      flavourText: '8/8 would r8 again',
+      icon: '../../assets/document.png',
+    });
+    this.equip(item);
+    item = new Item({
+      name: 'Dad Joke',
+      info: 'Dad jokes are great to lighten the mood... I think...',
+      type: 'weapon',
+      dmg: 5,
+      flavourText: 'GROANS',
+      icon: '../../assets/glasses-with-mustache.png',
+    });
+    this.equip(item);
+    item = new Item({
+      name: 'Coffee',
+      info: 'You hate some students, but you love your job. It really be like that sometimes. Have a cup of coffee to soothe the pain of the daily grind.',
+      type: 'heal',
+      heal: 5,
+      effect: 'morale',
+      flavourText: 'Venti, half-whole milk, one quarter 1%, one quarter non-fat, extra hot, split quad shots, 1 1/2 shots decaf, 2 1/2 shots regular, no foam latte, with whip, 2 packets of splenda, 1 sugar in the raw, a touch of vanilla syrup and 3 short sprinkles of cinnamon. And stat.',
+      icon: '../../assets/coffee.png',
+    });
+    this.equip(item);
   }
 
   add(item) {
@@ -116,7 +157,7 @@ export class Inventory {
     this.inventory[i] = item;
 
     // Placeholder before adding item icons
-    // shape.fill('green');
+    shape.fill('green');
     shape.fillPatternImage(item.icon);
     shape.name('filled');
 
@@ -146,7 +187,7 @@ export class Inventory {
     const stats = new Konva.Text({
       x: 750,
       y: 100 + title.height() + info.height(),
-      text: `${(item.type === 'weapon') ? `Damage: ${item.dmg}`: `Healing: ${item.heal}`}`,
+      text: `${(item.type === 'weapon') ? `Damage: ${item.dmg}`: `Effect: +${item.heal} ${item.effect} (HP)`}`,
       fontSize: 18,
       fill: '#555',
       padding: 20,
@@ -238,17 +279,54 @@ export class Inventory {
     };
     console.assert(shape.name() === 'empty');
     this.equipped[i] = item;
-    this.drop(inventoryIcon);
+    if (inventoryIcon) {
+      this.drop(inventoryIcon);
+    }
     this.equipped_num += 1;
     shape.fill('green');
     shape.name('equipped');
     shape.listening(true);
 
-    const info = new Konva.Text({
+    const title = new Konva.Text({
       x: 750,
       y: 100,
-      text: `${item.name}\n\n${item.info}`,
+      text: `${item.name}`,
+      fontSize: 22,
+      fontStyle: 'bold',
+      fill: '#555',
+      padding: 20,
+      width: 220,
+      align: 'center',
+    });
+
+    const info = new Konva.Text({
+      x: 750,
+      y: 100 + title.height(),
+      text: `${item.info}`,
       fontSize: 18,
+      fill: '#555',
+      padding: 20,
+      width: 220,
+      align: 'center',
+    });
+    
+    const stats = new Konva.Text({
+      x: 750,
+      y: 100 + title.height() + info.height(),
+      text: `${(item.type === 'weapon') ? `Damage: ${item.dmg}`: `Effect: +${item.heal} ${item.effect} (HP)`}`,
+      fontSize: 18,
+      fill: '#555',
+      padding: 20,
+      width: 220,
+      align: 'center',
+    });
+
+    const flavourText = new Konva.Text({
+      x: 750,
+      y: 100 + title.height() + info.height() + stats.height(),
+      text: `${item.flavourText}`,
+      fontStyle: 'italic',
+      fontSize: 15,
       fill: '#555',
       padding: 20,
       width: 220,
@@ -262,7 +340,7 @@ export class Inventory {
       strokeWidth: 5,
       fill: '#ddd',
       width: 225,
-      height: info.height(),
+      height: title.height() + info.height() + stats.height() + flavourText.height(),
       shadowColor: 'black',
       shadowBlur: 10,
       shadowOffsetX: 10,
@@ -276,13 +354,22 @@ export class Inventory {
       document.body.style.cursor = 'pointer';
       layer.add(infoBox);
       layer.add(info);
+      layer.add(title);
+      layer.add(stats);
+      layer.add(flavourText);
       info.show();
+      title.show();
+      stats.show();
+      flavourText.show();
       infoBox.show();
       layer.draw();
     });
     shape.on('mouseout', function() {
       document.body.style.cursor = 'default';
       info.hide();
+      title.hide();
+      stats.hide();
+      flavourText.hide();
       infoBox.hide();
       layer.draw();
     });

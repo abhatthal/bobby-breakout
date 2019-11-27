@@ -2,6 +2,8 @@ import {genID} from './helper_functions.js';
 
 export class Tooltip {
   constructor(data) {
+    this.name = (data.name) ? data.name : null;
+    this.shape_id = (data.shape_id) ? data.shape_id : null,
     this.x = data.x;
     this.y = data.y;
     this.width = (data.width) ? data.width : 160; // default to 160 if not specified
@@ -24,6 +26,8 @@ export class Tooltip {
     });
 
     this.tipText = new Konva.Text({
+      name: this.name,
+      id: this.shape_id,
       x: this.x,
       y: this.y,
       text: this.text,
@@ -34,6 +38,8 @@ export class Tooltip {
     });
 
     this.tipBox = new Konva.Rect({
+      name: this.name,
+      id: this.shape_id,
       x: this.x,
       y: this.y,
       stroke: this.primaryColor,

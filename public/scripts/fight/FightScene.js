@@ -9,6 +9,7 @@ export class FightScene extends Scene {
     this.fightLayer = new Konva.Layer();
 
     this.player = data.player;
+    this.inventory = data.player._inventory;
 
     // Tooltip for fight
     this.tooltips = {
@@ -20,39 +21,40 @@ export class FightScene extends Scene {
         text: 'TIME TO FIGHT! coming later...\nE/SPACE TO RETURN',
       }),
       skillA1Tooltip: new Tooltip({
-        x: 300,
-        y: 400,
-        width: 100,
+        name: 'skill',
+        shape_id: '0',
+        x: data.stage.width()/6,
+        y: data.stage.height() - 100,
+        width: 300,
         height: 50,
-        text: 'A1 Z',
+        text: `${this.inventory.equipped[0].name}`,
       }),
       skillA2Tooltip: new Tooltip({
-        x: 450,
-        y: 400,
-        width: 100,
+        name: 'skill',
+        shape_id: '1',
+        x: data.stage.width()/6 + 300,
+        y: data.stage.height() - 100,
+        width: 300,
         height: 50,
-        text: 'A2 X',
+        text: `${this.inventory.equipped[1].name}`,
       }),
       skillA3Tooltip: new Tooltip({
-        x: 600,
-        y: 400,
-        width: 100,
+        name: 'skill',
+        shape_id: '2',
+        x: data.stage.width()/6,
+        y: data.stage.height() - 200,
+        width: 300,
         height: 50,
-        text: 'A3 C',
+        text: `${this.inventory.equipped[2].name}`,
       }),
       skillA4Tooltip: new Tooltip({
-        x: 750,
-        y: 400,
-        width: 100,
+        name: 'skill',
+        shape_id: '3',
+        x: data.stage.width()/6 + 300,
+        y: data.stage.height() - 200,
+        width: 300,
         height: 50,
-        text: 'A4 V',
-      }),
-      escapeTooltip: new Tooltip({
-        x: 300,
-        y: 320,
-        width: 550,
-        height: 150,
-        text: 'Q to normal attack; E to escape fight',
+        text: `${this.inventory.equipped[3].name}`,
       }),
       playerTooltip: new Tooltip({
         x: 20,
@@ -140,6 +142,73 @@ export class FightScene extends Scene {
     data.player.skillA1 = skilldefault.Skill1;
   }
 
+  doDamage(opponent, item) {
+    if (opponent.hp >= 0) {
+      opponent.hp -= item.dmg;
+    }
+
+    // temp update enemy hp
+    // abstract this into a general function later that updates all things to do with ui?
+    const enemyStatText = 'Enemy: \ncome fight bobby\n\n' + opponent.hp;
+    this.tooltips['enemyTooltip'].text = enemyStatText;
+    this.fightLayer.add(
+      this.tooltips['enemyTooltip'].renderBox,
+      this.tooltips['enemyTooltip'].renderText,
+    );
+    this.fightLayer.draw();
+  }
+
+  heal(player, item) {
+    Player is full health
+    if (player.hp >= 100) {
+      return;
+    }
+
+    player.hp += item.heal;
+    const playerStatText = 'Bobby here! \nsmash all ppl \nblocking your way\n' + player.hp;
+    this.tooltips['playerTooltip'].text = playerStatText;
+    this.fightLayer.add(
+      this.tooltips['playerTooltip'].renderBox,
+      this.tooltips['playerTooltip'].renderText,
+    );
+    this.fightLayer.draw();
+  }
+
+  fightLoop(subject, opponent, item) {
+    if (opponent.hp <= 0) {
+      // remove enemy when dead. currently not working.
+      // issue: doesn't rerender the current mapscene after going back to it
+
+      // console.log(this.map.npcArray);
+      // const index = this.map.npcArray.indexOf(opponent);
+      // if(index > -1){ //opponent exists in array
+      //   this.map.npcArray.splice(index, 1); //remove 1 element @ specified index
+      // }
+      // console.log(this.map.npcArray);
+      const game = Game.getInstance();
+      game.switchToMap();
+    }
+    // assume player act first
+    if (subject.fightSpeed >= opponent.fightSpeed) {
+      if (item.type === 'weapon') {
+        this.doDamage(opponent, item);
+      } else {
+        this.heal(subject, item);
+      }
+      this.enemyfight(opponent, subject);
+    } else {
+      this.enemyfight(opponent, subject);
+      this.doDamage(subject, opponent);
+    }
+    // this.fightSceneLoad(subject, npc);
+  }
+
+  // Enemy fight strategy
+  enemyfight(opponent, subject) {
+    // alert(opponent.hp, subject.hp);
+    // opponent.skillA1.hpchange(subject, 0);
+  }
+
   switchFrom(data) {
     console.assert(data != null);
     this.controls.removeControlBindings();
@@ -165,7 +234,7 @@ export class FightScene extends Scene {
 
   fightSceneLoad(player, npc) {
     // #region old ui
-    const playerStatText = 'Bobby here! \nsmash all ppl \nblocking your way\n' + player.hp; //
+    const playerStatText = 'Bobby here! \nsmash all ppl \nblocking your way\n' + player.hp;
     const enemyStatText = 'Enemy: \ncome fight bobby\n\n' + npc.hp;
     console.log(playerStatText);
     this.tooltips['playerTooltip'].text = playerStatText;
@@ -176,47 +245,53 @@ export class FightScene extends Scene {
     );
 
     this.fightLayer.add(
-        this.tooltips['skillA2Tooltip'].renderBox,
-        this.tooltips['skillA2Tooltip'].renderText,
+      this.tooltips['skillA2Tooltip'].renderBox,
+      this.tooltips['skillA2Tooltip'].renderText,
     );
     this.fightLayer.add(
-        this.tooltips['skillA3Tooltip'].renderBox,
-        this.tooltips['skillA3Tooltip'].renderText,
+      this.tooltips['skillA3Tooltip'].renderBox,
+      this.tooltips['skillA3Tooltip'].renderText,
     );
     this.fightLayer.add(
-        this.tooltips['skillA4Tooltip'].renderBox,
-        this.tooltips['skillA4Tooltip'].renderText,
+      this.tooltips['skillA4Tooltip'].renderBox,
+      this.tooltips['skillA4Tooltip'].renderText,
     );
 
     this.fightLayer.add(
-        this.tooltips['playerTooltip'].renderBox,
-        this.tooltips['playerTooltip'].renderText,
+      this.tooltips['playerTooltip'].renderBox,
+      this.tooltips['playerTooltip'].renderText,
     );
     this.fightLayer.add(
-        this.tooltips['enemyTooltip'].renderBox,
-        this.tooltips['enemyTooltip'].renderText,
+      this.tooltips['enemyTooltip'].renderBox,
+      this.tooltips['enemyTooltip'].renderText,
     );
-    this.fightLayer.add(
-        this.tooltips['fightTooltip'].renderBox,
-        this.tooltips['fightTooltip'].renderText,
-    );
-    this.fightLayer.add(
-        this.tooltips['escapeTooltip'].renderBox,
-        this.tooltips['escapeTooltip'].renderText,
-    );
-    // #endregion
 
-    // #region new ui
-    // this.fightLayer.add(
-    //   this.uiStuff['activityCenter'],
-    //   this.uiStuff['skillsTab'],
-    //   this.uiStuff['skill1'],
-    //   this.uiStuff['skill2'],
-    //   this.uiStuff['skill3'],
-    //   this.uiEntities['player'],
-    //   this.uiEntities['enemy']
-    // );
-    // #endregion
+    this.fightLayer.on('mouseover', function(evt) {
+      let shape = evt.target;
+      if (shape.name() === 'skill') {
+        document.body.style.cursor = 'pointer';
+      }
+    });
+    this.fightLayer.on('mouseout', function(evt) {
+      let shape = evt.target;
+      if (shape.name() === 'skill') {
+        document.body.style.cursor = 'default';
+      }
+    });
+
+    let fight = this;
+    this.fightLayer.on('click', function(evt) {
+      let shape = evt.target;
+      if (shape.name() === 'skill') {
+        fight.fightLoop(player, npc, player.inventory.equipped[shape.id()]);
+      }
+    });
+    this.fightLayer.add(
+      this.tooltips['fightTooltip'].renderBox,
+      this.tooltips['fightTooltip'].renderText,
+    );
+
     this.fightLayer.draw();
   }
+
 }
