@@ -10,7 +10,6 @@ export class MapControls extends Controls {
     this._readyToInteract = undefined;
     this._atEndPoint = false;
     this._inInventoryWindow = false;
-    this._isColliding = false;
   }
 
   addControlBindings() {
@@ -66,28 +65,28 @@ export class MapControls extends Controls {
     // visual indicator to player if colliding
     let isColliding = false;
     let willCollide = false;
-    // let oldPos = [this.player.x, this.player.y];
-    let playerMoveDir;
+    let playerMoveDirX;
+    let playerMoveDirY;
 
     // #region Check Next Movement Direction
     // Down arrow or S for moving sprite down
     if (this.keys[40] || this.keys[83]) {
-      playerMoveDir = DIRECTION.DOWN;
+      playerMoveDirY = DIRECTION.DOWN;
     } else if (this.keys[38] || this.keys[87]) {
       // Up arrow or W to move sprite up
-      playerMoveDir = DIRECTION.UP;
+      playerMoveDirY = DIRECTION.UP;
     }
 
     // Left arrow or A for moving sprite left
     if (this.keys[37] || this.keys[65]) {
-      playerMoveDir = DIRECTION.LEFT;
+      playerMoveDirX = DIRECTION.LEFT;
     } else if (this.keys[39] || this.keys[68]) {
       // Right arrow or D to move sprite right
-      playerMoveDir = DIRECTION.RIGHT;
+      playerMoveDirX = DIRECTION.RIGHT;
     }
 
     // get simulated new player position
-    const newPos = this.player.simulateMove(playerMoveDir);
+    const newPos = this.player.simulateMove(playerMoveDirX, playerMoveDirY);
 
     const playerSim = {
       x: newPos[0],
@@ -117,7 +116,8 @@ export class MapControls extends Controls {
     // only move if next simulated position wont collide with anything
     if (!willCollide) {
       this.map.mapArray.forEach((node) => {
-        node.scroll(oppositeDirection(playerMoveDir)); // TODO: direction based on delta
+        node.scroll(oppositeDirection(playerMoveDirX));
+        node.scroll(oppositeDirection(playerMoveDirY));
       });
     }
 

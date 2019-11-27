@@ -53,16 +53,18 @@ export class Character extends Entity {
     }
   }
 
-  simulateMove(dir) {
+  simulateMove(dirX, dirY) {
     let newX = this.x;
     let newY = this.y;
-    switch (dir) {
+    switch (dirX) {
       case DIRECTION.LEFT:
         newX = this.x + this.speed * DIRECTION.UNIT_LEFT;
         break;
       case DIRECTION.RIGHT:
         newX = this.x + this.speed * DIRECTION.UNIT_RIGHT;
         break;
+    }
+    switch (dirY) {
       case DIRECTION.UP:
         newY = this.y + this.speed * DIRECTION.UNIT_UP;
         break;
