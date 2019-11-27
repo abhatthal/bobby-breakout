@@ -9,7 +9,7 @@ import {Inventory} from '../inventory/Inventory.js';
 export class Character extends Entity {
   constructor(data) {
     super(data);
-    this.speed = 8; // movement speed
+    this.speed = 5; // movement speed
     this.fightSpeed = 0; // for fight priority
     this.skillA1 = null; // defaultskill.Skill1;
     this.enableFace = (data.enableFace) ? data.enableFace : false;
