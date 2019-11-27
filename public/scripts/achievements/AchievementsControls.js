@@ -59,5 +59,10 @@ export class AchievementsControls extends Controls {
       const game = Game.getInstance();
       game.switchToMap();
     }
+    // i to open inventory window
+    if (this.keys[73]) {
+      const game = Game.getInstance();
+      game.switchToInventory();
+    }
   }
 }
