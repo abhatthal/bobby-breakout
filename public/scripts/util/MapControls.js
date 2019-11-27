@@ -11,13 +11,6 @@ export class MapControls extends Controls {
     this._atEndPoint = false;
     this._inInventoryWindow = false;
     this._isColliding = false;
-
-    this._collisionDir = {
-      up: false,
-      right: false,
-      down: false,
-      left: false,
-    };
   }
 
   addControlBindings() {
@@ -56,66 +49,77 @@ export class MapControls extends Controls {
 
   handleKeyDownLogic(event) {
     this.keys[event.keyCode] = true;
+    this.doInteractionKeyDown();
 
-    this.doKeyDown();
+    /*
+      PSEUDO-CODE MOVEMENT ALGORITHM
+      store x (old pos)
+      check x' (new pos)
+      if x' collision == false
+        then deltaX = x' - x
+        movePlayerOrEnvironment(deltaX)
+      else
+        no movement
+        return
+    */
 
-    // TODO: Reorganize this better in new class
-    // TODO: move to checkMovementCollision();
-    const isColliding = false;
-    // #region old block collison
-    // this.map.blockArray.forEach((node) => {
-    //   if (this.player.checkCollision(node)) {
-    //     // handle impassible walls here
-    //     if (node.impassible === true) {
-    //       // this.doReverseMovement();
-    //       // this.disableMovementDirection();
-    //     }
-    //     isColliding = true;
-    //   }
-    // });
-    // #endregion
+    // visual indicator to player if colliding
+    let isColliding = false;
+    let willCollide = false;
+    // let oldPos = [this.player.x, this.player.y];
+    let playerMoveDir;
+
+    // #region Check Next Movement Direction
+    // Down arrow or S for moving sprite down
+    if (this.keys[40] || this.keys[83]) {
+      playerMoveDir = DIRECTION.DOWN;
+    } else if (this.keys[38] || this.keys[87]) {
+      // Up arrow or W to move sprite up
+      playerMoveDir = DIRECTION.UP;
+    }
+
+    // Left arrow or A for moving sprite left
+    if (this.keys[37] || this.keys[65]) {
+      playerMoveDir = DIRECTION.LEFT;
+    } else if (this.keys[39] || this.keys[68]) {
+      // Right arrow or D to move sprite right
+      playerMoveDir = DIRECTION.RIGHT;
+    }
+
+    // get simulated new player position
+    const newPos = this.player.simulateMove(playerMoveDir);
+
+    const playerSim = {
+      x: newPos[0],
+      y: newPos[1],
+      width: this.player.width,
+      height: this.player.height,
+    };
+    // console.log(playerSim, newPos);
+
+    // check if simulated position will collide to any node
+    this.map.blockArray.forEach((node) => {
+      if (this.player.checkCollision(node, playerSim)) {
+        console.log('will collide');
+        willCollide = true;
+        isColliding = true; // for visual indicator, change colour to red
+      }
+    });
+
+    // change colour to show collision if they move in that direction
     if (isColliding) {
-      this.player.shape.attrs.fill = 'red';
+      this.player.shape.attrs.fill = 'orange';
     } else {
       this.player.shape.attrs.fill = 'grey';
     }
-    // #region old npc collision
-    // this.map.npcArray.forEach((node) => {
-    //   this.player.checkCollision(node);
-    //   node.checkPlayerDetection(this.player);
-    //   if (this.player.isColliding(node)) {
-    //     // trigger some interaction, for now, change colour
-    //     // console.log('i am touching an NPC', node.id);
-    //     // handle impassible NPCs here
-    //     if (node.impassible === true) {
-    //       // this.doReverseMovement();
-    //       // this.disableMovementDirection();
-    //     }
-    //     isColliding = true;
-    //   }
-    //   // TODO: move to checkSightCollision();
-    //   if (node.isSeeing(this.player)) {
-    //     // console.log('i see the player');
+    // console.log(willCollide);
 
-    //     this.tooltips.interaction.moveTo({
-    //       x: node.x + 50,
-    //       y: node.y - 50,
-    //     });
-
-    //     this.layer.add(this.tooltips.interaction.renderBox,
-    //       this.tooltips.interaction.renderText);
-    //     // not sure why adding tooltip by a group doesn't work
-    //     // layer.add(tooltip.render);
-
-    //     this.layer.draw();
-    //     this._readyToInteract = node;
-    //   } else {
-    //     this.tooltips.interaction.remove();
-    //     this._readyToInteract = undefined;
-    //   }
-    // });
-    // #endregion
-    // TODO: move to checkPointCollision()
+    // only move if next simulated position wont collide with anything
+    if (!willCollide) {
+      this.map.mapArray.forEach((node) => {
+        node.scroll(oppositeDirection(playerMoveDir)); // TODO: direction based on delta
+      });
+    }
 
     // check if player is on spawn point or end points
     // #region spawn point check stuff
@@ -143,71 +147,7 @@ export class MapControls extends Controls {
     this.layer.batchDraw();
   }
 
-  doKeyDown() {
-    /*
-      store x (old pos)
-      check x' (new pos)
-      if x' collision == false
-        then deltaX = x' - x
-        movePlayerOrEnvironment(deltaX)
-      else
-        no movement
-        return
-      */
-    let willCollide = false;
-    // let oldPos = [this.player.x, this.player.y];
-    let playerMoveDir;
-    // Down arrow or S for moving sprite down
-    if (this.keys[40] || this.keys[83]) {
-      playerMoveDir = DIRECTION.DOWN;
-    } else if (this.keys[38] || this.keys[87]) {
-      // Up arrow or W to move sprite up
-      playerMoveDir = DIRECTION.UP;
-    }
-
-    // Left arrow or A for moving sprite left
-    if (this.keys[37] || this.keys[65]) {
-      playerMoveDir = DIRECTION.LEFT;
-    } else if (this.keys[39] || this.keys[68]) {
-      // Right arrow or D to move sprite right
-      playerMoveDir = DIRECTION.RIGHT;
-    }
-
-    // new player position
-    const newPos = this.player.simulateMove(playerMoveDir);
-
-    const playerSim = {
-      x: newPos[0],
-      y: newPos[1],
-      width: this.player.width,
-      height: this.player.height,
-    };
-    console.log(playerSim, newPos);
-
-    this.map.blockArray.forEach((node) => {
-      if (this.player.checkCollision(node, playerSim)) {
-        // handle impassible walls here
-        if (node.impassible === true) {
-          // this.doReverseMovement();
-          // this.disableMovementDirection();
-        }
-        willCollide = true;
-        // console.log(node);
-      }
-    });
-    console.log(willCollide);
-
-    if (!willCollide) {
-      this.map.mapArray.forEach((node) => {
-        node.scroll(oppositeDirection(playerMoveDir)); // TODO: direction based on delta
-      });
-    }
-
-    // console.log('up: ', this._currMovementDir.up,
-    //     '\nright: ', this._currMovementDir.right,
-    //     '\ndown: ', this._currMovementDir.down,
-    //     '\nleft: ', this._currMovementDir.left);
-
+  doInteractionKeyDown() {
     // Space or E for interaction
     if (this.keys[32] || this.keys[69]) {
       console.log(this._atEndPoint);
@@ -233,27 +173,4 @@ export class MapControls extends Controls {
       this.keys[80] = false;
     }
   }
-
-  disableMovementDirection() {
-    this._collisionDir = this._currMovementDir;
-    console.log('collision direction: ', this._collisionDir);
-  }
-
-  // doReverseMovement() {
-  //   // Down arrow or W for moving sprite down
-  //   if (this.keys[40] || this.keys[83]) {
-  //     this.player.move(DIRECTION.DOWN);
-  //   } else if (this.keys[38] || this.keys[87]) {
-  //     // Up arrow or S to move sprite up
-  //     this.player.move(DIRECTION.UP);
-  //   }
-
-  //   // Left arrow or A for moving sprite left
-  //   if (this.keys[37] || this.keys[65]) {
-  //     this.player.move(DIRECTION.RIGHT);
-  //   } else if (this.keys[39] || this.keys[68]) {
-  //     // Right arrow or D to move sprite right
-  //     this.player.move(DIRECTION.LEFT);
-  //   }
-  // }
 }

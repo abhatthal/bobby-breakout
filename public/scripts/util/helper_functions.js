@@ -27,8 +27,8 @@ export const DIRECTION = {
   DOWN: 'DOWN',
   UNIT_LEFT: -1,
   UNIT_RIGHT: 1,
-  UNIT_UP: 1,
-  UNIT_DOWN: -1,
+  UNIT_UP: -1, // up should be -1 since origin is top-left
+  UNIT_DOWN: 1, // down should be +1 since origin is top-left
 };
 
 export function oppositeDirection(dir) {
