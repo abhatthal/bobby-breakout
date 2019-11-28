@@ -39,7 +39,7 @@ export class Achievements {
         y: 120 + (parseInt(i / 5) * 80),
         width: 50,
         height: 50,
-        fill: 'red',
+        fill: 'gray',
         stroke: 'black',
         strokeWidth: 4,
         name: 'empty',
@@ -71,10 +71,16 @@ export class Achievements {
     if (this.Achievements_num >= this.Achievements_size) {
       return;
     }
-
-    let shape;
+    // Already have this achievement --> do nothing
     let i = 0;
-    for (; i < this.Achievements_size; i++) {
+    for (i = 0; i < this.Achievements.length; i++) {
+      if (JSON.stringify(item) === JSON.stringify(this.Achievements[i])) {
+        return;
+      }
+    }
+    
+    let shape;
+    for (i = 0; i < this.Achievements_size; i++) {
       if (this.Achievements_icon[i].name() === 'empty') {
         shape = this.Achievements_icon[i];
         break;
