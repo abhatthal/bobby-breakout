@@ -27,15 +27,15 @@ export class Map {
     });
     layer.add(endPoint.render);
 
-    const block = new Wall({
-      x: stage.width() / 2 - 70,
-      y: stage.height() / 2,
-      width: 300,
-      height: 30,
-      colour: 'orange',
-      name: 'wall',
-    });
-    layer.add(block.render);
+    // const block = new Wall({
+    //   x: stage.width() / 2 - 70,
+    //   y: stage.height() / 2,
+    //   width: 300,
+    //   height: 30,
+    //   colour: 'orange',
+    //   name: 'wall',
+    // });
+    // layer.add(block.render);
 
     const block2 = new Wall({
       x: stage.width() / 2,
@@ -106,7 +106,7 @@ export class Map {
     this.npcArray.push(npc);
 
     this.blockArray = [];
-    this.blockArray.push(block);
+    // this.blockArray.push(block);
     this.blockArray.push(block2);
     this.blockArray.push(stageTop);
     this.blockArray.push(stageBottom);
