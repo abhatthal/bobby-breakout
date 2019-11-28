@@ -1,4 +1,5 @@
 import * as AL from './achievements/AchievementsList.js';
+import * as IL from './inventory/InventoryList.js';
 
 // For controls across all scenes
 export function achievementsDown(ctx) {
@@ -9,4 +10,8 @@ export function achievementsDown(ctx) {
 }
 
 export function inventoryDown(ctx) {
+  // For debugging purposes, a key 'z' to add an item
+  if (ctx.keys[90]) {
+    ctx.player.inventory.add(IL.testItem);
+  }
 }

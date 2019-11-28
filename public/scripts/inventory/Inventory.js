@@ -195,7 +195,7 @@ export class Inventory {
     this.equipped[i] = item;
     this.drop(inventoryIcon);
     this.equipped_num += 1;
-    shape.fill(item.color);
+    shape.fill('item.color');
     shape.name('equipped');
     shape.listening(true);
 

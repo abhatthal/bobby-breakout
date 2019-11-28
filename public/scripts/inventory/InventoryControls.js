@@ -46,15 +46,6 @@ export class InventoryControls extends Controls {
   handleKeyDown(event) {
     this.keys[event.keyCode] = true;
 
-    // For debugging purposes, a key 'z' to add an item
-    if (this.keys[90]) {
-      const item = new Item({
-        name: 'Sword',
-        info: 'looool',
-      });
-      this.player.inventory.add(item);
-    }
-
     // All global achievements
     achievementsDown(this);
     // All global inventory
