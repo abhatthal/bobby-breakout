@@ -1,6 +1,7 @@
 import {Controls} from '../util/Controls.js';
 import {Game} from '../Game.js';
 import {Item} from '../Item.js';
+import {achievementsDown, inventoryDown} from '../globalCtrl.js';
 
 export class InventoryControls extends Controls {
   constructor(data) {
@@ -53,6 +54,12 @@ export class InventoryControls extends Controls {
       });
       this.player.inventory.add(item);
     }
+
+    // All global achievements
+    achievementsDown(this);
+    // All global inventory
+    inventoryDown(this);
+
     // i for inventory menu exit
     if (this.keys[73]) {
       const game = Game.getInstance();

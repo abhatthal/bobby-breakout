@@ -1,7 +1,6 @@
 import {Controls} from '../util/Controls.js';
 import {Game} from '../Game.js';
-// import {Item} from '../Item.js';
-import * as AL from './AchievementsList.js';
+import {achievementsDown, inventoryDown} from '../globalCtrl.js';
 
 export class AchievementsControls extends Controls {
   constructor(data) {
@@ -46,10 +45,10 @@ export class AchievementsControls extends Controls {
   handleKeyDown(event) {
     this.keys[event.keyCode] = true;
 
-    // For debugging purposes, a key 'x' to add an item (achievement)
-    if (this.keys[88]) {
-      this.player.achievements.add(AL.testAchievement);
-    }
+    // All global achievements
+    achievementsDown(this);
+    // All global inventory
+    inventoryDown(this);
 
     // p for Achievements menu exit
     if (this.keys[80]) {

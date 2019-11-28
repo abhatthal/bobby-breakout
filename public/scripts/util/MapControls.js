@@ -1,6 +1,7 @@
 import {DIRECTION} from '../util/helper_functions.js';
 import {Game} from '../Game.js';
 import {Controls} from './Controls.js';
+import {achievementsDown, inventoryDown} from '../globalCtrl.js';
 
 export class MapControls extends Controls {
   constructor(data) {
@@ -168,7 +169,15 @@ export class MapControls extends Controls {
       this.keys[27] = false;
       this.keys[80] = false;
     }
+
+    // All global achievements
+    achievementsDown(this);
+    // All global inventory
+    inventoryDown(this);
+
   }
+
+ 
 
   doReverseMovement() {
     // Down arrow or W for moving sprite down
