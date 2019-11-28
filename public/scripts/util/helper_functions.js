@@ -48,3 +48,8 @@ export function httpGet(theUrl) {
   xmlHttp.send(null);
   return xmlHttp.responseText;
 }
+
+export function isPremium() {
+  const url = new URL(window.location.href);
+  return url.searchParams.get('premium');
+}

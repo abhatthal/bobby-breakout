@@ -1,3 +1,5 @@
+import {isPremium} from './util/helper_functions.js';
+
 export class Achievements {
   constructor() {
     this.Achievements = [];
@@ -71,6 +73,7 @@ export class Achievements {
     if (this.Achievements_num >= this.Achievements_size) {
       return;
     }
+
     // Already have this achievement --> do nothing
     let i = 0;
     for (i = 0; i < this.Achievements.length; i++) {

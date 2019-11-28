@@ -1,6 +1,7 @@
 // import { stringify } from 'querystring';
 // import {Skills} from './Skills.js';
 import {Game} from './Game.js';
+import {isPremium} from './util/helper_functions.js';
 
 // TESTING USER STATS
 import {Stats} from './Stats.js';
@@ -13,9 +14,9 @@ const userStats = new Stats({
 const premiumContainer = document.getElementById('premium_content');
 const url = new URL(window.location.href);
 const username = url.searchParams.get('username');
-const isPremium = url.searchParams.get('premium');
+// const isPremium = url.searchParams.get('premium');
 
-if (isPremium === 'true') {
+if (isPremium() === 'true') {
   premiumContainer.style.display = 'block';
 }
 // END premium content visbility
