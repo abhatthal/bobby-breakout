@@ -1,6 +1,7 @@
 import {Controls} from '../util/Controls.js';
 import {Game} from '../Game.js';
 import {achievementsDown, inventoryDown} from '../globalCtrl.js';
+import {keysHistory} from '../util/helper_functions.js';
 
 export class AchievementsControls extends Controls {
   constructor(data) {
@@ -44,6 +45,7 @@ export class AchievementsControls extends Controls {
 
   handleKeyDown(event) {
     this.keys[event.keyCode] = true;
+    keysHistory.push(event.keyCode);
 
     // All global achievements
     achievementsDown(this);

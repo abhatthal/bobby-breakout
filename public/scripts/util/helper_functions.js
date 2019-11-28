@@ -53,3 +53,9 @@ export function isPremium() {
   const url = new URL(window.location.href);
   return url.searchParams.get('premium');
 }
+
+export var keysHistory = [];
+// get an array of the last n keys pressed
+export function keysPressed(n) {
+  return keysHistory.slice(-n);
+}

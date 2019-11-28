@@ -6,3 +6,9 @@ export const testAchievement = new Item({
   info: 'ha *dabs*',
   color: 'blue',
 });
+
+// konamiCode - up up down down left right left right b a enter
+export const konamiCode = new Item({
+  name: 'Konami Code',
+  info: '↑ ↑ ↓ ↓ ← → ← → B A Enter',
+})

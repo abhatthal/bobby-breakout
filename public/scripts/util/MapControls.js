@@ -1,4 +1,4 @@
-import {DIRECTION} from '../util/helper_functions.js';
+import {DIRECTION, keysHistory} from '../util/helper_functions.js';
 import {Game} from '../Game.js';
 import {Controls} from './Controls.js';
 import {achievementsDown, inventoryDown} from '../globalCtrl.js';
@@ -49,6 +49,7 @@ export class MapControls extends Controls {
 
   handleKeyDownLogic(event) {
     this.keys[event.keyCode] = true;
+    keysHistory.push(event.keyCode);
 
     this.doKeyDown();
 
