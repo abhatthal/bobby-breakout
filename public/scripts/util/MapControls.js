@@ -98,7 +98,10 @@ export class MapControls extends Controls {
 
     // BLOCKS: check if simulated position will collide to any node
     this.map.blockArray.forEach((node) => {
+      // console.log(node);
+      // console.log(this.player);  
       if (this.player.checkCollision(node, playerSim)) {
+        // console.log(node);
         willCollide = true;
         isColliding = true; // for visual indicator, change colour to red
       }
