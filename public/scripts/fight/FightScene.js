@@ -2,6 +2,7 @@ import {Scene} from '../Scene.js';
 import {Tooltip} from '../util/ToolTip.js';
 import {FightControls} from './FightControls.js';
 import * as skilldefault from '../skilldefault.js';
+import {CharacterLayout} from './CharacterLayout.js';
 
 export class FightScene extends Scene {
   constructor(data) {
@@ -67,6 +68,19 @@ export class FightScene extends Scene {
         width: 150,
         height: 300,
         text: '',
+      }),
+
+    };
+
+    this.CharacterLayout = {
+      playerLayout: new CharacterLayout({
+        x: 20,
+        y: data.stage.height() - 500,
+      }),
+
+      enemyLayout: new CharacterLayout({
+        x: data.stage.width() - 200,
+        y: 100,
       }),
     };
 
@@ -204,6 +218,23 @@ export class FightScene extends Scene {
         this.tooltips['escapeTooltip'].renderBox,
         this.tooltips['escapeTooltip'].renderText,
     );
+
+    this.fightLayer.add(
+        this.CharacterLayout['playerLayout'].renderheadBox,
+        this.CharacterLayout['playerLayout'].renderbodyBox,
+        this.CharacterLayout['playerLayout'].renderleftlegBox,
+        this.CharacterLayout['playerLayout'].renderrightlegBox,
+        this.CharacterLayout['playerLayout'].renderleftarmBox,
+        this.CharacterLayout['playerLayout'].renderrightarmBox,
+
+        this.CharacterLayout['enemyLayout'].renderheadBox,
+        this.CharacterLayout['enemyLayout'].renderbodyBox,
+        this.CharacterLayout['enemyLayout'].renderleftlegBox,
+        this.CharacterLayout['enemyLayout'].renderrightlegBox,
+        this.CharacterLayout['enemyLayout'].renderleftarmBox,
+        this.CharacterLayout['enemyLayout'].renderrightarmBox,
+    );
+
     // #endregion
 
     // #region new ui
