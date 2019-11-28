@@ -24,7 +24,6 @@ export class Entity {
       x: this.x,
       y: this.y,
       id: this.id,
-      draggable: true,
     });
     this.shape = new Konva.Rect({
       width: data.width,

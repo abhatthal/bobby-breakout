@@ -1,5 +1,6 @@
 import {Scene} from '../Scene.js';
 import {Map} from './Map.js';
+import {MapASB} from './MapASB.js';
 import {Tooltip} from '../util/ToolTip.js';
 import {MapControls} from '../util/MapControls.js';
 
@@ -8,7 +9,8 @@ export class MapScene extends Scene {
     super(data);
     this._layer = new Konva.Layer();
 
-    this.map = new Map({layer: this.layer, stage: data.stage});
+    // this.map = new Map({layer: this.layer, stage: data.stage});
+    this.map = new MapASB({layer: this.layer, stage: data.stage});
 
     this.tooltips = {
       interaction: new Tooltip({

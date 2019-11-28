@@ -20,6 +20,42 @@ export class BoundingBox {
   }
 }
 
+export class LineBoundingBox {
+  constructor(group, points, isVisible) {
+    console.assert(points != null);
+    console.assert(group != null);
+    // this.boundingArea = shape.getClientRect({relativeTo: group});
+    // this.box = new Konva.Rect({
+    //   x: this.boundingArea.x,
+    //   y: this.boundingArea.y,
+    //   width: this.boundingArea.width,
+    //   height: this.boundingArea.height,
+    //   stroke: 'cyan',
+    //   strokeWidth: (isVisible) ? 5 : 0,
+    // });
+    console.log(points.length);
+
+    /*
+    pairs = points.length / 2
+    numLines = pairs - 1
+    line = new Konva.Line({
+      points: data.points,
+      stroke: 'black',
+      strokeWidth: 10,
+    })
+    */
+
+    for(let i = 0; i < points.length; i+=2){
+
+    }
+    // points.length();
+  }
+
+  get boundingBox() {
+    return this.box;
+  }
+}
+
 export class VisionCone {
   constructor(group, shape) {
     console.assert(shape != null);
