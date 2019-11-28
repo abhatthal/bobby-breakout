@@ -1,4 +1,4 @@
-import {isPremium} from './util/helper_functions.js';
+import {isPremium} from '../util/helper_functions.js';
 
 export class Achievements {
   constructor() {

@@ -1,6 +1,7 @@
 import {Controls} from '../util/Controls.js';
 import {Game} from '../Game.js';
-import {Item} from '../Item.js';
+// import {Item} from '../Item.js';
+import * as AL from './AchievementsList.js';
 
 export class AchievementsControls extends Controls {
   constructor(data) {
@@ -47,12 +48,7 @@ export class AchievementsControls extends Controls {
 
     // For debugging purposes, a key 'x' to add an item (achievement)
     if (this.keys[88]) {
-      const achievement = new Item({
-        name: 'Ya Nerd',
-        info: 'ha *dabs*',
-        color: 'blue'
-      });
-      this.player.achievements.add(achievement);
+      this.player.achievements.add(AL.testAchievement);
     }
 
     // p for Achievements menu exit
