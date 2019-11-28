@@ -78,7 +78,7 @@ export class Achievements {
         return;
       }
     }
-    
+
     let shape;
     for (i = 0; i < this.Achievements_size; i++) {
       if (this.Achievements_icon[i].name() === 'empty') {
@@ -90,7 +90,7 @@ export class Achievements {
     this.Achievements[i] = item;
 
     // Placeholder before adding item icons
-    shape.fill('green');
+    shape.fill(item.color);
     shape.name('filled');
 
     const info = new Konva.Text({

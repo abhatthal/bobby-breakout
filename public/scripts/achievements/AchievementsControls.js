@@ -50,6 +50,7 @@ export class AchievementsControls extends Controls {
       const achievement = new Item({
         name: 'Ya Nerd',
         info: 'ha *dabs*',
+        color: 'blue'
       });
       this.player.achievements.add(achievement);
     }

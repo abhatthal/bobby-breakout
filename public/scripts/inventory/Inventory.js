@@ -116,7 +116,7 @@ export class Inventory {
     this.inventory[i] = item;
 
     // Placeholder before adding item icons
-    shape.fill('green');
+    shape.fill(item.color);
     shape.name('filled');
 
     const info = new Konva.Text({
@@ -195,7 +195,7 @@ export class Inventory {
     this.equipped[i] = item;
     this.drop(inventoryIcon);
     this.equipped_num += 1;
-    shape.fill('green');
+    shape.fill(item.color);
     shape.name('equipped');
     shape.listening(true);
 
