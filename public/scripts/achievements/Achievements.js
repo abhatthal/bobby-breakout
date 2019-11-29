@@ -146,6 +146,7 @@ export class Achievements {
     // Achievement Notification
     let notificationContainer = document.getElementById('achievement');
     notificationContainer.style.display = 'block';
+    notificationContainer.innerHTML = '<h1>Achievement Unlocked: ' + item.name + '</h1>';
     setTimeout(function() {
       notificationContainer.style.display = 'none';
     }, 3000);
