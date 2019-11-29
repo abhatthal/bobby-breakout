@@ -58,7 +58,7 @@ body {
   border: 2px solid #CDCDCD;
   background-color: #F6F0E3;
 }
-img {
+#achievement img {
   display: inline-block;
   width: 50px;
   height: auto;
