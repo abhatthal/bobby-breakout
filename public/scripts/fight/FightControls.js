@@ -1,5 +1,6 @@
 import {Controls} from '../util/Controls.js';
 import {Game} from '../Game.js';
+import {achievementsDown, inventoryDown} from '../globalCtrl.js';
 
 export class FightControls extends Controls {
   constructor(data) {
@@ -59,6 +60,12 @@ export class FightControls extends Controls {
     if (this.keys[81]) {
       this.fightLoop(this.player, this.npc);
     }
+
+    // All global achievements
+    achievementsDown(this);
+    // All global inventory
+    inventoryDown(this);
+
   }
 
   doDamage(player, opponent) {
