@@ -82,6 +82,11 @@ export class Achievements {
       }
     }
 
+    // Freemium users should not be able to see achievement details
+    if (!(isPremium())) {
+      item.info = '';
+    }
+
     let shape;
     for (i = 0; i < this.Achievements_size; i++) {
       if (this.Achievements_icon[i].name() === 'empty') {

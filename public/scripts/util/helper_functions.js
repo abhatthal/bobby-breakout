@@ -51,7 +51,7 @@ export function httpGet(theUrl) {
 
 export function isPremium() {
   const url = new URL(window.location.href);
-  return url.searchParams.get('premium');
+  return (url.searchParams.get('premium') === 'true');
 }
 
 export var keysHistory = [];
