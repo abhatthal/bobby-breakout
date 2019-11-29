@@ -3,16 +3,19 @@ import {FightControls} from './FightControls.js';
 import * as skilldefault from '../skilldefault.js';
 import {CharacterLayout} from './CharacterLayout.js';
 import {Dialogtip} from './DialogTip.js';
+import {AnimationTip} from './AnimationTip.js';
 
 export class FightScene extends Scene {
   constructor(data) {
     super(data);
     this.fightLayer = new Konva.Layer();
-
     this.player = data.player;
 
-    // Tooltip for fight
-    this.tooltips = {
+    this.animationtips = {
+      animationItem1: new AnimationTip({
+        x: data.stage.width() * 0.1,
+        y: data.stage.height() * 0.2,
+      }),
     };
 
     this.CharacterLayout = {
@@ -222,6 +225,10 @@ export class FightScene extends Scene {
         this.dialogtips['playerDialogtip'].renderText,
         this.dialogtips['enemyDialogtip'].renderBox,
         this.dialogtips['enemyDialogtip'].renderText,
+    );
+
+    this.fightLayer.add(
+        this.animationtips['animationItem1'].renderhexagon,
     );
 
     this.fightLayer.add(
