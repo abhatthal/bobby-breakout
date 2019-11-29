@@ -11,6 +11,8 @@ export class Entity {
     this.id = genID();
     this.hp = (data.hp) ? data.hp : null;
     this.dmg = (data.dmg) ? data.dmg : null;
+    this.globalX = data.globalX;
+    this.globalY = data.globalY;
 
     let imageObj;
     if (data.image) {
