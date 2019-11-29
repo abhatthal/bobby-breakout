@@ -75,6 +75,10 @@ export class Inventory {
         width: 50,
         height: 50,
         fill: 'red',
+        fillPatternScale: {
+          x: 0.1,
+          y: 0.1
+        },
         stroke: 'black',
         strokeWidth: 4,
         name: 'empty',
@@ -89,6 +93,10 @@ export class Inventory {
         width: 50,
         height: 50,
         fill: 'yellow',
+        fillPatternScale: {
+          x: 0.1,
+          y: 0.1
+        },
         stroke: 'black',
         strokeWidth: 4,
         name: 'empty',
@@ -157,8 +165,15 @@ export class Inventory {
     this.inventory[i] = item;
 
     // Placeholder before adding item icons
-    shape.fill('green');
-    shape.fillPatternImage(item.icon);
+    shape.fill(null);
+
+    const self = this;
+    Promise.resolve(item.img).then(function(imgValue) {
+      // This ensures we wait for images to load before setting the fill pattern
+      // This avoids black boxes.
+      shape.fillPatternImage(imgValue);
+      self.layer.draw();
+    });
     shape.name('filled');
 
     const title = new Konva.Text({
@@ -283,7 +298,15 @@ export class Inventory {
       this.drop(inventoryIcon);
     }
     this.equipped_num += 1;
-    shape.fill('green');
+    shape.fill(null);
+
+    const self = this;
+    Promise.resolve(item.img).then(function(imgValue) {
+      // This ensures we wait for images to load before setting the fill pattern
+      // This avoids black boxes.
+      shape.fillPatternImage(imgValue);
+      self.layer.draw();
+    });
     shape.name('equipped');
     shape.listening(true);
 
