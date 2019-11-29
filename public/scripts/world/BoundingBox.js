@@ -60,7 +60,7 @@ export class LineBoundingBox {
       });
       this._lineBBox.push(bbox);
     }
-    console.log(this._lineBBox);
+    // console.log(this._lineBBox);
 
     // add all line bounding boxes to group
     for (let i = 0; i < this._lineBBox.length; i++) {
