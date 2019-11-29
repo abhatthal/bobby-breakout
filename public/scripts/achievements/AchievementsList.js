@@ -12,3 +12,9 @@ export const konamiCode = new Item({
   name: 'Konami Code',
   info: '↑ ↑ ↓ ↓ ← → ← → B A Enter',
 })
+
+// lazy - don't move for 5 minutes (only attainable on Map scene)
+export const lazy = new Item({
+  name: 'Lazy',
+  info: 'Don\'t move for 5 minutes',
+})
