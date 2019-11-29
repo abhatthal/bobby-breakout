@@ -7,7 +7,6 @@ export class CharacterLayout {
     this.width = (data.width) ? data.width : 200; // default to 160 if not specified
     this.height = (data.height) ? data.height : 400;
     this.id = genID();
-    this._text = data.text;
 
     this.primaryColor = '#b22222'; // firebrick
     this.secondaryColor = '#0000ff'; // blue
