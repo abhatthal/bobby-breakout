@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable linebreak-style */
 /* eslint-disable require-jsdoc */
+import {Game} from '../Game.js';
 // generates random string of length 16
 export function genID() {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
@@ -58,4 +59,9 @@ export var keysHistory = [];
 // get an array of the last n keys pressed
 export function keysPressed(n) {
   return keysHistory.slice(-n);
+}
+
+export function getScene() {
+  const game = Game.getInstance();
+  return game.current_scene.constructor.name;
 }

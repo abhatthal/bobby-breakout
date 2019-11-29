@@ -1,4 +1,4 @@
-import {DIRECTION, keysHistory} from '../util/helper_functions.js';
+import {DIRECTION, keysHistory, getScene} from '../util/helper_functions.js';
 import {Game} from '../Game.js';
 import {Controls} from './Controls.js';
 import {achievementsDown, inventoryDown} from '../globalCtrl.js';
@@ -174,15 +174,13 @@ export class MapControls extends Controls {
 
     // lazy - don't move for 5 minutes (only attainable on Map scene)
     var histBefore = keysHistory.length;
-    var histAfter;
     var that = this;
     setTimeout(function() {
-      histAfter = keysHistory.length;
-
-      if (histBefore === histAfter) {
+      var histAfter = keysHistory.length;
+      if (histBefore === histAfter && getScene() == 'MapScene') {
         that.player.achievements.add(AL.lazy);
       }
-    }, 1000 * 60 * 5);
+    }, 1000);
 
     // All global achievements
     achievementsDown(this);
