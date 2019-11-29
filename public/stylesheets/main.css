@@ -9,6 +9,10 @@ body {
   margin: 0;
 }
 
+label {
+  white-space: pre;
+}
+
 .app {
   display: flex;
   flex-direction: column;
@@ -29,6 +33,11 @@ body {
 
 .game {
   width: 90%;
+  border: 2px solid black;
+}
+
+.portrait {
+  width: 30%;
   border: 2px solid black;
 }
 

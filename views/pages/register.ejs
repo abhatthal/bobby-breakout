@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <% include ../partials/header.ejs %>
   <meta charset="utf-8">
   <title>Prepare to game with Bobby</title>
   <script src="scripts/register.js" defer type="module"></script>
 </head>
 <body>
-  <h2>Welcome To Bobby Breakout</h2>
-  <img src="assets/bobby.jpg" alt="Bobby Photograph">
-  <br><br><br>
-  <div class="loginbox">
-    <form class="form" method="POST" action="/register">
-        <label>Username</label>
-        <input type="text" placeholder="Enter Username" name="uname" required>
-
-        <label>Password</label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
-
-        <label>Magic</label>
-        <input type="text" value="try this!" placeholder="Enter Magicword" name="mgw" >
-
-        <button type="submit">Login</button>
-    </form>
-    <p><b>Have login?</b></p>
-    <button id ="gologinbtn">Go Login</button>
+  <div class="app">
+    <div class="header">
+      <h1 id="title">Bobby's Breakout</h1>
+    </div>
+    <div class="main">
+      <div id="info" class="info">
+        <h2>Registration</h2>
+        <div class="loginbox">
+          <form class="form" method="POST" action="/register">
+              <label>Username     </label>
+              <input type="text" placeholder="Enter Username" name="uname" required>
+              <br>
+              <label>Password      </label>
+              <input type="password" placeholder="Enter Password" name="psw" required>
+              <br>
+              <label>Premium Key</label>
+              <input type="text" value="bobbyisgreat" placeholder="Enter Magicword" name="mgw" >
+              <br>
+              <button type="submit">Register</button>
+          </form>
+          <br>
+          <b>Already have a username/password?</b>
+          <br>
+          <button id="gologinbtn">Login</button>
+        </div>
+      </div>
+      <img src="assets/bobby.jpg" class="portrait" alt="Bobby Photograph">
+    </div>
   </div>
 </body>
 </html>
