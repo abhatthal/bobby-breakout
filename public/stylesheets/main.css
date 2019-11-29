@@ -47,8 +47,14 @@ body {
   padding-right: 0.5em;
 }
 
-#premium_benefits{
+#premium_benefits {
   list-style-type: none;
+}
+
+#achievement {
+  text-align: center;
+  border: 2px solid #CDCDCD;
+  background-color: #F6F0E3;
 }
 
 .controls {

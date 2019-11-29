@@ -142,5 +142,12 @@ export class Achievements {
     this.layer.draw();
     this.Achievements_num += 1;
     console.assert(this.Achievements_num <= this.Achievements_size);
+
+    // Achievement Notification
+    let notificationContainer = document.getElementById('achievement');
+    notificationContainer.style.display = 'block';
+    setTimeout(function() {
+      notificationContainer.style.display = 'none';
+    }, 3000);
   }
 }
