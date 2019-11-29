@@ -180,7 +180,7 @@ export class MapControls extends Controls {
       if (histBefore === histAfter && getScene() == 'MapScene') {
         that.player.achievements.add(AL.lazy);
       }
-    }, 1000);
+    }, 1000 * 60 * 5);
 
     // All global achievements
     achievementsDown(this);
