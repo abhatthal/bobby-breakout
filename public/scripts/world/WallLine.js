@@ -1,8 +1,8 @@
 import {Wall} from './Wall.js';
-import {LineBoundingBox, BoundingBox} from './BoundingBox.js';
+import {LineBoundingBox} from './BoundingBox.js';
 
-export class WallLine extends Wall{
-  constructor(data){
+export class WallLine extends Wall {
+  constructor(data) {
     super(data);
     // overwrite: super class's shape, use line instead
     this.shape = new Konva.Line({
@@ -15,12 +15,9 @@ export class WallLine extends Wall{
     // console.log(this.impassible);
 
     // overwrite: new bounding box for the line
-    // this.bbox = new LineBoundingBox(this.group, data.points, true);
-    // this.bbox = new BoundingBox(this.group, this.shape, true);
-    // this.bboxArea = this.bbox.boundingBox;
+    this.bbox = new LineBoundingBox(this.group, data.points, true);
 
     // overwrite: group content
     this.group.add(this.shape);
-    // this.group.add(this.bboxArea);
   }
 }
