@@ -18,7 +18,7 @@ export class LoadScene extends Scene {
         primaryColor: 'black',
         secondaryColor: 'black',
         tertiaryColor: 'black',
-        text: 'TESTTTTTTTTTTTTTTIIIIIIIIINNNNNNNNNNNGGGGGGGGGGGGG',
+        text: 'Enemy encountered! Be ready to fight!',
       }),
     };
     this.counter = 0;

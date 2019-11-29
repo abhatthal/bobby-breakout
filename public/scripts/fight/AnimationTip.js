@@ -1,4 +1,3 @@
-import {genID} from '../util/helper_functions.js';
 
 export class AnimationTip {
   constructor(data) {
