@@ -23,6 +23,8 @@ export class Game {
     this.player = new Player({
       x: this.stage.width()/2 - 30,
       y: this.stage.height()/2 - 30,
+      globalX: 5280.31,
+      globalY: 7207.55,
       width: 60,
       height: 60,
       image: 'assets/bobby.jpg',

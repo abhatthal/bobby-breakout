@@ -32,6 +32,7 @@ export class Character extends Entity {
     }
   }
 
+  // #region old movement code
   move(dir) {
     switch (dir) {
       case DIRECTION.LEFT:
@@ -52,6 +53,7 @@ export class Character extends Entity {
         break;
     }
   }
+  // #endregion
 
   simulateMove(dirX, dirY) {
     let newX = this.x;
