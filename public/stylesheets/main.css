@@ -53,8 +53,17 @@ body {
 
 #achievement {
   text-align: center;
+  font-style: bold;
+  font-size: 20px;
   border: 2px solid #CDCDCD;
   background-color: #F6F0E3;
+}
+img {
+  display: inline-block;
+  width: 50px;
+  height: auto;
+  position: relative;
+  top: 10px;
 }
 
 .controls {

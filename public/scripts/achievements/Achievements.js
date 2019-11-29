@@ -146,7 +146,7 @@ export class Achievements {
     // Achievement Notification
     let notificationContainer = document.getElementById('achievement');
     notificationContainer.style.display = 'block';
-    notificationContainer.innerHTML = '<h1>Achievement Unlocked: ' + item.name + '</h1>';
+    notificationContainer.innerHTML = '<img src = \'https://opengameart.org/sites/default/files/Icon_Ranking_0.png\'><span>Achievement Unlocked: ' + item.name + '</span>';
     setTimeout(function() {
       notificationContainer.style.display = 'none';
     }, 3000);
