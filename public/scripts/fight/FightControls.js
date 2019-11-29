@@ -5,6 +5,7 @@ export class FightControls extends Controls {
   constructor(data) {
     super(data);
     this.tooltips = data.tooltips;
+    this.dialogtips = data.dialogtips;
     this.ui = data.ui;
     this.player = data.player;
     this.npc = data.npc;
@@ -70,10 +71,10 @@ export class FightControls extends Controls {
     // temp update enemy hp
     // abstract this into a general function later that updates all things to do with ui?
     const enemyStatText = 'Enemy: \ncome fight bobby\n\n' + opponent.hp;
-    this.tooltips['enemyTooltip'].text = enemyStatText;
+    this.dialogtips['enemyDialogtip'].text = enemyStatText;
     this.layer.add(
-        this.tooltips['enemyTooltip'].renderBox,
-        this.tooltips['enemyTooltip'].renderText,
+        this.dialogtips['enemyDialogtip'].renderBox,
+        this.dialogtips['enemyDialogtip'].renderText,
     );
     this.layer.draw();
   }

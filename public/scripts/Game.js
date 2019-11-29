@@ -1,6 +1,7 @@
 import {Player} from './world/Character.js';
 import {MapScene} from './world/MapScene.js';
 import {FightScene} from './fight/FightScene.js';
+import {LoadScene} from './fight/LoadScene.js';
 import {InventoryScene} from './inventory/InventoryScene.js';
 
 export class Game {
@@ -39,6 +40,7 @@ export class Game {
   start() {
     this.mapScene = new MapScene({stage: this.stage, player: this.player});
     this.fightScene = new FightScene({stage: this.stage, player: this.player});
+    this.LoadScene = new LoadScene({stage: this.stage, player: this.player});
     this.inventoryScene = new InventoryScene({stage: this.stage, player: this.player});
 
     this.current_scene = this.mapScene;
@@ -47,6 +49,15 @@ export class Game {
 
   switchToFight(npc, map) {
     this.current_scene.switchFrom({stage: this.stage, player: this.player});
+    this.current_scene = this.LoadScene;
+    this.current_scene.loadSceneLoad({stage: this.stage});
+    setTimeout(() => {
+      this.fightLoad(npc, map);
+    }, 500);
+  }
+
+  fightLoad(npc, map) {
+    this.current_scene.loadLayer.remove();
     this.current_scene = this.fightScene;
     this.current_scene.switchTo({stage: this.stage, player: this.player, npc: npc, map: map});
   }

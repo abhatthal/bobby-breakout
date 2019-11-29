@@ -1,5 +1,4 @@
 import {Scene} from '../Scene.js';
-import {Tooltip} from '../util/ToolTip.js';
 import {FightControls} from './FightControls.js';
 import * as skilldefault from '../skilldefault.js';
 import {CharacterLayout} from './CharacterLayout.js';
@@ -14,77 +13,78 @@ export class FightScene extends Scene {
 
     // Tooltip for fight
     this.tooltips = {
-      fightTooltip: new Tooltip({
-        x: 250,
-        y: 30,
-        width: 500,
-        height: 150,
-        text: 'TIME TO FIGHT! coming later...\nE/SPACE TO RETURN',
-      }),
-      skillA1Tooltip: new Tooltip({
-        x: 300,
-        y: 400,
-        width: 100,
-        height: 50,
-        text: 'A1 Z',
-      }),
-      skillA2Tooltip: new Tooltip({
-        x: 450,
-        y: 400,
-        width: 100,
-        height: 50,
-        text: 'A2 X',
-      }),
-      skillA3Tooltip: new Tooltip({
-        x: 600,
-        y: 400,
-        width: 100,
-        height: 50,
-        text: 'A3 C',
-      }),
-      skillA4Tooltip: new Tooltip({
-        x: 750,
-        y: 400,
-        width: 100,
-        height: 50,
-        text: 'A4 V',
-      }),
-      escapeTooltip: new Tooltip({
-        x: 300,
-        y: 320,
-        width: 550,
-        height: 150,
-        text: 'Q to normal attack; E to escape fight',
-      }),
     };
 
     this.CharacterLayout = {
       playerLayout: new CharacterLayout({
-        x: 20,
-        y: data.stage.height() - 500,
+        x: data.stage.width() * 0.1,
+        y: data.stage.height() * 0.2,
       }),
 
       enemyLayout: new CharacterLayout({
-        x: data.stage.width() - 200,
-        y: 100,
+        x: data.stage.width() * 0.8,
+        y: data.stage.height() * 0.2,
       }),
     };
 
-    this.dialogTips = {
+    this.dialogtips = {
       playerDialogtip: new Dialogtip({
-        x: 20,
-        y: 130,
+        x: data.stage.width() * 0.1,
+        y: data.stage.height() * 0.2 - 100,
         width: 150,
         height: 300,
         text: '',
       }),
 
       enemyDialogtip: new Dialogtip({
-        x: 820,
-        y: 30,
+        x: data.stage.width() * 0.8,
+        y: data.stage.height() * 0.2 - 100,
         width: 150,
         height: 300,
         text: '',
+      }),
+
+      fightDialogtip: new Dialogtip({
+        x: data.stage.width() * 0.3,
+        y: data.stage.height() * 0.2 - 100,
+        width: 500,
+        height: 150,
+        text: 'TIME TO FIGHT! coming later...\nE/SPACE TO RETURN',
+      }),
+      skillA1Dialogtip: new Dialogtip({
+        x: data.stage.width() * 0.3,
+        y: data.stage.height() * 0.9,
+        width: 150,
+        height: 50,
+        text: 'A1 Z',
+      }),
+      skillA2Dialogtip: new Dialogtip({
+        x: data.stage.width() * 0.3 + 150,
+        y: data.stage.height() * 0.9,
+        width: 150,
+        height: 50,
+        text: 'A2 X',
+      }),
+      skillA3Dialogtip: new Dialogtip({
+        x: data.stage.width() * 0.3 + 300,
+        y: data.stage.height() * 0.9,
+        width: 150,
+        height: 50,
+        text: 'A3 C',
+      }),
+      skillA4Dialogtip: new Dialogtip({
+        x: data.stage.width() * 0.3 + 450,
+        y: data.stage.height() * 0.9,
+        width: 150,
+        height: 50,
+        text: 'A4 V',
+      }),
+      escapeDialogtip: new Dialogtip({
+        x: data.stage.width() * 0.3,
+        y: data.stage.height() * 0.9 - 80,
+        width: 600,
+        height: 150,
+        text: 'Q to normal attack; E to escape fight',
       }),
     };
 
@@ -170,6 +170,7 @@ export class FightScene extends Scene {
       player: data.player,
       container: data.stage.container(),
       tooltips: this.tooltips,
+      dialogtips: this.dialogtips,
       ui: this.uiStuff,
       map: data.map,
       npc: data.npc,
@@ -186,41 +187,41 @@ export class FightScene extends Scene {
     const playerStatText = 'Bobby here! \nsmash all ppl \nblocking your way\n' + player.hp; //
     const enemyStatText = 'Enemy: \ncome fight bobby\n\n' + npc.hp;
     console.log(playerStatText);
-    this.dialogTips['playerDialogtip'].text = playerStatText;
-    this.dialogTips['enemyDialogtip'].text = enemyStatText;
+    this.dialogtips['playerDialogtip'].text = playerStatText;
+    this.dialogtips['enemyDialogtip'].text = enemyStatText;
 
     this.fightLayer.add(
-        this.tooltips['skillA1Tooltip'].renderBox,
-        this.tooltips['skillA1Tooltip'].renderText,
-    );
-
-    this.fightLayer.add(
-        this.tooltips['skillA2Tooltip'].renderBox,
-        this.tooltips['skillA2Tooltip'].renderText,
-    );
-    this.fightLayer.add(
-        this.tooltips['skillA3Tooltip'].renderBox,
-        this.tooltips['skillA3Tooltip'].renderText,
-    );
-    this.fightLayer.add(
-        this.tooltips['skillA4Tooltip'].renderBox,
-        this.tooltips['skillA4Tooltip'].renderText,
+        this.dialogtips['skillA1Dialogtip'].renderBox,
+        this.dialogtips['skillA1Dialogtip'].renderText,
     );
 
     this.fightLayer.add(
-        this.tooltips['fightTooltip'].renderBox,
-        this.tooltips['fightTooltip'].renderText,
+        this.dialogtips['skillA2Dialogtip'].renderBox,
+        this.dialogtips['skillA2Dialogtip'].renderText,
     );
     this.fightLayer.add(
-        this.tooltips['escapeTooltip'].renderBox,
-        this.tooltips['escapeTooltip'].renderText,
+        this.dialogtips['skillA3Dialogtip'].renderBox,
+        this.dialogtips['skillA3Dialogtip'].renderText,
+    );
+    this.fightLayer.add(
+        this.dialogtips['skillA4Dialogtip'].renderBox,
+        this.dialogtips['skillA4Dialogtip'].renderText,
     );
 
     this.fightLayer.add(
-        this.dialogTips['playerDialogtip'].renderBox,
-        this.dialogTips['playerDialogtip'].renderText,
-        this.dialogTips['enemyDialogtip'].renderBox,
-        this.dialogTips['enemyDialogtip'].renderText,
+        this.dialogtips['fightDialogtip'].renderBox,
+        this.dialogtips['fightDialogtip'].renderText,
+    );
+    this.fightLayer.add(
+        this.dialogtips['escapeDialogtip'].renderBox,
+        this.dialogtips['escapeDialogtip'].renderText,
+    );
+
+    this.fightLayer.add(
+        this.dialogtips['playerDialogtip'].renderBox,
+        this.dialogtips['playerDialogtip'].renderText,
+        this.dialogtips['enemyDialogtip'].renderBox,
+        this.dialogtips['enemyDialogtip'].renderText,
     );
 
     this.fightLayer.add(
