@@ -20,59 +20,6 @@ export class BoundingBox {
   }
 }
 
-export class LineBoundingBox {
-  constructor(group, points, isVisible) {
-    console.assert(points != null);
-    console.assert(group != null);
-
-    // console.log(points.length, points);
-
-    // data pairs
-    const pairs = [];
-    for (let i = 0; i < points.length; i+=2) {
-      pairs.push({
-        x: points[i],
-        y: points[i+1],
-      });
-    }
-    // console.log(pairs);
-
-    this._lineBBox = [];
-    // create lines from p1 -> p2
-    for (let i = 0; i < pairs.length - 1; i++) {
-      const p1 = pairs[i];
-      const p2 = pairs[i+1];
-      // console.log(p1, p2);
-      // continue;
-      const currLine = new Konva.Line({
-        points: [p1.x, p1.y, p2.x, p2.y],
-        stroke: 'black',
-        strokeWidth: 10,
-      });
-      const boundingArea = currLine.getClientRect({relativeTo: group});
-      const bbox = new Konva.Rect({
-        x: boundingArea.x,
-        y: boundingArea.y,
-        width: boundingArea.width,
-        height: boundingArea.height,
-        stroke: 'cyan',
-        strokeWidth: (isVisible) ? 5 : 0,
-      });
-      this._lineBBox.push(bbox);
-    }
-    // console.log(this._lineBBox);
-
-    // add all line bounding boxes to group
-    for (let i = 0; i < this._lineBBox.length; i++) {
-      group.add(this._lineBBox[i]);
-    }
-  }
-
-  get boundingBox() {
-    return this.box;
-  }
-}
-
 export class VisionCone {
   constructor(group, shape) {
     console.assert(shape != null);
