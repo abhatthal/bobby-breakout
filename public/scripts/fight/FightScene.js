@@ -1,6 +1,7 @@
 import {Scene} from '../Scene.js';
 import {Tooltip} from '../util/ToolTip.js';
 import {FightControls} from './FightControls.js';
+import {Game} from '../Game.js';
 import * as skilldefault from '../skilldefault.js';
 
 export class FightScene extends Scene {

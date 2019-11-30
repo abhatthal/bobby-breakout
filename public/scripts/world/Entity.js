@@ -13,6 +13,8 @@ export class Entity {
     this.dmg = (data.dmg) ? data.dmg : null;
     this.globalX = data.globalX;
     this.globalY = data.globalY;
+    this.offsetX = 0;
+    this.offsetY = 0;
 
     let imageObj;
     if (data.image) {

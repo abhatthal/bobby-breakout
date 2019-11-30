@@ -1,13 +1,14 @@
 import {DIRECTION, oppositeDirection} from '../util/helper_functions.js';
 import {Game} from '../Game.js';
 import {Controls} from './Controls.js';
+import {MiniBossNPC} from '../world/NPC.js';
 
 export class MapControls extends Controls {
   constructor(data) {
     super(data);
     this.tooltips = data.tooltips;
 
-    this._readyToInteractNPC = undefined;
+    this._triggeredNPC = undefined;
     this._atEndPoint = false;
     this._inInventoryWindow = false;
     this._scrollSpeed = 5;
@@ -29,12 +30,21 @@ export class MapControls extends Controls {
       self._numberKeysDown++;
       self.keys[event.keyCode] = true;
       if (self._numberKeysDown == 1) {
-        self.handleKeyDownLogic(event);
+        self.handleKeyDownLogic();
       }
     };
 
     this.container.addEventListener('keyup', this.handleKeyUpMethod);
     this.container.addEventListener('keydown', this.handleKeyDownMethod);
+
+    // This lets NPCs continue moving immediately after a fight finishes/scene switches,
+    // or else they stay frozen
+    if (this._triggeredNPC instanceof MiniBossNPC) {
+      console.log('removing wall');
+      this.shouldRemoveWall = true;
+    }
+    this._triggeredNPC = undefined;
+    this.handleKeyDownLogic();
   }
 
   removeControlBindings() {
@@ -52,7 +62,7 @@ export class MapControls extends Controls {
       self._numberKeysDown++;
       self.keys[event.keyCode] = true;
       if (self._numberKeysDown == 1) {
-        self.handleKeyDownLogic(event);
+        self.handleKeyDownLogic();
       }
     };
 
@@ -64,7 +74,7 @@ export class MapControls extends Controls {
     this.keys[event.keyCode] = false;
   };
 
-  handleKeyDownLogic(event) {
+  handleKeyDownLogic() {
     this.doInteractionKeyDown();
 
     /*
@@ -117,6 +127,8 @@ export class MapControls extends Controls {
         y: newPos[1],
         width: this.player.width,
         height: this.player.height,
+        offsetX: this.player.offsetX,
+        offsetY: this.player.offsetY,
       };
       // console.log(playerSim, newPos);
 
@@ -140,19 +152,27 @@ export class MapControls extends Controls {
 
         // check if player is w/in sight
         if (node.isSeeing(this.player)) {
-          this.tooltips.interaction.moveTo({
-            X: node.x + 50,
-            y: node.y - 50,
-          });
-          this.layer.add(this.tooltips.interaction.renderBox, this.tooltips.interaction.renderText);
-          // TODO: check why we can't render tooltips as a group
-          this.layer.draw();
-          this._readyToInteractNPC = node;
+          if (this._triggeredNPC == undefined && node.hp > 0) {
+            this._triggeredNPC = node;
+            node.walkForwardsToPlayer(this.layer, this.player, () => {
+              const game = Game.getInstance();
+              game.switchToFight(this._triggeredNPC, this.map);
+            });
+          }
         } else {
-          this.tooltips.interaction.remove();
-          this._readyToInteractNPC = undefined;
+          // NPCs should freeze when fight begins and resume after it ends
+          if (this._triggeredNPC == undefined) {
+            node.shouldMove = true;
+          } else {
+            node.shouldMove = false;
+          }
         }
       });
+
+      // WALL REMOVAL ONCE NPC IS DEAD
+      if (this.shouldRemoveWall) {
+        this.map.lockedWall.scroll(DIRECTION.LEFT, 10000);
+      }
 
       // CHECKPOINTS: spawn and end point
       this.map.spawnArray.forEach((node) => {
@@ -180,14 +200,14 @@ export class MapControls extends Controls {
       // console.log(willCollide);
 
       // only move if next simulated position wont collide with anything
-      if (!willCollide) {
+      // and there's no npc currently triggering a fight
+      if (!willCollide && this._triggeredNPC == undefined) {
         this.map.mapArray.forEach((node) => {
           node.scroll(oppositeDirection(dir), this._scrollSpeed * speedMultiplier);
         });
       }
     });
 
-    event.preventDefault();
     this.layer.batchDraw();
 
     if (this._numberKeysDown > 0) {
@@ -204,11 +224,11 @@ export class MapControls extends Controls {
       if (this._atEndPoint) {
         alert('YOU WIN! Play again?');
         location.reload();
-      } else if (this._readyToInteractNPC) {
-        console.log('ready to interact with npc? ', this._readyToInteractNPC);
-        if (this._readyToInteractNPC.hp > 0) {
+      } else if (this._triggeredNPC) {
+        console.log('ready to interact with npc? ', this._triggeredNPC);
+        if (this._triggeredNPC.hp > 0) {
           const game = Game.getInstance();
-          game.switchToFight(this._readyToInteractNPC, this.map);
+          game.switchToFight(this._triggeredNPC, this.map);
         }
       }
     }

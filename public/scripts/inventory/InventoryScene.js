@@ -47,7 +47,6 @@ export class InventoryScene extends Scene {
     });
 
     data.stage.on('contextmenu', function(e) {
-      e.evt.preventDefault();
       if (e.target.name() === 'filled') {
         currentShape = e.target;
         equippedMenu.style.display = 'none';
