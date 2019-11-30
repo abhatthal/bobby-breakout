@@ -23,7 +23,7 @@ export const lazy = new Item({
 export const babySteps = new Item({
   name: 'Baby Steps',
   info: 'Finish the tutorial',
-}) // TODO
+})
 
 // warrior - First fight with an NPC
 export const warrior = new Item({

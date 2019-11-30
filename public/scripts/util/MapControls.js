@@ -148,8 +148,13 @@ export class MapControls extends Controls {
     if (this.keys[32] || this.keys[69]) {
       console.log(this._atEndPoint);
       if (this._atEndPoint) {
-        alert('YOU WIN! Play again?');
-        location.reload();
+
+        // babySteps - Finish the tutorial
+        this.player.achievements.add(AL.babySteps);
+        setTimeout(function() {
+          alert('YOU WIN! Play again?');
+          location.reload();
+        }, 3500);
       } else if (this._readyToInteract) {
         if (this._readyToInteract.hp > 0) {
           const game = Game.getInstance();
