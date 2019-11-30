@@ -186,23 +186,6 @@ export class MapControls extends Controls {
         }
       }
 
-    // Down arrow or W for moving sprite down
-    if (this.keys[40] || this.keys[83]) {
-      this.player.move(DIRECTION.UP);
-    } else if (this.keys[38] || this.keys[87]) {
-      // Up arrow or S to move sprite up
-      this.player.move(DIRECTION.DOWN);
-    }
-
-    // Left arrow or A for moving sprite left
-    if (this.keys[37] || this.keys[65]) {
-      this.player.move(DIRECTION.LEFT);
-    } else if (this.keys[39] || this.keys[68]) {
-      // Right arrow or D to move sprite right
-      this.player.move(DIRECTION.RIGHT);
-    }
-
-  // doInteractionKeyDown() {
     // Space or E for interaction
     if (this.keys[32] || this.keys[69]) {
       console.log('at endpoint? ', this._atEndPoint);
