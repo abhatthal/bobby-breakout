@@ -12,8 +12,8 @@ export class MapASB {
       x: 1100,
       y: 1100,
     };
-    initialDisplacement.x = 300;
-    initialDisplacement.y = 2200;
+    // initialDisplacement.x = 300;
+    // initialDisplacement.y = 2200;
     // initialDisplacement.y = 700;
 
     const weakNpc = new WeakNPC({
