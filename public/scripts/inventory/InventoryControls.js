@@ -3,6 +3,7 @@ import {Game} from '../Game.js';
 import {Item} from '../Item.js';
 import {achievementsDown, inventoryDown} from '../globalCtrl.js';
 import {keysHistory} from '../util/helper_functions.js';
+import * as IL from './InventoryList.js';
 
 export class InventoryControls extends Controls {
   constructor(data) {
@@ -53,6 +54,19 @@ export class InventoryControls extends Controls {
     // All global inventory
     inventoryDown(this);
 
+    // For debugging purposes, add items
+    if (this.keys[90]) {
+      this.player.inventory.add(IL.plasticSword);
+    }
+    if (this.keys[88]) {
+      this.player.inventory.add(IL.studentEvaluations);
+    }
+    if (this.keys[67]) {
+      this.player.inventory.add(IL.dadJoke);
+    }
+    if (this.keys[86]) {
+      this.player.inventory.add(IL.coffee);
+    }
     // i for inventory menu exit
     if (this.keys[73]) {
       const game = Game.getInstance();

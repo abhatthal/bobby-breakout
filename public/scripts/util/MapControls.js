@@ -1,4 +1,4 @@
-import {DIRECTION, keysHistory, getScene} from '../util/helper_functions.js';
+import {DIRECTION, keysHistory, getScene, oppositeDirection} from '../util/helper_functions.js';
 import {Game} from '../Game.js';
 import {Controls} from './Controls.js';
 import {achievementsDown, inventoryDown} from '../globalCtrl.js';
@@ -52,64 +52,91 @@ export class MapControls extends Controls {
   handleKeyDownLogic(event) {
     this.keys[event.keyCode] = true;
     keysHistory.push(event.keyCode);
+    this.doInteractionKeyDown();
 
-    this.doKeyDown();
+    /*
+      PSEUDO-CODE MOVEMENT ALGORITHM
+      store x (old pos)
+      check x' (new pos)
+      if x' collision == false
+        then deltaX = x' - x
+        movePlayerOrEnvironment(deltaX)
+      else
+        no movement
+        return
+    */
 
-    // TODO: Reorganize this better in new class
-    // TODO: move to checkMovementCollision();
+    // visual indicator to player if colliding
     let isColliding = false;
-    this.map.blockArray.forEach((node) => {
-      if (this.player.checkCollision(node)) {
-        // handle impassible walls here
-        if (node.impassible === true) {
-          this.doReverseMovement();
-        }
-        isColliding = true;
-      }
-    });
-    if (isColliding) {
-      this.player.shape.attrs.fill = 'red';
-    } else {
-      this.player.shape.attrs.fill = 'grey';
+    let willCollide = false;
+    let playerMoveDirX;
+    let playerMoveDirY;
+
+    // #region Check Next Movement Direction
+    // Down arrow or S for moving sprite down
+    if (this.keys[40] || this.keys[83]) {
+      playerMoveDirY = DIRECTION.DOWN;
+    } else if (this.keys[38] || this.keys[87]) {
+      // Up arrow or W to move sprite up
+      playerMoveDirY = DIRECTION.UP;
     }
 
-    this.map.npcArray.forEach((node) => {
-      this.player.checkCollision(node);
-      node.checkPlayerDetection(this.player);
-      if (this.player.isColliding(node)) {
-        // trigger some interaction, for now, change colour
-        // console.log('i am touching an NPC', node.id);
-        // handle impassible NPCs here
-        if (node.impassible === true) {
-          this.doReverseMovement();
-        }
-        isColliding = true;
-      }
-      // TODO: move to checkSightCollision();
-      if (node.isSeeing(this.player)) {
-        // console.log('i see the player');
+    // Left arrow or A for moving sprite left
+    if (this.keys[37] || this.keys[65]) {
+      playerMoveDirX = DIRECTION.LEFT;
+    } else if (this.keys[39] || this.keys[68]) {
+      // Right arrow or D to move sprite right
+      playerMoveDirX = DIRECTION.RIGHT;
+    }
 
-        this.tooltips.interaction.moveTo({
-          x: node.x + 50,
-          y: node.y - 50,
-        });
+    // get simulated new player position
+    const newPos = this.player.simulateMove(playerMoveDirX, playerMoveDirY);
 
-        this.layer.add(this.tooltips.interaction.renderBox, this.tooltips.interaction.renderText);
-        // not sure why adding tooltip by a group doesn't work
-        // layer.add(tooltip.render);
+    const playerSim = {
+      x: newPos[0],
+      y: newPos[1],
+      width: this.player.width,
+      height: this.player.height,
+    };
+    // console.log(playerSim, newPos);
 
-        this.layer.draw();
-        this._readyToInteract = node;
-      } else {
-        this.tooltips.interaction.remove();
-        this._readyToInteract = undefined;
+    // BLOCKS: check if simulated position will collide to any node
+    this.map.blockArray.forEach((node) => {
+      // console.log(node);
+      // console.log(this.player);
+      if (this.player.checkCollision(node, playerSim)) {
+        console.log(node);
+        willCollide = true;
+        isColliding = true; // for visual indicator, change colour to red
       }
     });
-    // TODO: move to checkPointCollision()
+
+    // NPCS: check collision among them
+    this.map.npcArray.forEach((node) => {
+      if (this.player.checkCollision(node, playerSim)) {
+        willCollide = true;
+        isColliding = true; // for visual indicator, change colour to red
+      }
+
+      // check if player is w/in sight
+      if (node.isSeeing(this.player)) {
+        this.tooltips.interaction.moveTo({
+          X: node.x + 50,
+          y: node.y - 50,
+        });
+        this.layer.add(this.tooltips.interaction.renderBox, this.tooltips.interaction.renderText);
+        // TODO: check why we can't render tooltips as a group
+        this.layer.draw();
+        this._readyToInteract = true;
+      } else {
+        this.tooltips.interaction.remove();
+        this._readyToInteract = false;
+      }
+    });
+
+    // CHECKPOINTS: spawn and end point
     this.map.spawnArray.forEach((node) => {
-      this.player.checkCollision(node);
-      if (this.player.isColliding(node)) {
-        // trigger some interaction, for now, change colour
+      if (this.player.checkCollision(node, playerSim)) {
         if (node.name === 'start') {
           // console.log('i am at the spawn', node.id);
         } else if (node.name === 'end') {
@@ -124,11 +151,28 @@ export class MapControls extends Controls {
       }
     });
 
+    // change colour to show collision if they move in that direction
+    if (isColliding) {
+      this.player.shape.attrs.fill = 'orange';
+    } else {
+      this.player.shape.attrs.fill = 'grey';
+    }
+    // console.log(willCollide);
+
+    // only move if next simulated position wont collide with anything
+    if (!willCollide) {
+      this.map.mapArray.forEach((node) => {
+        node.scroll(oppositeDirection(playerMoveDirX));
+        node.scroll(oppositeDirection(playerMoveDirY));
+      });
+    }
+
     event.preventDefault();
     this.layer.batchDraw();
   }
 
-  doKeyDown() {
+  // doKeyDown() {
+  doInteractionKeyDown() {
     // any movement of the sprite
     if (this.keys[40] || this.keys[83]
       || this.keys[38] || this.keys[87]
@@ -158,9 +202,10 @@ export class MapControls extends Controls {
       this.player.move(DIRECTION.RIGHT);
     }
 
+  // doInteractionKeyDown() {
     // Space or E for interaction
     if (this.keys[32] || this.keys[69]) {
-      console.log(this._atEndPoint);
+      console.log('at endpoint? ', this._atEndPoint);
       if (this._atEndPoint) {
 
         // babySteps - Finish the tutorial
@@ -170,6 +215,7 @@ export class MapControls extends Controls {
           location.reload();
         }, 3500);
       } else if (this._readyToInteract) {
+        console.log('ready to interact with npc? ', this._readyToInteract);
         if (this._readyToInteract.hp > 0) {
           const game = Game.getInstance();
           game.switchToFight(this._readyToInteract, this.map);
@@ -207,8 +253,6 @@ export class MapControls extends Controls {
     inventoryDown(this);
 
   }
-
- 
 
   doReverseMovement() {
     // Down arrow or W for moving sprite down
