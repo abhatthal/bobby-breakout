@@ -13,8 +13,8 @@ export class FightScene extends Scene {
 
     this.animationtips = {
       animationItem1: new AnimationTip({
-        x: data.stage.width() * 0.1,
-        y: data.stage.height() * 0.2,
+        x: data.stage.width() * 0.3,
+        y: data.stage.height() * 0.3,
       }),
     };
 
@@ -185,11 +185,18 @@ export class FightScene extends Scene {
     this.controls.addControlBindings();
   }
 
+  animation1(startpos, endpos, frame) {
+    this.animationtips['animationItem1'].moveTo(startpos);
+    this.animationtips['animationItem1'].renderhexagon.show();
+    this.animationtips['animationItem1'].slidTo(endpos, frame);
+    this.animationtips['animationItem1'].renderhexagon.hide();
+  }
+
   fightSceneLoad(player, npc) {
     // #region old ui
     const playerStatText = 'Bobby here! \nsmash all ppl \nblocking your way\n' + player.hp; //
     const enemyStatText = 'Enemy: \ncome fight bobby\n\n' + npc.hp;
-    console.log(playerStatText);
+
     this.dialogtips['playerDialogtip'].text = playerStatText;
     this.dialogtips['enemyDialogtip'].text = enemyStatText;
 
@@ -230,6 +237,7 @@ export class FightScene extends Scene {
     this.fightLayer.add(
         this.animationtips['animationItem1'].renderhexagon,
     );
+    this.animationtips['animationItem1'].renderhexagon.hide();
 
     this.fightLayer.add(
         this.CharacterLayout['playerLayout'].renderheadBox,

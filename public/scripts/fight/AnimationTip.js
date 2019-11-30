@@ -3,15 +3,17 @@ export class AnimationTip {
   constructor(data) {
     this.primaryColor = this.getRandomColor();
     this.secondaryColor = this.getRandomColor();
+    this.side = 5;
+    this.radius = 20;
 
     this.hexagon = new Konva.RegularPolygon({
-      x: 0,
-      y: 0,
-      sides: this.randomnumber(),
-      radius: this.randomnumber(),
+      x: data.x,
+      y: data.y,
+      sides: this.side, // this.randomnumber(),
+      radius: this.radius, // this.randomnumber(),
       fill: this.primaryColor,
       stroke: this.secondaryColor,
-      strokeWidth: this.randomnumber(),
+      strokeWidth: 2, // this.randomnumber(),
     });
   }
 
@@ -24,13 +26,22 @@ export class AnimationTip {
     return color;
   }
 
-  randomnumber() {
-    return Math.random() % 10;
+  randomnumber(val) {
+    return Math.round(Math.random() % val);
   }
 
   moveTo(pos) {
     this.hexagon.x = pos.x;
     this.hexagon.y = pos.y;
+  }
+
+  sildTo(pos, frame) {
+    this.hexagon.x = pos.x;
+    this.hexagon.y = pos.y;
+    var anim = new Konva.Animation(function(frame) {
+        hexagon.x(
+         Math.sin(frame.time);
+      });
   }
 
   animationTo(pos) {
