@@ -10,6 +10,8 @@ export class MapControls extends Controls {
     this._readyToInteract = undefined;
     this._atEndPoint = false;
     this._inInventoryWindow = false;
+    this._scrollSpeed = 5;
+    this._numberKeysDown = 0;
   }
 
   addControlBindings() {
@@ -17,10 +19,18 @@ export class MapControls extends Controls {
     this.keys = [];
 
     this.handleKeyUpMethod = this.handleKeyUpMethod || function(event) {
+      self._numberKeysDown--;
       self.handleKeyUp(event);
     };
     this.handleKeyDownMethod = this.handleKeyDownMethod || function(event) {
-      self.handleKeyDownLogic(event);
+      if (self.keys[event.keyCode]) {
+        return;
+      }
+      self._numberKeysDown++;
+      self.keys[event.keyCode] = true;
+      if (self._numberKeysDown == 1) {
+        self.handleKeyDownLogic(event);
+      }
     };
 
     this.container.addEventListener('keyup', this.handleKeyUpMethod);
@@ -32,10 +42,18 @@ export class MapControls extends Controls {
     this.keys = [];
 
     this.handleKeyUpMethod = this.handleKeyUpMethod || function(event) {
+      self._numberKeysDown--;
       self.handleKeyUp(event);
     };
     this.handleKeyDownMethod = this.handleKeyDownMethod || function(event) {
-      self.handleKeyDownLogic(event);
+      if (self.keys[event.keyCode]) {
+        return;
+      }
+      self._numberKeysDown++;
+      self.keys[event.keyCode] = true;
+      if (self._numberKeysDown == 1) {
+        self.handleKeyDownLogic(event);
+      }
     };
 
     this.container.removeEventListener('keyup', this.handleKeyUpMethod);
@@ -47,7 +65,6 @@ export class MapControls extends Controls {
   };
 
   handleKeyDownLogic(event) {
-    this.keys[event.keyCode] = true;
     this.doInteractionKeyDown();
 
     /*
@@ -64,7 +81,6 @@ export class MapControls extends Controls {
 
     // visual indicator to player if colliding
     let isColliding = false;
-    let willCollide = false;
     let playerMoveDirX;
     let playerMoveDirY;
 
@@ -85,86 +101,100 @@ export class MapControls extends Controls {
       playerMoveDirX = DIRECTION.RIGHT;
     }
 
+    // Shift for sprinting
+    let speedMultiplier = 1;
+    if (this.keys[16]) {
+      speedMultiplier = 2.5;
+    }
+
     // get simulated new player position
-    const newPos = this.player.simulateMove(playerMoveDirX, playerMoveDirY);
+    [playerMoveDirX, playerMoveDirY].forEach((dir) => {
+      const newPos = this.player.simulateMove(dir, this._scrollSpeed * speedMultiplier);
+      let willCollide = false;
 
-    const playerSim = {
-      x: newPos[0],
-      y: newPos[1],
-      width: this.player.width,
-      height: this.player.height,
-    };
-    // console.log(playerSim, newPos);
+      const playerSim = {
+        x: newPos[0],
+        y: newPos[1],
+        width: this.player.width,
+        height: this.player.height,
+      };
+      // console.log(playerSim, newPos);
 
-    // BLOCKS: check if simulated position will collide to any node
-    this.map.blockArray.forEach((node) => {
-      // console.log(node);
-      // console.log(this.player);
-      if (this.player.checkCollision(node, playerSim)) {
-        console.log(node);
-        willCollide = true;
-        isColliding = true; // for visual indicator, change colour to red
-      }
-    });
-
-    // NPCS: check collision among them
-    this.map.npcArray.forEach((node) => {
-      if (this.player.checkCollision(node, playerSim)) {
-        willCollide = true;
-        isColliding = true; // for visual indicator, change colour to red
-      }
-
-      // check if player is w/in sight
-      if (node.isSeeing(this.player)) {
-        this.tooltips.interaction.moveTo({
-          X: node.x + 50,
-          y: node.y - 50,
-        });
-        this.layer.add(this.tooltips.interaction.renderBox, this.tooltips.interaction.renderText);
-        // TODO: check why we can't render tooltips as a group
-        this.layer.draw();
-        this._readyToInteract = true;
-      } else {
-        this.tooltips.interaction.remove();
-        this._readyToInteract = false;
-      }
-    });
-
-    // CHECKPOINTS: spawn and end point
-    this.map.spawnArray.forEach((node) => {
-      if (this.player.checkCollision(node, playerSim)) {
-        if (node.name === 'start') {
-          // console.log('i am at the spawn', node.id);
-        } else if (node.name === 'end') {
-          // console.log('i am a winner', node.id);
-          this._atEndPoint = true;
-          this.layer.add(this.tooltips.completion.renderBox, this.tooltips.completion.renderText);
-          this.layer.draw();
+      // BLOCKS: check if simulated position will collide to any node
+      this.map.blockArray.forEach((node) => {
+        // console.log(node);
+        // console.log(this.player);
+        if (this.player.checkCollision(node, playerSim)) {
+          // console.log(node);
+          willCollide = true;
+          isColliding = true; // for visual indicator, change colour to red
         }
+      });
+
+      // NPCS: check collision among them
+      this.map.npcArray.forEach((node) => {
+        if (this.player.checkCollision(node, playerSim)) {
+          willCollide = true;
+          isColliding = true; // for visual indicator, change colour to red
+        }
+
+        // check if player is w/in sight
+        if (node.isSeeing(this.player)) {
+          this.tooltips.interaction.moveTo({
+            X: node.x + 50,
+            y: node.y - 50,
+          });
+          this.layer.add(this.tooltips.interaction.renderBox, this.tooltips.interaction.renderText);
+          // TODO: check why we can't render tooltips as a group
+          this.layer.draw();
+          this._readyToInteract = true;
+        } else {
+          this.tooltips.interaction.remove();
+          this._readyToInteract = false;
+        }
+      });
+
+      // CHECKPOINTS: spawn and end point
+      this.map.spawnArray.forEach((node) => {
+        if (this.player.checkCollision(node, playerSim)) {
+          if (node.name === 'start') {
+            // console.log('i am at the spawn', node.id);
+          } else if (node.name === 'end') {
+            // console.log('i am a winner', node.id);
+            this._atEndPoint = true;
+            this.layer.add(this.tooltips.completion.renderBox, this.tooltips.completion.renderText);
+            this.layer.draw();
+          }
+        } else {
+          this._atEndPoint = false;
+          this.tooltips.completion.remove();
+        }
+      });
+
+      // change colour to show collision if they move in that direction
+      if (isColliding) {
+        this.player.shape.attrs.fill = 'orange';
       } else {
-        this._atEndPoint = false;
-        this.tooltips.completion.remove();
+        this.player.shape.attrs.fill = 'grey';
+      }
+      // console.log(willCollide);
+
+      // only move if next simulated position wont collide with anything
+      if (!willCollide) {
+        this.map.mapArray.forEach((node) => {
+          node.scroll(oppositeDirection(dir), this._scrollSpeed * speedMultiplier);
+        });
       }
     });
-
-    // change colour to show collision if they move in that direction
-    if (isColliding) {
-      this.player.shape.attrs.fill = 'orange';
-    } else {
-      this.player.shape.attrs.fill = 'grey';
-    }
-    // console.log(willCollide);
-
-    // only move if next simulated position wont collide with anything
-    if (!willCollide) {
-      this.map.mapArray.forEach((node) => {
-        node.scroll(oppositeDirection(playerMoveDirX));
-        node.scroll(oppositeDirection(playerMoveDirY));
-      });
-    }
 
     event.preventDefault();
     this.layer.batchDraw();
+
+    if (this._numberKeysDown > 0) {
+      setTimeout(() => {
+        this.handleKeyDownLogic(event);
+      }, 10);
+    }
   }
 
   doInteractionKeyDown() {

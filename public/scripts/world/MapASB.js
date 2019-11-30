@@ -1,4 +1,4 @@
-import {NPC} from './Character.js';
+import {NPC} from './NPC.js';
 // import {Environment} from './Environment.js'; // for spawn and end points?
 import {CsilCoords} from '../../assets/csil_coords.js';
 import {Wall} from './Wall.js';

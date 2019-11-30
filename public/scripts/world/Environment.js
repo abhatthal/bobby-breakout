@@ -5,7 +5,6 @@ export class Environment extends Entity {
   constructor(data) {
     super(data);
     this.impassible = data.impassible || false;
-    this.scrollSpeed = 5;
   }
 
   get impassible() {
@@ -17,22 +16,22 @@ export class Environment extends Entity {
     this._impassible = val;
   }
 
-  scroll(dir) {
+  scroll(dir, speed) {
     switch (dir) {
       case DIRECTION.LEFT:
-        this.x += this.scrollSpeed * DIRECTION.UNIT_LEFT;
+        this.x += speed * DIRECTION.UNIT_LEFT;
         this.group.x(this.x);
         break;
       case DIRECTION.RIGHT:
-        this.x += this.scrollSpeed * DIRECTION.UNIT_RIGHT;
+        this.x += speed * DIRECTION.UNIT_RIGHT;
         this.group.x(this.x);
         break;
       case DIRECTION.UP:
-        this.y += this.scrollSpeed * DIRECTION.UNIT_UP;
+        this.y += speed * DIRECTION.UNIT_UP;
         this.group.y(this.y);
         break;
       case DIRECTION.DOWN:
-        this.y += this.scrollSpeed * DIRECTION.UNIT_DOWN;
+        this.y += speed * DIRECTION.UNIT_DOWN;
         this.group.y(this.y);
         break;
     }
