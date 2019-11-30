@@ -1,4 +1,4 @@
-import {Item} from '../Item.js'
+import {Item} from '../Item.js';
 
 export class Inventory {
   constructor() {
@@ -77,7 +77,7 @@ export class Inventory {
         fill: 'red',
         fillPatternScale: {
           x: 0.1,
-          y: 0.1
+          y: 0.1,
         },
         stroke: 'black',
         strokeWidth: 4,
@@ -95,7 +95,7 @@ export class Inventory {
         fill: 'yellow',
         fillPatternScale: {
           x: 0.1,
-          y: 0.1
+          y: 0.1,
         },
         stroke: 'black',
         strokeWidth: 4,
@@ -109,6 +109,7 @@ export class Inventory {
 
     let item = new Item({
       name: 'Plastic Sword',
+      // eslint-disable-next-line max-len
       info: 'This is the mighty plastic sword that Bobby picked up from the ground in front of his office.',
       type: 'weapon',
       dmg: 15,
@@ -118,6 +119,7 @@ export class Inventory {
     this.equip(item);
     item = new Item({
       name: 'Positive Student Evaluations',
+      // eslint-disable-next-line max-len
       info: 'Nothing\'s better than the sweet sweet ecstacy of reading through your saved stash of your student\'s compliment.',
       type: 'heal',
       heal: 10,
@@ -137,10 +139,12 @@ export class Inventory {
     this.equip(item);
     item = new Item({
       name: 'Coffee',
+      // eslint-disable-next-line max-len
       info: 'You hate some students, but you love your job. It really be like that sometimes. Have a cup of coffee to soothe the pain of the daily grind.',
       type: 'heal',
       heal: 5,
       effect: 'morale',
+      // eslint-disable-next-line max-len
       flavourText: 'Venti, half-whole milk, one quarter 1%, one quarter non-fat, extra hot, split quad shots, 1 1/2 shots decaf, 2 1/2 shots regular, no foam latte, with whip, 2 packets of splenda, 1 sugar in the raw, a touch of vanilla syrup and 3 short sprinkles of cinnamon. And stat.',
       icon: '../../assets/coffee.png',
     });
@@ -198,11 +202,13 @@ export class Inventory {
       width: 220,
       align: 'center',
     });
-    
+
     const stats = new Konva.Text({
       x: 750,
       y: 100 + title.height() + info.height(),
-      text: `${(item.type === 'weapon') ? `Damage: ${item.dmg}`: `Effect: +${item.heal} ${item.effect} (HP)`}`,
+      text: `${(item.type === 'weapon') ?
+          `Damage: ${item.dmg}`:
+          `Effect: +${item.heal} ${item.effect} (HP)`}`,
       fontSize: 18,
       fill: '#555',
       padding: 20,
@@ -332,11 +338,13 @@ export class Inventory {
       width: 220,
       align: 'center',
     });
-    
+
     const stats = new Konva.Text({
       x: 750,
       y: 100 + title.height() + info.height(),
-      text: `${(item.type === 'weapon') ? `Damage: ${item.dmg}`: `Effect: +${item.heal} ${item.effect} (HP)`}`,
+      text: `${(item.type === 'weapon') ?
+          `Damage: ${item.dmg}`:
+          `Effect: +${item.heal} ${item.effect} (HP)`}`,
       fontSize: 18,
       fill: '#555',
       padding: 20,

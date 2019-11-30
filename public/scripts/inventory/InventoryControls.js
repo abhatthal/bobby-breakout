@@ -49,6 +49,7 @@ export class InventoryControls extends Controls {
     if (this.keys[90]) {
       const item = new Item({
         name: 'Plastic Sword',
+        // eslint-disable-next-line max-len
         info: 'This is the mighty plastic sword that Bobby picked up from the ground in front of his office.',
         type: 'weapon',
         dmg: 15,
@@ -60,6 +61,7 @@ export class InventoryControls extends Controls {
     if (this.keys[88]) {
       const item = new Item({
         name: 'Positive Student Evaluations',
+        // eslint-disable-next-line max-len
         info: 'Nothing\'s better than the sweet sweet ecstacy of reading through your saved stash of your student\'s compliment.',
         type: 'heal',
         heal: 10,
@@ -83,10 +85,12 @@ export class InventoryControls extends Controls {
     if (this.keys[86]) {
       const item = new Item({
         name: 'Coffee',
+        // eslint-disable-next-line max-len
         info: 'You hate some students, but you love your job. It really be like that sometimes. Have a cup of coffee to soothe the pain of the daily grind.',
         type: 'heal',
         heal: 5,
         effect: 'morale',
+        // eslint-disable-next-line max-len
         flavourText: 'Venti, half-whole milk, one quarter 1%, one quarter non-fat, extra hot, split quad shots, 1 1/2 shots decaf, 2 1/2 shots regular, no foam latte, with whip, 2 packets of splenda, 1 sugar in the raw, a touch of vanilla syrup and 3 short sprinkles of cinnamon. And stat.',
         icon: '../../assets/coffee.png',
       });
