@@ -152,8 +152,8 @@ export class FightScene extends Scene {
     const enemyStatText = 'Enemy: \ncome fight bobby\n\n' + opponent.hp;
     this.tooltips['enemyTooltip'].text = enemyStatText;
     this.fightLayer.add(
-      this.tooltips['enemyTooltip'].renderBox,
-      this.tooltips['enemyTooltip'].renderText,
+        this.tooltips['enemyTooltip'].renderBox,
+        this.tooltips['enemyTooltip'].renderText,
     );
     this.fightLayer.draw();
   }
@@ -168,8 +168,8 @@ export class FightScene extends Scene {
     const playerStatText = 'Bobby here! \nsmash all ppl \nblocking your way\n' + player.hp;
     this.tooltips['playerTooltip'].text = playerStatText;
     this.fightLayer.add(
-      this.tooltips['playerTooltip'].renderBox,
-      this.tooltips['playerTooltip'].renderText,
+        this.tooltips['playerTooltip'].renderBox,
+        this.tooltips['playerTooltip'].renderText,
     );
     this.fightLayer.draw();
   }
@@ -246,53 +246,52 @@ export class FightScene extends Scene {
     );
 
     this.fightLayer.add(
-      this.tooltips['skillA2Tooltip'].renderBox,
-      this.tooltips['skillA2Tooltip'].renderText,
+        this.tooltips['skillA2Tooltip'].renderBox,
+        this.tooltips['skillA2Tooltip'].renderText,
     );
     this.fightLayer.add(
-      this.tooltips['skillA3Tooltip'].renderBox,
-      this.tooltips['skillA3Tooltip'].renderText,
+        this.tooltips['skillA3Tooltip'].renderBox,
+        this.tooltips['skillA3Tooltip'].renderText,
     );
     this.fightLayer.add(
-      this.tooltips['skillA4Tooltip'].renderBox,
-      this.tooltips['skillA4Tooltip'].renderText,
+        this.tooltips['skillA4Tooltip'].renderBox,
+        this.tooltips['skillA4Tooltip'].renderText,
     );
 
     this.fightLayer.add(
-      this.tooltips['playerTooltip'].renderBox,
-      this.tooltips['playerTooltip'].renderText,
+        this.tooltips['playerTooltip'].renderBox,
+        this.tooltips['playerTooltip'].renderText,
     );
     this.fightLayer.add(
-      this.tooltips['enemyTooltip'].renderBox,
-      this.tooltips['enemyTooltip'].renderText,
+        this.tooltips['enemyTooltip'].renderBox,
+        this.tooltips['enemyTooltip'].renderText,
     );
 
     this.fightLayer.on('mouseover', function(evt) {
-      let shape = evt.target;
+      const shape = evt.target;
       if (shape.name() === 'skill') {
         document.body.style.cursor = 'pointer';
       }
     });
     this.fightLayer.on('mouseout', function(evt) {
-      let shape = evt.target;
+      const shape = evt.target;
       if (shape.name() === 'skill') {
         document.body.style.cursor = 'default';
       }
     });
 
-    let fight = this;
+    const fight = this;
     this.fightLayer.on('click', function(evt) {
-      let shape = evt.target;
+      const shape = evt.target;
       if (shape.name() === 'skill') {
         fight.fightLoop(player, npc, player.inventory.equipped[shape.id()]);
       }
     });
     this.fightLayer.add(
-      this.tooltips['fightTooltip'].renderBox,
-      this.tooltips['fightTooltip'].renderText,
+        this.tooltips['fightTooltip'].renderBox,
+        this.tooltips['fightTooltip'].renderText,
     );
 
     this.fightLayer.draw();
   }
-
 }

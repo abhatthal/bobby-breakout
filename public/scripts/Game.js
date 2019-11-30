@@ -44,7 +44,7 @@ export class Game {
     this.current_scene = this.mapScene;
     this.current_scene.switchTo({stage: this.stage, player: this.player});
   }
-  
+
   switchToInventory() {
     this.current_scene.switchFrom({stage: this.stage, player: this.player});
     this.current_scene = this.inventoryScene;

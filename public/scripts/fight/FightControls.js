@@ -54,6 +54,5 @@ export class FightControls extends Controls {
       const game = Game.getInstance();
       game.switchToMap();
     }
-
   }
 }

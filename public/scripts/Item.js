@@ -10,7 +10,9 @@ export class Item {
     this.flavourText = (data.flavourText) ? data.flavourText : '';
 
     function loadImage(url) {
-      return new Promise(r => { let i = new Image(); i.onload = (() => r(i)); i.src = url; });
+      return new Promise((r) => {
+        const i = new Image(); i.onload = (() => r(i)); i.src = url;
+      });
     }
 
     // let img;
