@@ -3,6 +3,7 @@ import {Game} from '../Game.js';
 import {Controls} from './Controls.js';
 import {achievementsDown, inventoryDown} from '../globalCtrl.js';
 import * as AL from '../achievements/AchievementsList.js';
+import {userStats} from '../Stats.js';
 
 export class MapControls extends Controls {
   constructor(data) {
@@ -128,6 +129,19 @@ export class MapControls extends Controls {
   }
 
   doKeyDown() {
+    // any movement of the sprite
+    if (this.keys[40] || this.keys[83]
+      || this.keys[38] || this.keys[87]
+      || this.keys[37] || this.keys[65]
+      || this.keys[39] || this.keys[68]) {
+        userStats.walkedSteps = 1; // increment by 1
+        // console.log(userStats.walkedSteps);
+        if (userStats.walkedSteps == 500) {
+          // Marathoner - Walk 500 steps
+          this.player.achievements.add(AL.marathoner);
+        }
+      }
+
     // Down arrow or W for moving sprite down
     if (this.keys[40] || this.keys[83]) {
       this.player.move(DIRECTION.UP);

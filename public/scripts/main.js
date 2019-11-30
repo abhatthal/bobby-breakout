@@ -2,13 +2,7 @@
 // import {Skills} from './Skills.js';
 import {Game} from './Game.js';
 import {isPremium} from './util/helper_functions.js';
-
-// TESTING USER STATS
-import {Stats} from './Stats.js';
-const userStats = new Stats({
-  userID: 12,
-});
-// TESTING USER STATS
+import {userStats} from './Stats.js';
 
 // Set premium content visbility
 const premiumContainer = document.getElementById('premium_content');

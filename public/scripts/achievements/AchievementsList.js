@@ -35,4 +35,4 @@ export const warrior = new Item({
 export const marathoner = new Item({
   name: 'Marathoner',
   info: 'Walk 500 steps',
-}) // TODO
+})
