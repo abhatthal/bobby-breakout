@@ -35,7 +35,7 @@ export class Entity {
       name: data.name,
     });
 
-    this.bbox = new BoundingBox(this.group, this.shape, true);
+    this.bbox = new BoundingBox(this.group, this.shape, false);
     this.bboxArea = this.bbox.boundingBox;
 
     this.group.add(this.shape);
