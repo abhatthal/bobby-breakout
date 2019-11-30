@@ -14,6 +14,7 @@ const bodyParser = require('body-parser');
 const pg = require('pg');
 // eslint-disable-next-line max-len
 const conString = 'postgres://vyqzrennssqgdm:5427cde89c19c7c04595851cca03f048cce351ed5ce02df1f19e4ff075effa20@ec2-174-129-253-162.compute-1.amazonaws.com:5432/dchmahd956dtm0?ssl=true';
+// const conString = app.DATABASE_URL;
 // /////////////////
 
 
