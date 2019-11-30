@@ -7,7 +7,7 @@ export class MapControls extends Controls {
     super(data);
     this.tooltips = data.tooltips;
 
-    this._readyToInteract = undefined;
+    this._readyToInteractNPC = undefined;
     this._atEndPoint = false;
     this._inInventoryWindow = false;
     this._scrollSpeed = 5;
@@ -147,10 +147,10 @@ export class MapControls extends Controls {
           this.layer.add(this.tooltips.interaction.renderBox, this.tooltips.interaction.renderText);
           // TODO: check why we can't render tooltips as a group
           this.layer.draw();
-          this._readyToInteract = true;
+          this._readyToInteractNPC = node;
         } else {
           this.tooltips.interaction.remove();
-          this._readyToInteract = false;
+          this._readyToInteractNPC = undefined;
         }
       });
 
@@ -204,11 +204,11 @@ export class MapControls extends Controls {
       if (this._atEndPoint) {
         alert('YOU WIN! Play again?');
         location.reload();
-      } else if (this._readyToInteract) {
-        console.log('ready to interact with npc? ', this._readyToInteract);
-        if (this._readyToInteract.hp > 0) {
+      } else if (this._readyToInteractNPC) {
+        console.log('ready to interact with npc? ', this._readyToInteractNPC);
+        if (this._readyToInteractNPC.hp > 0) {
           const game = Game.getInstance();
-          game.switchToFight(this._readyToInteract, this.map);
+          game.switchToFight(this._readyToInteractNPC, this.map);
         }
       }
     }
