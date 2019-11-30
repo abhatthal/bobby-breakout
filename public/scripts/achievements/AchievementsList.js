@@ -23,16 +23,16 @@ export const lazy = new Item({
 export const babySteps = new Item({
   name: 'Baby Steps',
   info: 'Finish the tutorial',
-})
+}) // TODO
 
 // warrior - First fight with an NPC
 export const warrior = new Item({
   name: 'Warrior',
   info: 'First fight with an NPC',
-})
+}) // TODO
 
 // Marathoner - Walk 500 steps
 export const marathoner = new Item({
   name: 'Marathoner',
   info: 'Walk 500 steps',
-})
+}) // TODO
