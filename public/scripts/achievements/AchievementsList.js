@@ -29,7 +29,7 @@ export const babySteps = new Item({
 export const warrior = new Item({
   name: 'Warrior',
   info: 'First fight with an NPC',
-}) // TODO
+})
 
 // Marathoner - Walk 500 steps
 export const marathoner = new Item({
