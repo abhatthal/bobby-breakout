@@ -50,7 +50,7 @@ export class NPC extends Character {
       // move left until we collide with the player
       this.x += -speed;
       this.group.x(this.x);
-      if (isColliding(this, player)) {
+      if (isColliding(this, player) || this.x < player.x) {
         this.x -= -speed;
         this.group.x(this.x);
         // We hit the player! So done moving
@@ -61,7 +61,7 @@ export class NPC extends Character {
       // move up until we collide with the player
       this.y += -speed;
       this.group.y(this.y);
-      if (isColliding(this, player)) {
+      if (isColliding(this, player) || this.y < player.y) {
         this.y -= -speed;
         this.group.y(this.y);
         // We hit the player! So done moving
@@ -72,7 +72,7 @@ export class NPC extends Character {
       // move right until we collide with the player
       this.x += speed;
       this.group.x(this.x);
-      if (isColliding(this, player)) {
+      if (isColliding(this, player) || this.x > player.x) {
         this.x -= speed;
         this.group.x(this.x);
         // We hit the player! So done moving
@@ -83,7 +83,7 @@ export class NPC extends Character {
       // move down until we collide with the player
       this.y += speed;
       this.group.y(this.y);
-      if (isColliding(this, player)) {
+      if (isColliding(this, player) || this.y > player.y) {
         this.y -= speed;
         this.group.y(this.y);
         // We hit the player! So done moving
