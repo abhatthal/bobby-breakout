@@ -50,21 +50,6 @@ export class Achievements {
       this.layer.add(shape);
     }
 
-    // for (let i = 0; i < 4; i++) {
-    //   const shape = new Konva.Rect({
-    //     x: 390 + (i % 4) * 80,
-    //     y: 450,
-    //     width: 50,
-    //     height: 50,
-    //     fill: 'yellow',
-    //     stroke: 'black',
-    //     strokeWidth: 4,
-    //     name: 'empty',
-    //   });
-    //   // this.equipped_icon.push(shape);
-    //   this.layer.add(shape);
-    // }
-
     this.layer.draw();
   }
 

@@ -131,6 +131,7 @@ export class Inventory {
     this.inventory[i] = item;
 
     // Placeholder before adding item icons
+    // shape.fill(item.color);
     shape.fill(null);
 
     const self = this;

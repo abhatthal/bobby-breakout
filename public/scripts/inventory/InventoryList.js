@@ -1,11 +1,5 @@
 import {Item} from '../Item.js';
 
-// For debugging purposes, a key 'z' to add an item
-export const testItem = new Item({
-  name: 'Sword',
-  info: 'looool',
-});
-
 export const plasticSword = new Item({
   name: 'Plastic Sword',
   // eslint-disable-next-line max-len
