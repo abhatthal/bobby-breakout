@@ -1,5 +1,4 @@
 import {Environment} from '../world/Environment.js';
-import {isColliding} from '../util/helper_functions.js';
 
 export class ItemBox extends Environment {
   constructor(data) {
@@ -18,11 +17,7 @@ export class ItemBox extends Environment {
       shape.fillPatternImage(imgValue);
     });
 
-    if (this.scaleX) {
-      this.shape.fillPatternScaleX(this.scaleX);
-    };
-    if (this.scaleY) {
-      this.shape.fillPatternScaleY(this.scaleY);
-    }
+    this.shape.fillPatternScaleX(this.scaleX);
+    this.shape.fillPatternScaleY(this.scaleY);
   }
 }

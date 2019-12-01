@@ -43,7 +43,7 @@ export class MapASB {
       effect: 'increased average grade from students on exams',
       // eslint-disable-next-line max-len
       flavourText: 'How did this get here? CSSS vending machine is usually out of coke zeros by now...',
-      icon: '../../assets/can.png',
+      icon: '../../assets/coke-zero.png',
     });
     const item2Box = new ItemBox({
       item: item2,
@@ -51,6 +51,8 @@ export class MapASB {
       y: -450 + initialDisplacement.y,
       width: 50,
       height: 50,
+      scaleX: 0.16,
+      scaleY: 0.09,
     });
     const item3 = new Item({
       name: 'Old Memes',
