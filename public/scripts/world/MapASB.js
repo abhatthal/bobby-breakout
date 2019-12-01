@@ -17,6 +17,7 @@ export class MapASB {
     // initialDisplacement.y = 700;
 
     const weakNpc = new WeakNPC({
+      name: 'weak npc',
       x: 20 + initialDisplacement.x,
       y: -40 + initialDisplacement.y,
       width: 60,
@@ -28,6 +29,7 @@ export class MapASB {
     });
     weakNpc.group.rotate(90);
     const strongNpc = new StrongNPC({
+      name: 'strong npc',
       x: 280 + initialDisplacement.x,
       y: -550 + initialDisplacement.y,
       width: 60,
@@ -39,6 +41,7 @@ export class MapASB {
     });
     strongNpc.group.rotate(90);
     const miniBossNpc = new MiniBossNPC({
+      name: 'mini boss npc',
       x: 630 + initialDisplacement.x,
       y: -2095 + initialDisplacement.y,
       width: 60,
@@ -50,6 +53,7 @@ export class MapASB {
     });
     miniBossNpc.group.rotate(270);
     const bossNpc = new BossNPC({
+      name: 'boss npc',
       x: 285 + initialDisplacement.x,
       y: -2775 + initialDisplacement.y,
       width: 250,
@@ -61,6 +65,7 @@ export class MapASB {
     });
     bossNpc.group.rotate(0);
     const movingNpc = new MovingNPC({
+      name: 'moving npc',
       x: -200 + initialDisplacement.x,
       y: -1575 + initialDisplacement.y,
       width: 60,

@@ -3,6 +3,7 @@ import {Tooltip} from '../util/ToolTip.js';
 import {FightControls} from './FightControls.js';
 import {Game} from '../Game.js';
 import * as skilldefault from '../skilldefault.js';
+import {Player} from '../world/Character.js';
 
 export class FightScene extends Scene {
   constructor(data) {
@@ -21,6 +22,7 @@ export class FightScene extends Scene {
         y: data.stage.height() - 100,
         width: 300,
         height: 50,
+        item: this.inventory.equipped[0],
         // eslint-disable-next-line max-len
         text: `${this.inventory.equipped[0].name} (${(this.inventory.equipped[0].type === 'weapon') ? (this.inventory.equipped[0].dmg + ' dmg'):('+' + this.inventory.equipped[0].heal + ' hp')})`,
       }),
@@ -31,6 +33,7 @@ export class FightScene extends Scene {
         y: data.stage.height() - 100,
         width: 300,
         height: 50,
+        item: this.inventory.equipped[1],
         // eslint-disable-next-line max-len
         text: `${this.inventory.equipped[1].name} (${(this.inventory.equipped[1].type === 'weapon') ? (this.inventory.equipped[1].dmg + ' dmg'):('+' + this.inventory.equipped[1].heal + ' hp')})`,
       }),
@@ -41,6 +44,7 @@ export class FightScene extends Scene {
         y: data.stage.height() - 200,
         width: 300,
         height: 50,
+        item: this.inventory.equipped[2],
         // eslint-disable-next-line max-len
         text: `${this.inventory.equipped[2].name} (${(this.inventory.equipped[2].type === 'weapon') ? (this.inventory.equipped[2].dmg + ' dmg'):('+' + this.inventory.equipped[2].heal + ' hp')})`,
       }),
@@ -51,6 +55,7 @@ export class FightScene extends Scene {
         y: data.stage.height() - 200,
         width: 300,
         height: 50,
+        item: this.inventory.equipped[3],
         // eslint-disable-next-line max-len
         text: `${this.inventory.equipped[3].name} (${(this.inventory.equipped[3].type === 'weapon') ? (this.inventory.equipped[3].dmg + ' dmg'):('+' + this.inventory.equipped[3].heal + ' hp')})`,
       }),
@@ -140,6 +145,7 @@ export class FightScene extends Scene {
 
   // Enemy fight strategy
   doEnemyAttack(player, item) {
+    // console.log(item);
     if (player.hp >= 0) {
       player.hp -= item.dmg;
     }
@@ -155,43 +161,63 @@ export class FightScene extends Scene {
     this.updatePlayerHP(player);
   }
 
-  updateFightPhases(skill) {
+  getDialogueAttackText(attackerIndex) {
+    let txt = '';
+    if (this.fightOrder[attackerIndex] instanceof Player) {
+      // eslint-disable-next-line max-len
+      txt = `${this.fightOrder[attackerIndex].name} used ${this._currSelectedSkill.name.toUpperCase()}`;
+    } else {
+      // console.log(this.fightOrder[attackerIndex].inventoryItem);
+      // eslint-disable-next-line max-len
+      txt = `${this.fightOrder[attackerIndex].name} used ${this.fightOrder[attackerIndex].inventoryItem.name.toUpperCase()}`;
+    }
+    return txt;
+  }
+
+  getDialogueAttackInfoText(attackerIndex, player, npc) {
+    let txt = '';
+    if (this.fightOrder[attackerIndex] instanceof Player) {
+      if (this._currSelectedSkill.type === 'weapon') {
+        this.doDamage(npc, this._currSelectedSkill);
+        // eslint-disable-next-line max-len
+        txt = `${this._currSelectedSkill.name.toUpperCase()} did ${this._currSelectedSkill.dmg} damage!`;
+      } else {
+        this.heal(player, this._currSelectedSkill);
+        // eslint-disable-next-line max-len
+        txt = `${this._currSelectedSkill.name.toUpperCase()} healed ${this.fightOrder[attackerIndex].name} for ${this._currSelectedSkill.heal} health!`;
+      }
+    } else {
+      // console.log(this.fightOrder[attackerIndex].inventoryItem);
+      this.doEnemyAttack(player, this.fightOrder[attackerIndex].inventoryItem);
+      // eslint-disable-next-line max-len
+      txt = `${this.fightOrder[attackerIndex].name}'s ${this.fightOrder[attackerIndex].inventoryItem.name}`;
+    }
+    return txt;
+  }
+
+  updateFightPhases(player, npc) {
     let dialogueText = '';
+    if (npc.hp <= 0) {
+      const game = Game.getInstance();
+      game.switchToMap();
+    }
+
     if (this.currPhase === this.phases[0]) {
-      // if (skill.type === 'weapon') {
-      //   dialogueText = `${this.fightOrder.name} used ${skill.name}`;
-      // }
-      dialogueText = 'im in phase 0';
+      // PHASE 0: p used x skill
+      dialogueText = this.getDialogueAttackText(0); // attacker 0 in fightOrder array
     } else if (this.currPhase === this.phases[1]) {
-      dialogueText = 'im in phase 1';
+      // PHASE 1: x skill did x.dmg
+      dialogueText = this.getDialogueAttackInfoText(0, player, npc);
     } else if (this.currPhase === this.phases[2]) {
-      dialogueText = 'im in phase 2';
+      // PHASE 2: p2 used y skill
+      dialogueText = this.getDialogueAttackText(1);
     } else if (this.currPhase === this.phases[3]) {
-      dialogueText = 'im in phase 3';
+      // PHASE 3: y skill did y.dmg
+      dialogueText = this.getDialogueAttackInfoText(1, player, npc);
     }
 
     this.phaseUI['dialogueBox'].text = dialogueText;
     this.fightLayer.draw();
-  }
-
-  fightLoop(subject, opponent, item) {
-    if (opponent.hp <= 0) {
-      const game = Game.getInstance();
-      game.switchToMap();
-    }
-    // assume player act first
-    if (subject.fightSpeed >= opponent.fightSpeed) {
-      if (item.type === 'weapon') {
-        this.doDamage(opponent, item);
-      } else {
-        this.heal(subject, item);
-      }
-      this.enemyfight(opponent, subject);
-    } else {
-      this.enemyfight(opponent, subject);
-      this.doDamage(subject, opponent);
-    }
-    // this.fightSceneLoad(subject, npc);
   }
 
 
@@ -237,6 +263,7 @@ export class FightScene extends Scene {
     console.assert(data != null);
     data.stage.add(this.fightLayer);
     this.fightSceneLoad(data.player, data.npc);
+    // sets who attacks first, is used in updateFightPhases
     this.setFightOrder(data.player, data.npc);
     this.controls.addControlBindings();
   }
@@ -287,17 +314,17 @@ export class FightScene extends Scene {
     this.fightLayer.on('click', (evt) => {
       const shape = evt.target;
       if (shape.name() === 'skill') {
-        // fight.fightLoop(player, npc, player.inventory.equipped[shape.id()]);
         console.log(fight.currPhase);
+        this._currSelectedSkill = this.inventory.equipped[shape.attrs.id];
         fight.phaseUI['dialogueBox'].tipBox.visible(true);
         fight.phaseUI['dialogueBox'].tipText.visible(true);
-        fight.updateFightPhases(shape);
+        fight.updateFightPhases(player, npc);
       }
 
       if (shape.name() === 'dialogue' && fight.currPhase !== fight.phases[fight.phases.length-1]) {
         // console.log('clicked ', shape);
         fight.currPhase = fight.getNextPhase(fight.currPhase);
-        fight.updateFightPhases();
+        fight.updateFightPhases(player, npc);
       }
     });
 
