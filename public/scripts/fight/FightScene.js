@@ -200,6 +200,7 @@ export class FightScene extends Scene {
   updateFightPhases(player, npc) {
     let dialogueText = '';
     if (npc.hp <= 0) {
+      player.hp = player.MAX_HP;
       const game = Game.getInstance();
       game.switchToMap();
     }
