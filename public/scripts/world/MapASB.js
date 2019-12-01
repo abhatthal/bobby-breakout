@@ -1,4 +1,4 @@
-import {NPC} from './Character.js';
+import {MovingNPC, WeakNPC, StrongNPC, MiniBossNPC, BossNPC} from './NPC.js';
 // import {Environment} from './Environment.js'; // for spawn and end points?
 import {CsilCoords} from '../../assets/csil_coords.js';
 import {Wall} from './Wall.js';
@@ -8,9 +8,17 @@ export class MapASB {
   constructor(data) {
     const layer = data.layer;
 
-    const npc = new NPC({
-      x: 400,
-      y: 50,
+    const initialDisplacement = {
+      x: 1100,
+      y: 1100,
+    };
+    // initialDisplacement.x = 300;
+    // initialDisplacement.y = 2200;
+    // initialDisplacement.y = 700;
+
+    const weakNpc = new WeakNPC({
+      x: 20 + initialDisplacement.x,
+      y: -40 + initialDisplacement.y,
       width: 60,
       height: 60,
       colour: 'yellow',
@@ -18,14 +26,80 @@ export class MapASB {
       hp: 100,
       enableFace: true,
     });
+    weakNpc.group.rotate(90);
+    const strongNpc = new StrongNPC({
+      x: 280 + initialDisplacement.x,
+      y: -550 + initialDisplacement.y,
+      width: 60,
+      height: 60,
+      colour: 'orange',
+      impassible: true,
+      hp: 100,
+      enableFace: true,
+    });
+    strongNpc.group.rotate(90);
+    const miniBossNpc = new MiniBossNPC({
+      x: 630 + initialDisplacement.x,
+      y: -2095 + initialDisplacement.y,
+      width: 60,
+      height: 60,
+      colour: 'magenta',
+      impassible: true,
+      hp: 100,
+      enableFace: true,
+    });
+    miniBossNpc.group.rotate(270);
+    const bossNpc = new BossNPC({
+      x: 285 + initialDisplacement.x,
+      y: -2775 + initialDisplacement.y,
+      width: 250,
+      height: 250,
+      colour: 'red',
+      impassible: true,
+      hp: 100,
+      enableFace: true,
+    });
+    bossNpc.group.rotate(0);
+    const movingNpc = new MovingNPC({
+      x: -200 + initialDisplacement.x,
+      y: -1575 + initialDisplacement.y,
+      width: 60,
+      height: 60,
+      colour: 'cyan',
+      impassible: true,
+      hp: 100,
+      enableFace: true,
+    });
+    movingNpc.group.rotate(270);
+    movingNpc.moveLoop(layer, data.player);
     // npc.isSeeing(player);
-    layer.add(npc.render);
+    layer.add(weakNpc.render);
+    layer.add(strongNpc.render);
+    layer.add(miniBossNpc.render);
+    layer.add(bossNpc.render);
+    layer.add(movingNpc.render);
 
     this.npcArray = [];
-    this.npcArray.push(npc);
+    this.npcArray.push(weakNpc);
+    this.npcArray.push(strongNpc);
+    this.npcArray.push(miniBossNpc);
+    this.npcArray.push(bossNpc);
+    this.npcArray.push(movingNpc);
 
     this.blockArray = [];
     // console.log(this.blockArray)
+
+    // Locked door before boss
+    this.lockedWall = new Wall({
+      x: 354 + initialDisplacement.x,
+      y: -1976 + initialDisplacement.y,
+      width: 150,
+      height: 15,
+      colour: 'orange',
+      name: 'lockedwall',
+      impassible: true,
+    });
+    this.blockArray.push(this.lockedWall);
 
     for (let i = 0; i < CsilCoords.length; i++) {
       const curr = CsilCoords[i];
@@ -52,8 +126,8 @@ export class MapASB {
         const y = p1y + (p2y - p1y)/2 - height/2;
 
         const currRect = new Wall({
-          x: x + 700,
-          y: y + 500,
+          x: x + initialDisplacement.x,
+          y: y + initialDisplacement.y,
           width: width,
           height: height,
           colour: 'black',

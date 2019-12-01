@@ -10,6 +10,16 @@ export const plasticSword = new Item({
   icon: '../../assets/sword.png',
 });
 
+export const mightySword = new Item({
+  name: 'Mighty Sword',
+  // eslint-disable-next-line max-len
+  info: 'placeholder hope nobody reads this.',
+  type: 'weapon',
+  dmg: 20,
+  flavourText: 'placeholder hope nobody reads this.',
+  icon: '../../assets/sword.png',
+});
+
 export const studentEvaluations = new Item({
   name: 'Positive Student Evaluations',
   // eslint-disable-next-line max-len
@@ -40,4 +50,34 @@ export const coffee = new Item({
   // eslint-disable-next-line max-len
   flavourText: 'Venti, half-whole milk, one quarter 1%, one quarter non-fat, extra hot, split quad shots, 1 1/2 shots decaf, 2 1/2 shots regular, no foam latte, with whip, 2 packets of splenda, 1 sugar in the raw, a touch of vanilla syrup and 3 short sprinkles of cinnamon. And stat.',
   icon: '../../assets/coffee.png',
+});
+
+export const miniBossWeapon = new Item({
+  name: 'Mini Boss Item placeholder name',
+  // eslint-disable-next-line max-len
+  info: 'placeholder hope nobody reads this.',
+  type: 'weapon',
+  dmg: 20,
+  flavourText: 'placeholder hope nobody reads this.',
+  icon: '../../assets/sword.png',
+});
+
+export const bossWeapon = new Item({
+  name: 'Boss Item placeholder name',
+  // eslint-disable-next-line max-len
+  info: 'placeholder hope nobody reads this.',
+  type: 'weapon',
+  dmg: 40,
+  flavourText: 'placeholder hope nobody reads this.',
+  icon: '../../assets/sword.png',
+});
+
+export const movingNPCItem = new Item({
+  name: 'Moving NPC Item placeholder name',
+  // eslint-disable-next-line max-len
+  info: 'placeholder hope nobody reads this.',
+  type: 'weapon',
+  dmg: 15,
+  flavourText: 'placeholder hope nobody reads this.',
+  icon: '../../assets/sword.png',
 });

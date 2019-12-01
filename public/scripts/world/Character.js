@@ -1,7 +1,5 @@
 import {Entity} from './Entity.js';
 import {DIRECTION, httpGet, isColliding} from '../util/helper_functions.js';
-import {VisionCone} from './BoundingBox.js';
-import {Wall} from './Wall.js';
 // import {Skills} from './Skills.js';
 // import * as defaultskill from './skilldefault.js';
 import {Inventory} from '../inventory/Inventory.js';
@@ -56,23 +54,21 @@ export class Character extends Entity {
   }
   // #endregion
 
-  simulateMove(dirX, dirY) {
+  simulateMove(dir, speed) {
     let newX = this.x;
     let newY = this.y;
-    switch (dirX) {
+    switch (dir) {
       case DIRECTION.LEFT:
-        newX = this.x + this.speed * DIRECTION.UNIT_LEFT;
+        newX = this.x + speed * DIRECTION.UNIT_LEFT;
         break;
       case DIRECTION.RIGHT:
-        newX = this.x + this.speed * DIRECTION.UNIT_RIGHT;
+        newX = this.x + speed * DIRECTION.UNIT_RIGHT;
         break;
-    }
-    switch (dirY) {
       case DIRECTION.UP:
-        newY = this.y + this.speed * DIRECTION.UNIT_UP;
+        newY = this.y + speed * DIRECTION.UNIT_UP;
         break;
       case DIRECTION.DOWN:
-        newY = this.y + this.speed * DIRECTION.UNIT_DOWN;
+        newY = this.y + speed * DIRECTION.UNIT_DOWN;
         break;
     }
     return [newX, newY];
@@ -132,92 +128,9 @@ export class Player extends Character {
   checkCollision(obj, obj2) { // block array of Environment objects
     console.assert(obj != null);
     if (isColliding(obj, obj2) ) {
-      if (obj instanceof Wall) {
-        // console.log('i am touching a Wall', obj.id);
-        // bruno add the wall stuff here
-        // ...
-      } else if (obj instanceof NPC) {
-        // console.log('i am touching an NPC', obj.id);
-      }
       return true;
     } else {
       return false;
-    }
-  }
-}
-
-export class NPC extends Character {
-  constructor(data) {
-    super(data);
-    this.friendly = data.friendly; // bool
-    this.orientation = DIRECTION.LEFT;
-    this.impassible = data.impassible || false;
-
-    this.visionCone = new VisionCone(this.group, this.shape);
-    this.coneArea = this.visionCone.coneArea;
-    this.tempRectArea = this.visionCone.coneBindingArea;
-    this.visionConeAttr = this.coneArea.getAttrs();
-
-    this.group.add(this.coneArea);
-    this.group.add(this.tempRectArea);
-
-    this.feelers = this.visionCone.feelers;
-    this.feelers.forEach((feeler) => {
-      this.group.add(feeler);
-    });
-
-    this.scrollSpeed = 5;
-  }
-
-  get impassible() {
-    return this._impassible;
-  }
-
-  set impassible(val) {
-    console.assert(typeof val === 'boolean');
-    this._impassible = val;
-  }
-
-  isSeeing(obj) {
-    console.assert(obj != null);
-    // console.log(this.tempRectArea);
-    // console.log(this.tempRectArea.absolutePosition());
-
-    const tempRectGlobalPos = this.tempRectArea.absolutePosition();
-    return !(obj.x > tempRectGlobalPos.x + this.tempRectArea.attrs.width ||
-      obj.x + obj.width < tempRectGlobalPos.x ||
-      obj.y > tempRectGlobalPos.y + this.tempRectArea.attrs.height ||
-      obj.y + obj.height < tempRectGlobalPos.y);
-  }
-
-  checkPlayerDetection(player) {
-    console.assert(player instanceof Player);
-    if (this.isSeeing(player) && player instanceof Player) {
-      // console.log('i see the player');
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  scroll(dir) {
-    switch (dir) {
-      case DIRECTION.LEFT:
-        this.x += this.scrollSpeed * DIRECTION.UNIT_LEFT;
-        this.group.x(this.x);
-        break;
-      case DIRECTION.RIGHT:
-        this.x += this.scrollSpeed * DIRECTION.UNIT_RIGHT;
-        this.group.x(this.x);
-        break;
-      case DIRECTION.UP:
-        this.y += this.scrollSpeed * DIRECTION.UNIT_UP;
-        this.group.y(this.y);
-        break;
-      case DIRECTION.DOWN:
-        this.y += this.scrollSpeed * DIRECTION.UNIT_DOWN;
-        this.group.y(this.y);
-        break;
     }
   }
 }

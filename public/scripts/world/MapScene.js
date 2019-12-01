@@ -9,7 +9,7 @@ export class MapScene extends Scene {
     this._layer = new Konva.Layer();
 
     // this.map = new Map({layer: this.layer, stage: data.stage});
-    this.map = new MapASB({layer: this.layer, stage: data.stage});
+    this.map = new MapASB({layer: this.layer, stage: data.stage, player: data.player});
 
     this.tooltips = {
       interaction: new Tooltip({

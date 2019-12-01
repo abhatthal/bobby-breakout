@@ -1,5 +1,5 @@
 import {Wall} from './Wall.js';
-import {NPC} from './Character.js';
+import {NPC} from './NPC.js';
 import {Environment} from './Environment.js';
 
 export class Map {
