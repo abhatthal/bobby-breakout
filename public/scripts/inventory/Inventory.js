@@ -151,7 +151,7 @@ export class Inventory {
     this.equip(item);
   }
 
-  add(item) {
+  add(item, scaleX=0.1, scaleY=0.1) {
     // Inventory is full --> do nothing
     if (this.inventory_num >= this.inventory_size) {
       return false;
@@ -170,6 +170,8 @@ export class Inventory {
 
     // Placeholder before adding item icons
     shape.fill(null);
+    shape.fillPatternScaleY(scaleY);
+    shape.fillPatternScaleX(scaleX);
 
     const self = this;
     Promise.resolve(item.img).then(function(imgValue) {

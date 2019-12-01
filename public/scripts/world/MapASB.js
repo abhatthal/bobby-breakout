@@ -18,12 +18,11 @@ export class MapASB {
     const item1 = new Item({
       name: 'Weird ENSC Project',
       // eslint-disable-next-line max-len
-      info: 'You hate some students, but you love your job. It really be like that sometimes. Have a cup of coffee to soothe the pain of the daily grind.',
-      type: 'heal',
-      heal: 5,
-      effect: 'morale',
+      info: 'ENSC students have some weird projects. Not sure what this is for but it might prove useful.',
+      type: 'weapon',
+      dmg: 8,
       // eslint-disable-next-line max-len
-      flavourText: 'Venti, half-whole milk, one quarter 1%, one quarter non-fat, extra hot, split quad shots, 1 1/2 shots decaf, 2 1/2 shots regular, no foam latte, with whip, 2 packets of splenda, 1 sugar in the raw, a touch of vanilla syrup and 3 short sprinkles of cinnamon. And stat.',
+      flavourText: 'Here lie the remains of an ENSC student\'s hopes and dreams.',
       icon: '../../assets/ensc-project.jpg',
     });
     const item1Box = new ItemBox({
@@ -32,38 +31,52 @@ export class MapASB {
       y: -600 + initialDisplacement.y,
       width: 50,
       height: 50,
+      scaleX: 0.17,
+      scaleY: 0.25,
     });
     const item2 = new Item({
-      name: 'Coffee',
+      name: 'Sacrificial Coke Zero',
       // eslint-disable-next-line max-len
-      info: 'You hate some students, but you love your job. It really be like that sometimes. Have a cup of coffee to soothe the pain of the daily grind.',
+      info: 'Some say you should sacrifice a coke zero to the CMPT 361 gods before any Shermer exam.',
       type: 'heal',
-      heal: 5,
-      effect: 'morale',
+      heal: 20,
+      effect: 'increased average grade from students on exams',
       // eslint-disable-next-line max-len
-      flavourText: 'Venti, half-whole milk, one quarter 1%, one quarter non-fat, extra hot, split quad shots, 1 1/2 shots decaf, 2 1/2 shots regular, no foam latte, with whip, 2 packets of splenda, 1 sugar in the raw, a touch of vanilla syrup and 3 short sprinkles of cinnamon. And stat.',
-      icon: '../../assets/coffee.png',
+      flavourText: 'How did this get here? CSSS vending machine is usually out of coke zeros by now...',
+      icon: '../../assets/can.png',
+    });
+    const item2Box = new ItemBox({
+      item: item2,
+      x: 800 + initialDisplacement.x,
+      y: -450 + initialDisplacement.y,
+      width: 50,
+      height: 50,
     });
     const item3 = new Item({
-      name: 'Coffee',
+      name: 'Old Memes',
       // eslint-disable-next-line max-len
-      info: 'You hate some students, but you love your job. It really be like that sometimes. Have a cup of coffee to soothe the pain of the daily grind.',
-      type: 'heal',
-      heal: 5,
-      effect: 'morale',
+      info: 'Who knew that outdated memes could be so effective in delivering emotional damage to students.',
+      type: 'weapon',
+      dmg: 18,
       // eslint-disable-next-line max-len
-      flavourText: 'Venti, half-whole milk, one quarter 1%, one quarter non-fat, extra hot, split quad shots, 1 1/2 shots decaf, 2 1/2 shots regular, no foam latte, with whip, 2 packets of splenda, 1 sugar in the raw, a touch of vanilla syrup and 3 short sprinkles of cinnamon. And stat.',
-      icon: '../../assets/coffee.png',
+      flavourText: 'Le me just feeling like a sir eating my baguette. *Drops baguette* FUUUUUUUUUU',
+      icon: '../../assets/old-meme.png',
+    });
+    const item3Box = new ItemBox({
+      item: item3,
+      x: 200 + initialDisplacement.x,
+      y: -200 + initialDisplacement.y,
+      width: 50,
+      height: 50,
     });
     const item4 = new Item({
       name: 'Plastic Poop Knife',
       // eslint-disable-next-line max-len
-      info: 'You hate some students, but you love your job. It really be like that sometimes. Have a cup of coffee to soothe the pain of the daily grind.',
-      type: 'heal',
-      heal: 5,
-      effect: 'morale',
+      info: 'It\'s a poop knife. For cutting poop. With a knife. Obviously.',
+      type: 'weapon',
+      dmg: 25,
       // eslint-disable-next-line max-len
-      flavourText: 'Venti, half-whole milk, one quarter 1%, one quarter non-fat, extra hot, split quad shots, 1 1/2 shots decaf, 2 1/2 shots regular, no foam latte, with whip, 2 packets of splenda, 1 sugar in the raw, a touch of vanilla syrup and 3 short sprinkles of cinnamon. And stat.',
+      flavourText: 'A fecal cleaver? A Dung divider? A guano glaive?',
       icon: '../../assets/knife.png',
     });
     const item4Box = new ItemBox({
@@ -137,6 +150,8 @@ export class MapASB {
     layer.add(movingNpc.render);
 
     layer.add(item1Box.render);
+    layer.add(item2Box.render);
+    layer.add(item3Box.render);
     layer.add(item4Box.render);
 
     this.npcArray = [];
@@ -148,6 +163,8 @@ export class MapASB {
 
     this.itemArray = [];
     this.itemArray.push(item1Box);
+    this.itemArray.push(item2Box);
+    this.itemArray.push(item3Box);
     this.itemArray.push(item4Box);
 
     this.blockArray = [];

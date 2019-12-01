@@ -5,6 +5,8 @@ export class ItemBox extends Environment {
   constructor(data) {
     super(data);
     this.item = data.item;
+    this.scaleY = (data.scaleY) ? data.scaleY : 0.1;
+    this.scaleX = (data.scaleX) ? data.scaleX : 0.1;
 
     this.shape.stroke('black');
     this.shape.strokeWidth(5);
@@ -15,5 +17,12 @@ export class ItemBox extends Environment {
       // This avoids black boxes.
       shape.fillPatternImage(imgValue);
     });
+
+    if (this.scaleX) {
+      this.shape.fillPatternScaleX(this.scaleX);
+    };
+    if (this.scaleY) {
+      this.shape.fillPatternScaleY(this.scaleY);
+    }
   }
 }
