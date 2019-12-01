@@ -27,8 +27,9 @@ export class FightScene extends Scene {
         x: data.stage.width()/6,
         y: data.stage.height() - 100,
         width: 300,
-        height: 50,
-        text: `${this.inventory.equipped[0].name}`,
+        height: 100,
+        // eslint-disable-next-line max-len
+        text: `${this.inventory.equipped[0].name} (${(this.inventory.equipped[0].type === 'weapon') ? (this.inventory.equipped[0].dmg + ' dmg'):('+' + this.inventory.equipped[0].heal + ' hp')})`,
       }),
       skillA2Tooltip: new Tooltip({
         name: 'skill',
@@ -37,7 +38,8 @@ export class FightScene extends Scene {
         y: data.stage.height() - 100,
         width: 300,
         height: 50,
-        text: `${this.inventory.equipped[1].name}`,
+        // eslint-disable-next-line max-len
+        text: `${this.inventory.equipped[1].name} (${(this.inventory.equipped[1].type === 'weapon') ? (this.inventory.equipped[1].dmg + ' dmg'):('+' + this.inventory.equipped[1].heal + ' hp')})`,
       }),
       skillA3Tooltip: new Tooltip({
         name: 'skill',
@@ -46,7 +48,8 @@ export class FightScene extends Scene {
         y: data.stage.height() - 200,
         width: 300,
         height: 50,
-        text: `${this.inventory.equipped[2].name}`,
+        // eslint-disable-next-line max-len
+        text: `${this.inventory.equipped[2].name} (${(this.inventory.equipped[2].type === 'weapon') ? (this.inventory.equipped[2].dmg + ' dmg'):('+' + this.inventory.equipped[2].heal + ' hp')})`,
       }),
       skillA4Tooltip: new Tooltip({
         name: 'skill',
@@ -55,7 +58,8 @@ export class FightScene extends Scene {
         y: data.stage.height() - 200,
         width: 300,
         height: 50,
-        text: `${this.inventory.equipped[3].name}`,
+        // eslint-disable-next-line max-len
+        text: `${this.inventory.equipped[3].name} (${(this.inventory.equipped[3].type === 'weapon') ? (this.inventory.equipped[3].dmg + ' dmg'):('+' + this.inventory.equipped[3].heal + ' hp')})`,
       }),
       playerTooltip: new Tooltip({
         x: 20,

@@ -11,7 +11,7 @@ export class MapControls extends Controls {
     this._triggeredNPC = undefined;
     this._atEndPoint = false;
     this._inInventoryWindow = false;
-    this._scrollSpeed = 5;
+    this._scrollSpeed = 20;
     this._numberKeysDown = 0;
   }
 

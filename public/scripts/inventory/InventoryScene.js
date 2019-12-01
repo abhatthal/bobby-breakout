@@ -32,6 +32,11 @@ export class InventoryScene extends Scene {
     const equippedMenu = document.getElementById('equippedMenu');
     let currentShape;
 
+    document.getElementById('container').addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+
     document.getElementById('dropButton').addEventListener('click', () => {
       this.playerInventory.drop(currentShape);
     });
