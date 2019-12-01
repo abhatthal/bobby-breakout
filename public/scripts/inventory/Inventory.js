@@ -1,4 +1,4 @@
-import {Item} from '../Item.js';
+import {Item} from '../item/Item.js';
 
 export class Inventory {
   constructor() {
@@ -112,7 +112,7 @@ export class Inventory {
       // eslint-disable-next-line max-len
       info: 'This is the mighty plastic sword that Bobby picked up from the ground in front of his office.',
       type: 'weapon',
-      dmg: 15,
+      dmg: 10,
       flavourText: 'It can\'t even cut paper...',
       icon: '../../assets/sword.png',
     });
@@ -154,7 +154,7 @@ export class Inventory {
   add(item) {
     // Inventory is full --> do nothing
     if (this.inventory_num >= this.inventory_size) {
-      return;
+      return false;
     }
 
     let shape;
@@ -272,6 +272,8 @@ export class Inventory {
     this.layer.draw();
     this.inventory_num += 1;
     console.assert(this.inventory_num <= this.inventory_size);
+
+    return true;
   }
 
   drop(icon) {

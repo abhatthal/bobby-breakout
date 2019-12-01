@@ -1,6 +1,6 @@
 import {Controls} from '../util/Controls.js';
 import {Game} from '../Game.js';
-import {Item} from '../Item.js';
+import {Item} from '../item/Item.js';
 
 export class InventoryControls extends Controls {
   constructor(data) {

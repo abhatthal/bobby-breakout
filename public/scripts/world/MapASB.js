@@ -2,6 +2,8 @@ import {MovingNPC, WeakNPC, StrongNPC, MiniBossNPC, BossNPC} from './NPC.js';
 // import {Environment} from './Environment.js'; // for spawn and end points?
 import {CsilCoords} from '../../assets/csil_coords.js';
 import {Wall} from './Wall.js';
+import {Item} from '../item/Item.js';
+import {ItemBox} from '../item/ItemBox.js';
 // import {CsilLabs} from '../../assets/csil_labs.js';
 
 export class MapASB {
@@ -10,12 +12,67 @@ export class MapASB {
 
     const initialDisplacement = {
       x: 1100,
-      y: 1100,
+      y: 1200,
     };
-    // initialDisplacement.x = 300;
-    // initialDisplacement.y = 2200;
-    // initialDisplacement.y = 700;
-
+    
+    const item1 = new Item({
+      name: 'Weird ENSC Project',
+      // eslint-disable-next-line max-len
+      info: 'You hate some students, but you love your job. It really be like that sometimes. Have a cup of coffee to soothe the pain of the daily grind.',
+      type: 'heal',
+      heal: 5,
+      effect: 'morale',
+      // eslint-disable-next-line max-len
+      flavourText: 'Venti, half-whole milk, one quarter 1%, one quarter non-fat, extra hot, split quad shots, 1 1/2 shots decaf, 2 1/2 shots regular, no foam latte, with whip, 2 packets of splenda, 1 sugar in the raw, a touch of vanilla syrup and 3 short sprinkles of cinnamon. And stat.',
+      icon: '../../assets/ensc-project.jpg',
+    });
+    const item1Box = new ItemBox({
+      item: item1,
+      x: -300 + initialDisplacement.x,
+      y: -600 + initialDisplacement.y,
+      width: 50,
+      height: 50,
+    });
+    const item2 = new Item({
+      name: 'Coffee',
+      // eslint-disable-next-line max-len
+      info: 'You hate some students, but you love your job. It really be like that sometimes. Have a cup of coffee to soothe the pain of the daily grind.',
+      type: 'heal',
+      heal: 5,
+      effect: 'morale',
+      // eslint-disable-next-line max-len
+      flavourText: 'Venti, half-whole milk, one quarter 1%, one quarter non-fat, extra hot, split quad shots, 1 1/2 shots decaf, 2 1/2 shots regular, no foam latte, with whip, 2 packets of splenda, 1 sugar in the raw, a touch of vanilla syrup and 3 short sprinkles of cinnamon. And stat.',
+      icon: '../../assets/coffee.png',
+    });
+    const item3 = new Item({
+      name: 'Coffee',
+      // eslint-disable-next-line max-len
+      info: 'You hate some students, but you love your job. It really be like that sometimes. Have a cup of coffee to soothe the pain of the daily grind.',
+      type: 'heal',
+      heal: 5,
+      effect: 'morale',
+      // eslint-disable-next-line max-len
+      flavourText: 'Venti, half-whole milk, one quarter 1%, one quarter non-fat, extra hot, split quad shots, 1 1/2 shots decaf, 2 1/2 shots regular, no foam latte, with whip, 2 packets of splenda, 1 sugar in the raw, a touch of vanilla syrup and 3 short sprinkles of cinnamon. And stat.',
+      icon: '../../assets/coffee.png',
+    });
+    const item4 = new Item({
+      name: 'Plastic Poop Knife',
+      // eslint-disable-next-line max-len
+      info: 'You hate some students, but you love your job. It really be like that sometimes. Have a cup of coffee to soothe the pain of the daily grind.',
+      type: 'heal',
+      heal: 5,
+      effect: 'morale',
+      // eslint-disable-next-line max-len
+      flavourText: 'Venti, half-whole milk, one quarter 1%, one quarter non-fat, extra hot, split quad shots, 1 1/2 shots decaf, 2 1/2 shots regular, no foam latte, with whip, 2 packets of splenda, 1 sugar in the raw, a touch of vanilla syrup and 3 short sprinkles of cinnamon. And stat.',
+      icon: '../../assets/knife.png',
+    });
+    const item4Box = new ItemBox({
+      item: item4,
+      x: -400 + initialDisplacement.x,
+      y: -1000 + initialDisplacement.y,
+      width: 50,
+      height: 50,
+    });
     const weakNpc = new WeakNPC({
       x: 20 + initialDisplacement.x,
       y: -40 + initialDisplacement.y,
@@ -79,12 +136,19 @@ export class MapASB {
     layer.add(bossNpc.render);
     layer.add(movingNpc.render);
 
+    layer.add(item1Box.render);
+    layer.add(item4Box.render);
+
     this.npcArray = [];
     this.npcArray.push(weakNpc);
     this.npcArray.push(strongNpc);
     this.npcArray.push(miniBossNpc);
     this.npcArray.push(bossNpc);
     this.npcArray.push(movingNpc);
+
+    this.itemArray = [];
+    this.itemArray.push(item1Box);
+    this.itemArray.push(item4Box);
 
     this.blockArray = [];
     // console.log(this.blockArray)
@@ -168,6 +232,7 @@ export class MapASB {
     this.mapArray.push(...this.blockArray);
     this.mapArray.push(...this.spawnArray);
     this.mapArray.push(...this.npcArray);
+    this.mapArray.push(...this.itemArray);
 
     layer.draw();
   }
