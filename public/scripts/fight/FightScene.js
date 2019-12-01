@@ -64,7 +64,7 @@ export class FightScene extends Scene {
         y: data.stage.height()*4.5/10,
         width: 200,
         height: 120,
-        text: 'Bobby',
+        text: 'Bobby Chan',
       }),
       playerHpTooltip: new Tooltip({
         x: data.stage.width()*2/10,
@@ -125,6 +125,8 @@ export class FightScene extends Scene {
   }
 
   updateNpcHP(npc) {
+    const enemyName = `${npc.name}`;
+    this.tooltips['enemyTooltip'].text = enemyName;
     const enemyStatText = 'HP: ' + npc.hp + ' / ' + npc.MAX_HP;
     this.tooltips['enemyHpTooltip'].text = enemyStatText;
     this.fightLayer.add(
