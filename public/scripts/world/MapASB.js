@@ -88,6 +88,23 @@ export class MapASB {
       width: 50,
       height: 50,
     });
+    const bonusItem = new Item({
+      name: 'North Korean Missiles',
+      // eslint-disable-next-line max-len
+      info: 'A technological marvel developed by our glorious leader.',
+      type: 'weapon',
+      dmg: 1,
+      // eslint-disable-next-line max-len
+      flavourText: 'You know what\'s more destructive than a nuclear bomb?... Words. - Kimg Jong-Un',
+      icon: '../../assets/missile.png',
+    });
+    const bonusItemBox = new ItemBox({
+      item: bonusItem,
+      x: 1000 + initialDisplacement.x,
+      y: -1300 + initialDisplacement.y,
+      width: 50,
+      height: 50,
+    });
     const weakNpc = new WeakNPC({
       x: 20 + initialDisplacement.x,
       y: -40 + initialDisplacement.y,
@@ -155,6 +172,7 @@ export class MapASB {
     layer.add(item2Box.render);
     layer.add(item3Box.render);
     layer.add(item4Box.render);
+    layer.add(bonusItemBox.render);
 
     this.npcArray = [];
     this.npcArray.push(weakNpc);
@@ -168,6 +186,7 @@ export class MapASB {
     this.itemArray.push(item2Box);
     this.itemArray.push(item3Box);
     this.itemArray.push(item4Box);
+    this.itemArray.push(bonusItemBox);
 
     this.blockArray = [];
     // console.log(this.blockArray)
