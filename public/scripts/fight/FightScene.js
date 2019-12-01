@@ -84,6 +84,21 @@ export class FightScene extends Scene {
       }),
     };
 
+    this.phaseUI = {
+      dialogueBox: new Tooltip({
+        name: 'dialogue',
+        x: data.stage.width()/6,
+        y: data.stage.height() - 200,
+        width: 600,
+        height: 150,
+        text: '',
+      }),
+    };
+
+    this.phases = ['e1Attack', 'e1AttackInfo', 'e2Attack', 'e2AttackInfo', 'await'];
+    this.currPhase = this.phases[0];
+    // console.log(this.phases[0]);
+
     this.controls;
 
     this.fightLayer.draw();
@@ -123,6 +138,14 @@ export class FightScene extends Scene {
     this.updateNpcHP(opponent);
   }
 
+  // Enemy fight strategy
+  doEnemyAttack(player, item) {
+    if (player.hp >= 0) {
+      player.hp -= item.dmg;
+    }
+    this.updatePlayerHP(player);
+  }
+
   heal(player, item) {
     // Player is full health
     if (player.hp >= 100) {
@@ -132,17 +155,27 @@ export class FightScene extends Scene {
     this.updatePlayerHP(player);
   }
 
+  updateFightPhases(skill) {
+    let dialogueText = '';
+    if (this.currPhase === this.phases[0]) {
+      // if (skill.type === 'weapon') {
+      //   dialogueText = `${this.fightOrder.name} used ${skill.name}`;
+      // }
+      dialogueText = 'im in phase 0';
+    } else if (this.currPhase === this.phases[1]) {
+      dialogueText = 'im in phase 1';
+    } else if (this.currPhase === this.phases[2]) {
+      dialogueText = 'im in phase 2';
+    } else if (this.currPhase === this.phases[3]) {
+      dialogueText = 'im in phase 3';
+    }
+
+    this.phaseUI['dialogueBox'].text = dialogueText;
+    this.fightLayer.draw();
+  }
+
   fightLoop(subject, opponent, item) {
     if (opponent.hp <= 0) {
-      // remove enemy when dead. currently not working.
-      // issue: doesn't rerender the current mapscene after going back to it
-
-      // console.log(this.map.npcArray);
-      // const index = this.map.npcArray.indexOf(opponent);
-      // if(index > -1){ //opponent exists in array
-      //   this.map.npcArray.splice(index, 1); //remove 1 element @ specified index
-      // }
-      // console.log(this.map.npcArray);
       const game = Game.getInstance();
       game.switchToMap();
     }
@@ -161,10 +194,28 @@ export class FightScene extends Scene {
     // this.fightSceneLoad(subject, npc);
   }
 
-  // Enemy fight strategy
-  enemyfight(opponent, subject) {
-    // alert(opponent.hp, subject.hp);
-    // opponent.skillA1.hpchange(subject, 0);
+
+  setFightOrder(player, npc) {
+    // assign fight order based on speed
+    if (player.fightSpeed >= npc.fightSpeed) {
+      this.fightOrder = [player, npc];
+    } else {
+      this.fightOrder = [npc, player];
+    }
+  }
+
+  getNextPhase(p) {
+    let index = this.phases.indexOf(p);
+    console.log('old phase', index);
+    index++;
+    if (index >= this.phases.length-1) {
+      index = 0;
+      // make dialogue box invisible to allow user to select next skill
+      this.phaseUI['dialogueBox'].tipBox.visible(false);
+      this.phaseUI['dialogueBox'].tipText.visible(false);
+    }
+    console.log('new phase', index, this.phases[index]);
+    return this.phases[index];
   }
 
   switchFrom(data) {
@@ -186,17 +237,15 @@ export class FightScene extends Scene {
     console.assert(data != null);
     data.stage.add(this.fightLayer);
     this.fightSceneLoad(data.player, data.npc);
-    // this.fightLoop(data.player, data.npc);
+    this.setFightOrder(data.player, data.npc);
     this.controls.addControlBindings();
   }
 
   fightSceneLoad(player, npc) {
-    // #region old ui
     this.fightLayer.add(
         this.tooltips['skillA1Tooltip'].renderBox,
         this.tooltips['skillA1Tooltip'].renderText,
     );
-
     this.fightLayer.add(
         this.tooltips['skillA2Tooltip'].renderBox,
         this.tooltips['skillA2Tooltip'].renderText,
@@ -209,28 +258,46 @@ export class FightScene extends Scene {
         this.tooltips['skillA4Tooltip'].renderBox,
         this.tooltips['skillA4Tooltip'].renderText,
     );
+    this.fightLayer.add(
+        this.phaseUI['dialogueBox'].renderBox,
+        this.phaseUI['dialogueBox'].renderText,
+    );
+    this.phaseUI['dialogueBox'].tipBox.visible(false);
+    this.phaseUI['dialogueBox'].tipText.visible(false);
+    console.assert(this.phaseUI['dialogueBox'] != null);
+
 
     this.updatePlayerHP(player);
     this.updateNpcHP(npc);
 
     this.fightLayer.on('mouseover', function(evt) {
       const shape = evt.target;
-      if (shape.name() === 'skill') {
+      if (shape.name() === 'skill' || shape.name() === 'dialogue') {
         document.body.style.cursor = 'pointer';
       }
     });
     this.fightLayer.on('mouseout', function(evt) {
       const shape = evt.target;
-      if (shape.name() === 'skill') {
+      if (shape.name() === 'skill' || shape.name() === 'dialogue') {
         document.body.style.cursor = 'default';
       }
     });
 
     const fight = this;
-    this.fightLayer.on('click', function(evt) {
+    this.fightLayer.on('click', (evt) => {
       const shape = evt.target;
       if (shape.name() === 'skill') {
-        fight.fightLoop(player, npc, player.inventory.equipped[shape.id()]);
+        // fight.fightLoop(player, npc, player.inventory.equipped[shape.id()]);
+        console.log(fight.currPhase);
+        fight.phaseUI['dialogueBox'].tipBox.visible(true);
+        fight.phaseUI['dialogueBox'].tipText.visible(true);
+        fight.updateFightPhases(shape);
+      }
+
+      if (shape.name() === 'dialogue' && fight.currPhase !== fight.phases[fight.phases.length-1]) {
+        // console.log('clicked ', shape);
+        fight.currPhase = fight.getNextPhase(fight.currPhase);
+        fight.updateFightPhases();
       }
     });
 
