@@ -46,7 +46,7 @@ export class Tooltip {
       strokeWidth: 5,
       fill: this.secondaryColor,
       width: this.width,
-      height: this.tipText.height(),
+      height: (data.height)? data.height : this.tipText.height(),
       shadowColor: this.tertiaryColor,
       shadowBlur: 10,
       shadowOffsetX: 10,
