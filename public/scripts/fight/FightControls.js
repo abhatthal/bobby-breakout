@@ -1,5 +1,5 @@
 import {Controls} from '../util/Controls.js';
-// import {Game} from '../Game.js';
+// import {achievementsDown, inventoryDown} from '../globalCtrl.js';
 
 export class FightControls extends Controls {
   constructor(data) {
@@ -47,11 +47,5 @@ export class FightControls extends Controls {
 
   handleKeyDown(event) {
     this.keys[event.keyCode] = true;
-
-    // Space or E for interaction
-    // if (this.keys[32] || this.keys[69]) {
-    //   const game = Game.getInstance();
-    //   game.switchToMap();
-    // }
   }
 }

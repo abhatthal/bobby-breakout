@@ -4,6 +4,7 @@ import {FightControls} from './FightControls.js';
 import {Game} from '../Game.js';
 import * as skilldefault from '../skilldefault.js';
 import {Player} from '../world/Character.js';
+import * as AL from '../achievements/AchievementsList.js';
 
 export class FightScene extends Scene {
   constructor(data) {
@@ -269,6 +270,9 @@ export class FightScene extends Scene {
     // sets who attacks first, is used in updateFightPhases
     this.setFightOrder(data.player, data.npc);
     this.controls.addControlBindings();
+
+    // warrior - First fight with an NPC
+    this.player.achievements.add(AL.warrior);
   }
 
   fightSceneLoad(player, npc) {

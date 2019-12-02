@@ -3,6 +3,7 @@ import {DIRECTION, httpGet, isColliding} from '../util/helper_functions.js';
 // import {Skills} from './Skills.js';
 // import * as defaultskill from './skilldefault.js';
 import {Inventory} from '../inventory/Inventory.js';
+import {Achievements} from '../achievements/Achievements.js';
 
 export class Character extends Entity {
   constructor(data) {
@@ -114,6 +115,16 @@ export class Player extends Character {
     return this._inventory;
   }
 
+  set achievements(ach) {
+    console.assert(ach instanceof Achievements);
+    this._achievements = ach;
+  }
+
+  get achievements() {
+    return this._achievements;
+  }
+
+  // checkCollision(obj) { // block array of Environment objects
   checkCollision(obj, obj2) { // block array of Environment objects
     console.assert(obj != null);
     if (isColliding(obj, obj2) ) {

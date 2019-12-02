@@ -1,6 +1,9 @@
-import {DIRECTION, oppositeDirection} from '../util/helper_functions.js';
+import {DIRECTION, keysHistory, getScene, oppositeDirection} from '../util/helper_functions.js';
 import {Game} from '../Game.js';
 import {Controls} from './Controls.js';
+import {achievementsDown, inventoryDown} from '../globalCtrl.js';
+import * as AL from '../achievements/AchievementsList.js';
+import {userStats} from '../Stats.js';
 import {MiniBossNPC} from '../world/NPC.js';
 
 export class MapControls extends Controls {
@@ -29,6 +32,8 @@ export class MapControls extends Controls {
       }
       self._numberKeysDown++;
       self.keys[event.keyCode] = true;
+      keysHistory.push(event.keyCode);
+
       if (self._numberKeysDown == 1) {
         self.handleKeyDownLogic();
       }
@@ -143,6 +148,15 @@ export class MapControls extends Controls {
         }
       });
 
+      // ITEMS: check collision
+      this.map.itemArray.forEach((node) => {
+        if (this.player.checkCollision(node, playerSim)) {
+          this.player.inventory.add(node.item, node.scaleX, node.scaleY);
+          node.x = 1000000000;
+          node.shape.hide();
+        }
+      });
+
       // NPCS: check collision among them
       this.map.npcArray.forEach((node) => {
         if (this.player.checkCollision(node, playerSim)) {
@@ -217,13 +231,34 @@ export class MapControls extends Controls {
     }
   }
 
+  // doKeyDown() {
   doInteractionKeyDown() {
+    // this.keys[event.keyCode] = true;
+    // keysHistory.push(event.keyCode);
+
+    // any movement of the sprite
+    if (this.keys[40] || this.keys[83] ||
+      this.keys[38] || this.keys[87] ||
+      this.keys[37] || this.keys[65] ||
+      this.keys[39] || this.keys[68]) {
+      userStats.walkedSteps = 1; // increment by 1
+      // console.log(userStats.walkedSteps);
+      if (userStats.walkedSteps == 500) {
+        // Marathoner - Walk 500 steps
+        this.player.achievements.add(AL.marathoner);
+      }
+    }
+
     // Space or E for interaction
     if (this.keys[32] || this.keys[69]) {
       console.log('at endpoint? ', this._atEndPoint);
       if (this._atEndPoint) {
-        alert('YOU WIN! Play again?');
-        location.reload();
+        // babySteps - Finish the tutorial
+        this.player.achievements.add(AL.babySteps);
+        setTimeout(function() {
+          alert('YOU WIN! Play again?');
+          location.reload();
+        }, 3500);
       } else if (this._triggeredNPC) {
         console.log('ready to interact with npc? ', this._triggeredNPC);
         if (this._triggeredNPC.hp > 0) {
@@ -239,9 +274,45 @@ export class MapControls extends Controls {
     }
     // Escape or P for pausing (to menu)
     if (this.keys[27] || this.keys[80]) {
-      alert('Game Paused\nPress ok to continue');
+      // alert('Game Paused\nPress ok to continue');
+      // Show achievements menu
+      const game = Game.getInstance();
+      game.switchToAchievements(this._readyToInteract, this.map);
       this.keys[27] = false;
       this.keys[80] = false;
+    }
+
+    // lazy - don't move for 5 minutes (only attainable on Map scene)
+    const histBefore = keysHistory.length;
+    const that = this;
+    setTimeout(function() {
+      const histAfter = keysHistory.length;
+      if (histBefore === histAfter && getScene() == 'MapScene') {
+        that.player.achievements.add(AL.lazy);
+      }
+    }, 1000 * 60 * 5);
+
+    // All global achievements
+    achievementsDown(this);
+    // All global inventory
+    inventoryDown(this);
+  }
+
+  doReverseMovement() {
+    // Down arrow or W for moving sprite down
+    if (this.keys[40] || this.keys[83]) {
+      this.player.move(DIRECTION.DOWN);
+    } else if (this.keys[38] || this.keys[87]) {
+      // Up arrow or S to move sprite up
+      this.player.move(DIRECTION.UP);
+    }
+
+    // Left arrow or A for moving sprite left
+    if (this.keys[37] || this.keys[65]) {
+      this.player.move(DIRECTION.RIGHT);
+    } else if (this.keys[39] || this.keys[68]) {
+      // Right arrow or D to move sprite right
+      this.player.move(DIRECTION.LEFT);
     }
   }
 }

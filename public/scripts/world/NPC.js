@@ -5,7 +5,7 @@ import {isColliding} from '../util/helper_functions.js';
 import {Game} from '../Game.js';
 // import {Skills} from './Skills.js';
 // import * as defaultskill from './skilldefault.js';
-import {Item} from '../Item.js';
+import * as IL from '../inventory/InventoryList.js';
 
 export class NPC extends Character {
   constructor(data) {
@@ -181,15 +181,7 @@ export class NPC extends Character {
 
 export class WeakNPC extends NPC {
   constructor(data) {
-    data.item = new Item({
-      name: 'Plastic Sword',
-      // eslint-disable-next-line max-len
-      info: 'This is the mighty plastic sword that Bobby picked up from the ground in front of his office.',
-      type: 'weapon',
-      dmg: 5,
-      flavourText: 'It can\'t even cut paper...',
-      icon: '../../assets/sword.png',
-    });
+    data.item = IL.plasticSword;
     data.visionWidth = data.width / 2;
     data.visionHeight = 150;
     super(data);
@@ -198,15 +190,7 @@ export class WeakNPC extends NPC {
 
 export class StrongNPC extends NPC {
   constructor(data) {
-    data.item = new Item({
-      name: 'Mighty Sword',
-      // eslint-disable-next-line max-len
-      info: 'placeholder hope nobody reads this.',
-      type: 'weapon',
-      dmg: 20,
-      flavourText: 'placeholder hope nobody reads this.',
-      icon: '../../assets/sword.png',
-    });
+    data.item = IL.mightySword;
     data.visionWidth = data.width / 2;
     data.visionHeight = 250;
     super(data);
@@ -215,15 +199,7 @@ export class StrongNPC extends NPC {
 
 export class MiniBossNPC extends NPC {
   constructor(data) {
-    data.item = new Item({
-      name: 'Mini Boss Item placeholder name',
-      // eslint-disable-next-line max-len
-      info: 'placeholder hope nobody reads this.',
-      type: 'weapon',
-      dmg: 20,
-      flavourText: 'placeholder hope nobody reads this.',
-      icon: '../../assets/sword.png',
-    });
+    data.item = IL.miniBossWeapon;
     data.visionWidth = 200;
     data.visionHeight = 150;
     super(data);
@@ -232,15 +208,7 @@ export class MiniBossNPC extends NPC {
 
 export class BossNPC extends NPC {
   constructor(data) {
-    data.item = new Item({
-      name: 'Boss Item placeholder name',
-      // eslint-disable-next-line max-len
-      info: 'placeholder hope nobody reads this.',
-      type: 'weapon',
-      dmg: 40,
-      flavourText: 'placeholder hope nobody reads this.',
-      icon: '../../assets/sword.png',
-    });
+    data.item = IL.bossWeapon;
     data.visionWidth = 800;
     data.visionHeight = 120;
     super(data);
@@ -249,15 +217,7 @@ export class BossNPC extends NPC {
 
 export class MovingNPC extends NPC {
   constructor(data) {
-    data.item = new Item({
-      name: 'Moving NPC Item placeholder name',
-      // eslint-disable-next-line max-len
-      info: 'placeholder hope nobody reads this.',
-      type: 'weapon',
-      dmg: 15,
-      flavourText: 'placeholder hope nobody reads this.',
-      icon: '../../assets/sword.png',
-    });
+    data.item = IL.movingNPCItem;
     data.visionWidth = data.width/2;
     data.visionHeight = 400;
     super(data);

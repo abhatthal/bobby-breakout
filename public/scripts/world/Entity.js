@@ -35,6 +35,10 @@ export class Entity {
       height: data.height,
       fill: (data.colour) ? data.colour : null,
       fillPatternImage: (data.image) ? imageObj : null,
+      fillPatternScale: {
+        x: 0.1,
+        y: 0.1,
+      },
       name: data.name,
     });
 

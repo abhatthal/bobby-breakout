@@ -2,6 +2,7 @@ import {Player} from './world/Character.js';
 import {MapScene} from './world/MapScene.js';
 import {FightScene} from './fight/FightScene.js';
 import {InventoryScene} from './inventory/InventoryScene.js';
+import {AchievementsScene} from './achievements/AchievementsScene.js';
 
 export class Game {
   static initialize() {
@@ -42,6 +43,7 @@ export class Game {
   start() {
     this.mapScene = new MapScene({stage: this.stage, player: this.player});
     this.inventoryScene = new InventoryScene({stage: this.stage, player: this.player});
+    this.achievementsScene = new AchievementsScene({stage: this.stage, player: this.player});
     this.fightScene = new FightScene({stage: this.stage, player: this.player});
 
     this.current_scene = this.mapScene;
@@ -63,6 +65,18 @@ export class Game {
   switchToMap() {
     this.current_scene.switchFrom({stage: this.stage, player: this.player});
     this.current_scene = this.mapScene;
+    this.current_scene.switchTo({stage: this.stage, player: this.player});
+  }
+
+  switchToInventory() {
+    this.current_scene.switchFrom({stage: this.stage, player: this.player});
+    this.current_scene = this.inventoryScene;
+    this.current_scene.switchTo({stage: this.stage, player: this.player});
+  }
+
+  switchToAchievements() {
+    this.current_scene.switchFrom({stage: this.stage, player: this.player});
+    this.current_scene = this.achievementsScene;
     this.current_scene.switchTo({stage: this.stage, player: this.player});
   }
 }
