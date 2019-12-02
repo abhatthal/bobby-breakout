@@ -10,10 +10,14 @@ import {Environment} from './Environment.js';
 export class MapASB {
   constructor(data) {
     const layer = data.layer;
-
+    const height = data.stage.height();
+    const width = data.stage.width();
+    console.log(width, height)
     const initialDisplacement = {
-      x: 900,
-      y: 1000,
+      // x: 900,
+      // y: 1000,
+      x: width * 0.73,
+      y: height * 1.55,
     };
 
     const item1 = new Item({
