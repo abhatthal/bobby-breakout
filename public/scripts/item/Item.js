@@ -20,4 +20,11 @@ export class Item {
 
     this.img = loadImage(this.icon);
   }
+
+  get name() {
+    return this._name;
+  }
+  set name(val) {
+    this._name = val;
+  }
 }

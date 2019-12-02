@@ -129,54 +129,101 @@ function checklogin(req, res) {
 io.on('connection', function(client) {
   console.log('Client connected...');
 
-  client.on('statsSent', function(data) {
-    console.log(data);
-    const pool = new pg.Pool({connectionString: conString});
-    pool.connect((isErr, client, done) => {
-      if (isErr) {
-        console.log('connect error:' + isErr.message);
-        done();
-        return;
-      } else { // connected
-        console.log('db connected');
-        const querycheck = `SELECT * FROM stats WHERE userid='${data.username}'`;
-        client.query(querycheck, function(err, result) {
-          if (err) {
-            console.log(err);
-            done();
-            return;
-          } else { // query success
-            if (result.rows.length < 1) {
-              // User doesn't exist
-              console.log('User doesnt exist');
-              // eslint-disable-next-line max-len
-              const queryCreate = `INSERT INTO stats (userid, walkedsteps, playtime) VALUES ('${data.username}', ${data.value}, 0)`;
-              client.query(queryCreate, function(err, result) {
-                if (err) {
-                  console.log(err + ' fail to create');
-                } else {
-                  console.log('Stats account created');
-                }
-                done();
-              });
-            } else {
-              // User exists
-              // eslint-disable-next-line max-len
-              const queryUpdate = `UPDATE stats SET walkedsteps=${data.value} WHERE userID='${data.username}'`;
-              client.query(queryUpdate, function(err, result) {
-                if (err) {
-                  console.log(err + ' fail to update');
-                } else {
-                  console.log('Stats updated');
-                }
-                done();
-              });
+  const pool = new pg.Pool({connectionString: conString});
+      
+    client.on('statsSent', function(data) {
+      console.log(data);
+      pool.connect((isErr, client, done) => {
+        if (isErr) {
+          console.log('connect error:' + isErr.message);
+          done();
+          return;
+        } else { // connected
+          console.log('stats connected');
+          const querycheck = `SELECT * FROM stats WHERE userid='${data.username}'`;
+          client.query(querycheck, function(err, result) {
+            if (err) {
+              console.log(err);
+              done();
+              return;
+            } else { // query success
+              if (result.rows.length < 1) {
+                // User doesn't exist
+                console.log('User doesnt exist');
+                // eslint-disable-next-line max-len
+                const queryCreate = `INSERT INTO stats (userid, walkedsteps, playtime) VALUES ('${data.username}', ${data.walkedSteps}, ${data.playTime})`;
+                client.query(queryCreate, function(err, result) {
+                  if (err) {
+                    console.log(err + ' fail to create');
+                  } else {
+                    console.log('Stats account created');
+                  }
+                  done();
+                });
+              } else {
+                // User exists
+                // eslint-disable-next-line max-len
+                const queryUpdate = `UPDATE stats SET walkedsteps=${data.walkedSteps}, playtime=${data.playTime} WHERE userID='${data.username}'`;
+                client.query(queryUpdate, function(err, result) {
+                  if (err) {
+                    console.log(err + ' fail to update');
+                  } else {
+                    console.log('Stats updated');
+                  }
+                  done();
+                });
+              }
             }
-          }
-        });
-      }
-    });
-  });
-});
+          });
+        }
+      }); // pool
+    }); // statsSent
 
-
+    client.on('achievementsSent', function(data) {
+      console.log(data);
+      pool.connect((isErr, client, done) => {
+        if (isErr) {
+          console.log('connect error:' + isErr.message);
+          done();
+          return;
+        } else { // connected
+          console.log('achievements connected');
+          const querycheck = `SELECT * FROM achievements WHERE username='${data.username}'`;
+          client.query(querycheck, function(err, result) {
+            if (err) {
+              console.log(err);
+              done();
+              return;
+            } else { // query success
+              if (result.rows.length < 1) {
+                // User doesn't exist
+                console.log('User doesnt exist');
+                // eslint-disable-next-line max-len
+                const queryCreate = `INSERT INTO achievements (username, testachievement, konamicode, lazy, babysteps, warrior, marathoner) VALUES ('${data.username}', ${data.testAchievement}, ${data.konamiCode}, ${data.lazy}, ${data.babySteps}, ${data.warrior}, ${data.marathoner})`;
+                client.query(queryCreate, function(err, result) {
+                  if (err) {
+                    console.log(err + ' fail to create');
+                  } else {
+                    console.log('Achievements account created');
+                  }
+                  done();
+                });
+              } else {
+                // User exists
+                // eslint-disable-next-line max-len
+                const queryUpdate = `UPDATE achievements SET testachievement=${data.testAchievement}, konamicode=${data.konamiCode}, lazy=${data.lazy}, babysteps=${data.babySteps}, warrior=${data.warrior}, marathoner=${data.marathoner} WHERE username='${data.username}'`;
+                client.query(queryUpdate, function(err, result) {
+                  if (err) {
+                    console.log(err + ' fail to update');
+                  } else {
+                    console.log('Achievements updated');
+                  }
+                  done();
+                });
+              }
+            }
+          });
+        }
+      }); // pool
+    }); // achievementsSent
+}); // socket io connection
