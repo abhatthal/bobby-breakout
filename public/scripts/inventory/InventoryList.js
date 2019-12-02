@@ -25,7 +25,7 @@ export const studentEvaluations = new Item({
   // eslint-disable-next-line max-len
   info: 'Nothing\'s better than the sweet sweet ecstacy of reading through your saved stash of your student\'s compliment.',
   type: 'heal',
-  heal: 10,
+  heal: 25,
   effect: 'ego boost',
   flavourText: '8/8 would r8 again',
   icon: '../../assets/document.png',
@@ -45,7 +45,7 @@ export const coffee = new Item({
   // eslint-disable-next-line max-len
   info: 'You hate some students, but you love your job. It really be like that sometimes. Have a cup of coffee to soothe the pain of the daily grind.',
   type: 'heal',
-  heal: 5,
+  heal: 15,
   effect: 'morale',
   // eslint-disable-next-line max-len
   flavourText: 'Venti, half-whole milk, one quarter 1%, one quarter non-fat, extra hot, split quad shots, 1 1/2 shots decaf, 2 1/2 shots regular, no foam latte, with whip, 2 packets of splenda, 1 sugar in the raw, a touch of vanilla syrup and 3 short sprinkles of cinnamon. And stat.',

@@ -14,7 +14,7 @@ export class MapControls extends Controls {
     this._triggeredNPC = undefined;
     this._atEndPoint = false;
     this._inInventoryWindow = false;
-    this._scrollSpeed = 5;
+    this._scrollSpeed = 20;
     this._numberKeysDown = 0;
   }
 
@@ -80,7 +80,6 @@ export class MapControls extends Controls {
   };
 
   handleKeyDownLogic() {
-    
     this.doInteractionKeyDown();
 
     /*
@@ -238,23 +237,22 @@ export class MapControls extends Controls {
     // keysHistory.push(event.keyCode);
 
     // any movement of the sprite
-    if (this.keys[40] || this.keys[83]
-      || this.keys[38] || this.keys[87]
-      || this.keys[37] || this.keys[65]
-      || this.keys[39] || this.keys[68]) {
-        userStats.walkedSteps = 1; // increment by 1
-        // console.log(userStats.walkedSteps);
-        if (userStats.walkedSteps == 500) {
-          // Marathoner - Walk 500 steps
-          this.player.achievements.add(AL.marathoner);
-        }
+    if (this.keys[40] || this.keys[83] ||
+      this.keys[38] || this.keys[87] ||
+      this.keys[37] || this.keys[65] ||
+      this.keys[39] || this.keys[68]) {
+      userStats.walkedSteps = 1; // increment by 1
+      // console.log(userStats.walkedSteps);
+      if (userStats.walkedSteps == 500) {
+        // Marathoner - Walk 500 steps
+        this.player.achievements.add(AL.marathoner);
       }
+    }
 
     // Space or E for interaction
     if (this.keys[32] || this.keys[69]) {
       console.log('at endpoint? ', this._atEndPoint);
       if (this._atEndPoint) {
-
         // babySteps - Finish the tutorial
         this.player.achievements.add(AL.babySteps);
         setTimeout(function() {
@@ -285,10 +283,10 @@ export class MapControls extends Controls {
     }
 
     // lazy - don't move for 5 minutes (only attainable on Map scene)
-    var histBefore = keysHistory.length;
-    var that = this;
+    const histBefore = keysHistory.length;
+    const that = this;
     setTimeout(function() {
-      var histAfter = keysHistory.length;
+      const histAfter = keysHistory.length;
       if (histBefore === histAfter && getScene() == 'MapScene') {
         that.player.achievements.add(AL.lazy);
       }
@@ -298,7 +296,6 @@ export class MapControls extends Controls {
     achievementsDown(this);
     // All global inventory
     inventoryDown(this);
-
   }
 
   doReverseMovement() {

@@ -10,6 +10,7 @@ export class Entity {
     this.y = data.y;
     this.id = genID();
     this.hp = (data.hp) ? data.hp : null;
+    this.MAX_HP = this.hp;
     this.dmg = (data.dmg) ? data.dmg : null;
     this.globalX = data.globalX;
     this.globalY = data.globalY;

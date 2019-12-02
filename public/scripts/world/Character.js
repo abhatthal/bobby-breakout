@@ -3,7 +3,7 @@ import {DIRECTION, httpGet, isColliding} from '../util/helper_functions.js';
 // import {Skills} from './Skills.js';
 // import * as defaultskill from './skilldefault.js';
 import {Inventory} from '../inventory/Inventory.js';
-import { Achievements } from '../achievements/Achievements.js';
+import {Achievements} from '../achievements/Achievements.js';
 
 export class Character extends Entity {
   constructor(data) {
