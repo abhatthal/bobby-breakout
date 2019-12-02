@@ -25,7 +25,35 @@ export class Achievements {
 
     // Freemium users should not be able to receive achievements
     if (isPremium()) {
-      
+
+      const that = this;
+      // get achievements item from achievements list
+      function getAchievement(name) {
+        Object.keys(AL).forEach(function(key) {
+          // console.log(key, AL[key]);
+          // console.log(AL[key]._name);
+          if (key == name) {
+            return AL[key];
+          }
+        });
+        return null;
+      }
+
+      // get achievements from database
+      const socket = io.connect();
+      socket.on('connect', function() {
+        socket.emit('achievementsReceived', getUsername(), function(data) {
+          // console.log(data.msg);
+          console.log(data);
+          Object.keys(data).forEach(function(key) {
+            console.log(key == 'msg');
+            if (data[key]) {
+              console.log(data[key]);
+              // that.Achievements.push(getAchievement(key));
+            }
+          });
+        }); // emit
+      }); // on
 
       const AchievementsTitle = new Konva.Text({
         x: 0,
@@ -69,16 +97,7 @@ export class Achievements {
       });
       this.layer.add(fremiumMsg);
     }
-
     this.layer.draw();
-
-    // get achievements from database
-    const socket = io.connect();
-    socket.on('achievementsReceived', function(data) {
-      // socket.emit('achievementsReceived', achievementsData);
-      console.log(data.msg);
-    });
-
   }
 
   add(item) {
