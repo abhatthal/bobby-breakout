@@ -35,7 +35,9 @@ export class Achievements {
           // console.log(data);
           Object.keys(data).forEach(function(key) {
             if (data[key]) {
-              that.add(AL[key]);
+              const item = AL[key];
+              item.fromDatabase = true;
+              that.add(item);
             }
           });
         }); // emit
@@ -168,12 +170,14 @@ export class Achievements {
     console.assert(this.Achievements_num <= this.Achievements_size);
 
     // Achievement Notification
-    let notificationContainer = document.getElementById('achievement');
-    notificationContainer.style.display = 'block';
-    notificationContainer.innerHTML = '<img src = \'/assets/trophy.png\'><span>Achievement Unlocked: ' + item.name + '</span>';
-    setTimeout(function() {
-      notificationContainer.style.display = 'none';
-    }, 3000);
+    if (!(item.fromDatabase)) {
+      let notificationContainer = document.getElementById('achievement');
+      notificationContainer.style.display = 'block';
+      notificationContainer.innerHTML = '<img src = \'/assets/trophy.png\'><span>Achievement Unlocked: ' + item.name + '</span>';
+      setTimeout(function() {
+        notificationContainer.style.display = 'none';
+      }, 3000);
+  }
 
       // tell if an achievement is present
       const that = this;
