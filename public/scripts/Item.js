@@ -2,6 +2,7 @@ export class Item {
   constructor(data) {
     this.name = data.name;
     this.info = data.info;
+    this.color = (data.color) ? data.color: 'green';
     this.type = data.type;
     this.dmg = (data.dmg) ? data.dmg : 0;
     this.heal = (data.heal) ? data.heal : 0;

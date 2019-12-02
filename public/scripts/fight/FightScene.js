@@ -3,6 +3,7 @@ import {Tooltip} from '../util/ToolTip.js';
 import {FightControls} from './FightControls.js';
 import {Game} from '../Game.js';
 import * as skilldefault from '../skilldefault.js';
+import * as AL from '../achievements/AchievementsList.js';
 
 export class FightScene extends Scene {
   constructor(data) {
@@ -232,6 +233,9 @@ export class FightScene extends Scene {
     this.fightSceneLoad(data.player, data.npc);
     // this.fightLoop(data.player, data.npc);
     this.controls.addControlBindings();
+
+    // warrior - First fight with an NPC
+    this.player.achievements.add(AL.warrior);
   }
 
   fightSceneLoad(player, npc) {

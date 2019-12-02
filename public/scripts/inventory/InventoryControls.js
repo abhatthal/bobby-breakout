@@ -1,6 +1,9 @@
 import {Controls} from '../util/Controls.js';
 import {Game} from '../Game.js';
 import {Item} from '../Item.js';
+import {achievementsDown, inventoryDown} from '../globalCtrl.js';
+import {keysHistory} from '../util/helper_functions.js';
+import * as IL from './InventoryList.js';
 
 export class InventoryControls extends Controls {
   constructor(data) {
@@ -44,62 +47,27 @@ export class InventoryControls extends Controls {
 
   handleKeyDown(event) {
     this.keys[event.keyCode] = true;
+    keysHistory.push(event.keyCode);
 
-    // For debugging purposes, add items
-    if (this.keys[90]) {
-      const item = new Item({
-        name: 'Plastic Sword',
-        // eslint-disable-next-line max-len
-        info: 'This is the mighty plastic sword that Bobby picked up from the ground in front of his office.',
-        type: 'weapon',
-        dmg: 15,
-        flavourText: 'It can\'t even cut paper...',
-        icon: '../../assets/sword.png',
-      });
-      this.player.inventory.add(item);
+    // All global achievements
+    achievementsDown(this);
+    // All global inventory
+    inventoryDown(this);
+
+    // For debugging purposes
+    if (this.keys[89]) {
+      this.player.inventory.add(IL.plasticSword);
     }
-    if (this.keys[88]) {
-      const item = new Item({
-        name: 'Positive Student Evaluations',
-        // eslint-disable-next-line max-len
-        info: 'Nothing\'s better than the sweet sweet ecstacy of reading through your saved stash of your student\'s compliment.',
-        type: 'heal',
-        heal: 10,
-        effect: 'ego boost',
-        flavourText: '8/8 would r8 again',
-        icon: '../../assets/document.png',
-      });
-      this.player.inventory.add(item);
-    }
-    if (this.keys[67]) {
-      const item = new Item({
-        name: 'Dad Joke',
-        info: 'Dad jokes are great to lighten the mood... I think...',
-        type: 'weapon',
-        dmg: 5,
-        flavourText: 'GROANS',
-        icon: '../../assets/glasses-with-mustache.png',
-      });
-      this.player.inventory.add(item);
-    }
-    if (this.keys[86]) {
-      const item = new Item({
-        name: 'Coffee',
-        // eslint-disable-next-line max-len
-        info: 'You hate some students, but you love your job. It really be like that sometimes. Have a cup of coffee to soothe the pain of the daily grind.',
-        type: 'heal',
-        heal: 5,
-        effect: 'morale',
-        // eslint-disable-next-line max-len
-        flavourText: 'Venti, half-whole milk, one quarter 1%, one quarter non-fat, extra hot, split quad shots, 1 1/2 shots decaf, 2 1/2 shots regular, no foam latte, with whip, 2 packets of splenda, 1 sugar in the raw, a touch of vanilla syrup and 3 short sprinkles of cinnamon. And stat.',
-        icon: '../../assets/coffee.png',
-      });
-      this.player.inventory.add(item);
-    }
+
     // i for inventory menu exit
     if (this.keys[73]) {
       const game = Game.getInstance();
       game.switchToMap();
+    }
+    // p for Achievements menu
+    if (this.keys[80]) {
+      const game = Game.getInstance();
+      game.switchToAchievements();
     }
   }
 }
