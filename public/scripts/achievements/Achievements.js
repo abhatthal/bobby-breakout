@@ -134,8 +134,9 @@ export class Achievements {
     console.assert(this.Achievements_num <= this.Achievements_size);
 
     // Achievement Notification
-    let notificationContainer = document.getElementById('achievement');
+    const notificationContainer = document.getElementById('achievement');
     notificationContainer.style.display = 'block';
+    // eslint-disable-next-line max-len
     notificationContainer.innerHTML = '<img src = \'/assets/trophy.png\'><span>Achievement Unlocked: ' + item.name + '</span>';
     setTimeout(function() {
       notificationContainer.style.display = 'none';

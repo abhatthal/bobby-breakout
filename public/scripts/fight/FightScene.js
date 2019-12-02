@@ -3,6 +3,7 @@ import {Tooltip} from '../util/ToolTip.js';
 import {FightControls} from './FightControls.js';
 import {Game} from '../Game.js';
 import * as skilldefault from '../skilldefault.js';
+import {Player} from '../world/Character.js';
 import * as AL from '../achievements/AchievementsList.js';
 
 export class FightScene extends Scene {
@@ -15,13 +16,6 @@ export class FightScene extends Scene {
 
     // Tooltip for fight
     this.tooltips = {
-      fightTooltip: new Tooltip({
-        x: 250,
-        y: 30,
-        width: 500,
-        height: 150,
-        text: 'TIME TO FIGHT! coming later...\nE/SPACE TO RETURN',
-      }),
       skillA1Tooltip: new Tooltip({
         name: 'skill',
         shape_id: '0',
@@ -29,7 +23,9 @@ export class FightScene extends Scene {
         y: data.stage.height() - 100,
         width: 300,
         height: 50,
-        text: `${this.inventory.equipped[0].name}`,
+        item: this.inventory.equipped[0],
+        // eslint-disable-next-line max-len
+        text: `${this.inventory.equipped[0].name} (${(this.inventory.equipped[0].type === 'weapon') ? (this.inventory.equipped[0].dmg + ' dmg'):('+' + this.inventory.equipped[0].heal + ' hp')})`,
       }),
       skillA2Tooltip: new Tooltip({
         name: 'skill',
@@ -38,7 +34,9 @@ export class FightScene extends Scene {
         y: data.stage.height() - 100,
         width: 300,
         height: 50,
-        text: `${this.inventory.equipped[1].name}`,
+        item: this.inventory.equipped[1],
+        // eslint-disable-next-line max-len
+        text: `${this.inventory.equipped[1].name} (${(this.inventory.equipped[1].type === 'weapon') ? (this.inventory.equipped[1].dmg + ' dmg'):('+' + this.inventory.equipped[1].heal + ' hp')})`,
       }),
       skillA3Tooltip: new Tooltip({
         name: 'skill',
@@ -47,7 +45,9 @@ export class FightScene extends Scene {
         y: data.stage.height() - 200,
         width: 300,
         height: 50,
-        text: `${this.inventory.equipped[2].name}`,
+        item: this.inventory.equipped[2],
+        // eslint-disable-next-line max-len
+        text: `${this.inventory.equipped[2].name} (${(this.inventory.equipped[2].type === 'weapon') ? (this.inventory.equipped[2].dmg + ' dmg'):('+' + this.inventory.equipped[2].heal + ' hp')})`,
       }),
       skillA4Tooltip: new Tooltip({
         name: 'skill',
@@ -56,86 +56,54 @@ export class FightScene extends Scene {
         y: data.stage.height() - 200,
         width: 300,
         height: 50,
-        text: `${this.inventory.equipped[3].name}`,
+        item: this.inventory.equipped[3],
+        // eslint-disable-next-line max-len
+        text: `${this.inventory.equipped[3].name} (${(this.inventory.equipped[3].type === 'weapon') ? (this.inventory.equipped[3].dmg + ' dmg'):('+' + this.inventory.equipped[3].heal + ' hp')})`,
       }),
       playerTooltip: new Tooltip({
-        x: 20,
-        y: 130,
+        x: data.stage.width()*2/10,
+        y: data.stage.height()*4.5/10,
+        width: 200,
+        height: 120,
+        text: 'Bobby Chan',
+      }),
+      playerHpTooltip: new Tooltip({
+        x: data.stage.width()*2/10,
+        y: data.stage.height()*4.5/10 - 50,
         width: 150,
-        height: 300,
+        height: 50,
         text: '',
       }),
       enemyTooltip: new Tooltip({
-        x: 820,
-        y: 30,
+        x: data.stage.width()*5.5/10,
+        y: data.stage.height()*1/10,
+        width: 200,
+        height: 120,
+        text: 'Enemy',
+      }),
+      enemyHpTooltip: new Tooltip({
+        x: data.stage.width()*5.5/10,
+        y: data.stage.height()*1/10 - 50,
         width: 150,
-        height: 300,
+        height: 50,
         text: '',
       }),
     };
 
-    this.uiStuff = {
-      activityCenter: new Konva.Rect({
-        x: data.stage.width()/2 - data.stage.width()*3/5/2, // subtract half of rect width
-        y: 0,
-        width: data.stage.width()*3/5,
-        height: 50,
-        stroke: 'black',
-        strokeWidth: 2,
-      }),
-      skillsTab: new Konva.Rect({
-        x: data.stage.width()/2 - data.stage.width()*2/3/2,
-        y: data.stage.height() - data.stage.height()*3/5/2,
-        width: data.stage.width()*2/3,
-        height: data.stage.height()*3/5,
-        stroke: 'black',
-        strokeWidth: 2,
-      }),
-      skill1: new Konva.Rect({
-        x: data.stage.width()/2 - data.stage.width()*2/3/2 + 50,
-        y: data.stage.height() - data.stage.height()*3/5/2 + 25,
-        width: 100,
-        height: 50,
-        stroke: 'black',
-        strokeWidth: 2,
-        text: 'Q',
-      }),
-      skill2: new Konva.Rect({
-        x: data.stage.width()/2 - data.stage.width()*2/3/2 + 50 + 100 + 10,
-        y: data.stage.height() - data.stage.height()*3/5/2 + 25,
-        width: 100,
-        height: 50,
-        stroke: 'black',
-        strokeWidth: 2,
-        text: 'N/A',
-      }),
-      skill3: new Konva.Rect({
-        x: data.stage.width()/2 - data.stage.width()*2/3/2 + 50 + 100 + 10 + 100 + 10,
-        y: data.stage.height() - data.stage.height()*3/5/2 + 25,
-        width: 100,
-        height: 50,
-        stroke: 'black',
-        strokeWidth: 2,
-        text: 'N/A',
+    this.phaseUI = {
+      dialogueBox: new Tooltip({
+        name: 'dialogue',
+        x: data.stage.width()/6,
+        y: data.stage.height() - 200,
+        width: 600,
+        height: 150,
+        text: '',
       }),
     };
 
-    this.uiEntities = {
-      player: new Konva.Rect({
-        x: data.stage.width()*4/10,
-        y: data.stage.height()*4.75/10,
-        width: 80,
-        height: 80,
-        fill: 'grey',
-      }),
-      enemy: new Konva.Rect({
-        x: data.stage.width()*6.5/10,
-        y: data.stage.height()*3/10,
-        width: 40,
-        height: 40,
-        fill: 'yellow',
-      }),
-    };
+    this.phases = ['e1Attack', 'e1AttackInfo', 'e2Attack', 'e2AttackInfo', 'await'];
+    this.currPhase = this.phases[0];
+    // console.log(this.phases[0]);
 
     this.controls;
 
@@ -144,20 +112,47 @@ export class FightScene extends Scene {
     data.player.skillA1 = skilldefault.Skill1;
   }
 
-  doDamage(opponent, item) {
-    if (opponent.hp >= 0) {
-      opponent.hp -= item.dmg;
-    }
-
-    // temp update enemy hp
-    // abstract this into a general function later that updates all things to do with ui?
-    const enemyStatText = 'Enemy: \ncome fight bobby\n\n' + opponent.hp;
-    this.tooltips['enemyTooltip'].text = enemyStatText;
+  updatePlayerHP(player) {
+    // console.log(player.hp);
+    const playerStatText = 'HP: ' + player.hp + ' / ' + player.MAX_HP;
+    this.tooltips['playerHpTooltip'].text = playerStatText;
     this.fightLayer.add(
+        this.tooltips['playerHpTooltip'].renderBox,
+        this.tooltips['playerHpTooltip'].renderText,
+        this.tooltips['playerTooltip'].renderBox,
+        this.tooltips['playerTooltip'].renderText,
+    );
+    this.fightLayer.draw();
+  }
+
+  updateNpcHP(npc) {
+    const enemyName = `${npc.name}`;
+    this.tooltips['enemyTooltip'].text = enemyName;
+    const enemyStatText = 'HP: ' + npc.hp + ' / ' + npc.MAX_HP;
+    this.tooltips['enemyHpTooltip'].text = enemyStatText;
+    this.fightLayer.add(
+        this.tooltips['enemyHpTooltip'].renderBox,
+        this.tooltips['enemyHpTooltip'].renderText,
         this.tooltips['enemyTooltip'].renderBox,
         this.tooltips['enemyTooltip'].renderText,
     );
     this.fightLayer.draw();
+  }
+
+  doDamage(opponent, item) {
+    if (opponent.hp >= 0) {
+      opponent.hp -= item.dmg;
+    }
+    this.updateNpcHP(opponent);
+  }
+
+  // Enemy fight strategy
+  doEnemyAttack(player, item) {
+    // console.log(item);
+    if (player.hp >= 0) {
+      player.hp -= item.dmg;
+    }
+    this.updatePlayerHP(player);
   }
 
   heal(player, item) {
@@ -165,50 +160,92 @@ export class FightScene extends Scene {
     if (player.hp >= 100) {
       return;
     }
-
     player.hp += item.heal;
-    const playerStatText = 'Bobby here! \nsmash all ppl \nblocking your way\n' + player.hp;
-    this.tooltips['playerTooltip'].text = playerStatText;
-    this.fightLayer.add(
-        this.tooltips['playerTooltip'].renderBox,
-        this.tooltips['playerTooltip'].renderText,
-    );
-    this.fightLayer.draw();
+    this.updatePlayerHP(player);
   }
 
-  fightLoop(subject, opponent, item) {
-    if (opponent.hp <= 0) {
-      // remove enemy when dead. currently not working.
-      // issue: doesn't rerender the current mapscene after going back to it
+  getDialogueAttackText(attackerIndex) {
+    let txt = '';
+    if (this.fightOrder[attackerIndex] instanceof Player) {
+      // eslint-disable-next-line max-len
+      txt = `${this.fightOrder[attackerIndex].name} used ${this._currSelectedSkill.name.toUpperCase()}`;
+    } else {
+      // console.log(this.fightOrder[attackerIndex].inventoryItem);
+      // eslint-disable-next-line max-len
+      txt = `${this.fightOrder[attackerIndex].name} used ${this.fightOrder[attackerIndex].inventoryItem.name.toUpperCase()}`;
+    }
+    return txt;
+  }
 
-      // console.log(this.map.npcArray);
-      // const index = this.map.npcArray.indexOf(opponent);
-      // if(index > -1){ //opponent exists in array
-      //   this.map.npcArray.splice(index, 1); //remove 1 element @ specified index
-      // }
-      // console.log(this.map.npcArray);
+  getDialogueAttackInfoText(attackerIndex, player, npc) {
+    let txt = '';
+    if (this.fightOrder[attackerIndex] instanceof Player) {
+      if (this._currSelectedSkill.type === 'weapon') {
+        this.doDamage(npc, this._currSelectedSkill);
+        // eslint-disable-next-line max-len
+        txt = `${this._currSelectedSkill.name.toUpperCase()} did ${this._currSelectedSkill.dmg} damage!`;
+      } else {
+        this.heal(player, this._currSelectedSkill);
+        // eslint-disable-next-line max-len
+        txt = `${this._currSelectedSkill.name.toUpperCase()} healed ${this.fightOrder[attackerIndex].name} for ${this._currSelectedSkill.heal} health!`;
+      }
+    } else {
+      // console.log(this.fightOrder[attackerIndex].inventoryItem);
+      this.doEnemyAttack(player, this.fightOrder[attackerIndex].inventoryItem);
+      // eslint-disable-next-line max-len
+      txt = `${this.fightOrder[attackerIndex].name}'s ${this.fightOrder[attackerIndex].inventoryItem.name}`;
+    }
+    return txt;
+  }
+
+  updateFightPhases(player, npc) {
+    let dialogueText = '';
+    if (npc.hp <= 0) {
+      player.hp = player.MAX_HP;
       const game = Game.getInstance();
       game.switchToMap();
     }
-    // assume player act first
-    if (subject.fightSpeed >= opponent.fightSpeed) {
-      if (item.type === 'weapon') {
-        this.doDamage(opponent, item);
-      } else {
-        this.heal(subject, item);
-      }
-      this.enemyfight(opponent, subject);
-    } else {
-      this.enemyfight(opponent, subject);
-      this.doDamage(subject, opponent);
+
+    if (this.currPhase === this.phases[0]) {
+      // PHASE 0: p used x skill
+      dialogueText = this.getDialogueAttackText(0); // attacker 0 in fightOrder array
+    } else if (this.currPhase === this.phases[1]) {
+      // PHASE 1: x skill did x.dmg
+      dialogueText = this.getDialogueAttackInfoText(0, player, npc);
+    } else if (this.currPhase === this.phases[2]) {
+      // PHASE 2: p2 used y skill
+      dialogueText = this.getDialogueAttackText(1);
+    } else if (this.currPhase === this.phases[3]) {
+      // PHASE 3: y skill did y.dmg
+      dialogueText = this.getDialogueAttackInfoText(1, player, npc);
     }
-    // this.fightSceneLoad(subject, npc);
+
+    this.phaseUI['dialogueBox'].text = dialogueText;
+    this.fightLayer.draw();
   }
 
-  // Enemy fight strategy
-  enemyfight(opponent, subject) {
-    // alert(opponent.hp, subject.hp);
-    // opponent.skillA1.hpchange(subject, 0);
+
+  setFightOrder(player, npc) {
+    // assign fight order based on speed
+    if (player.fightSpeed >= npc.fightSpeed) {
+      this.fightOrder = [player, npc];
+    } else {
+      this.fightOrder = [npc, player];
+    }
+  }
+
+  getNextPhase(p) {
+    let index = this.phases.indexOf(p);
+    console.log('old phase', index);
+    index++;
+    if (index >= this.phases.length-1) {
+      index = 0;
+      // make dialogue box invisible to allow user to select next skill
+      this.phaseUI['dialogueBox'].tipBox.visible(false);
+      this.phaseUI['dialogueBox'].tipText.visible(false);
+    }
+    console.log('new phase', index, this.phases[index]);
+    return this.phases[index];
   }
 
   switchFrom(data) {
@@ -224,14 +261,14 @@ export class FightScene extends Scene {
       player: data.player,
       container: data.stage.container(),
       tooltips: this.tooltips,
-      ui: this.uiStuff,
       map: data.map,
       npc: data.npc,
     });
     console.assert(data != null);
     data.stage.add(this.fightLayer);
     this.fightSceneLoad(data.player, data.npc);
-    // this.fightLoop(data.player, data.npc);
+    // sets who attacks first, is used in updateFightPhases
+    this.setFightOrder(data.player, data.npc);
     this.controls.addControlBindings();
 
     // warrior - First fight with an NPC
@@ -239,17 +276,10 @@ export class FightScene extends Scene {
   }
 
   fightSceneLoad(player, npc) {
-    // #region old ui
-    const playerStatText = 'Bobby here! \nsmash all ppl \nblocking your way\n' + player.hp;
-    const enemyStatText = 'Enemy: \ncome fight bobby\n\n' + npc.hp;
-    console.log(playerStatText);
-    this.tooltips['playerTooltip'].text = playerStatText;
-    this.tooltips['enemyTooltip'].text = enemyStatText;
     this.fightLayer.add(
         this.tooltips['skillA1Tooltip'].renderBox,
         this.tooltips['skillA1Tooltip'].renderText,
     );
-
     this.fightLayer.add(
         this.tooltips['skillA2Tooltip'].renderBox,
         this.tooltips['skillA2Tooltip'].renderText,
@@ -262,40 +292,48 @@ export class FightScene extends Scene {
         this.tooltips['skillA4Tooltip'].renderBox,
         this.tooltips['skillA4Tooltip'].renderText,
     );
+    this.fightLayer.add(
+        this.phaseUI['dialogueBox'].renderBox,
+        this.phaseUI['dialogueBox'].renderText,
+    );
+    this.phaseUI['dialogueBox'].tipBox.visible(false);
+    this.phaseUI['dialogueBox'].tipText.visible(false);
+    console.assert(this.phaseUI['dialogueBox'] != null);
 
-    this.fightLayer.add(
-        this.tooltips['playerTooltip'].renderBox,
-        this.tooltips['playerTooltip'].renderText,
-    );
-    this.fightLayer.add(
-        this.tooltips['enemyTooltip'].renderBox,
-        this.tooltips['enemyTooltip'].renderText,
-    );
+
+    this.updatePlayerHP(player);
+    this.updateNpcHP(npc);
 
     this.fightLayer.on('mouseover', function(evt) {
       const shape = evt.target;
-      if (shape.name() === 'skill') {
+      if (shape.name() === 'skill' || shape.name() === 'dialogue') {
         document.body.style.cursor = 'pointer';
       }
     });
     this.fightLayer.on('mouseout', function(evt) {
       const shape = evt.target;
-      if (shape.name() === 'skill') {
+      if (shape.name() === 'skill' || shape.name() === 'dialogue') {
         document.body.style.cursor = 'default';
       }
     });
 
     const fight = this;
-    this.fightLayer.on('click', function(evt) {
+    this.fightLayer.on('click', (evt) => {
       const shape = evt.target;
       if (shape.name() === 'skill') {
-        fight.fightLoop(player, npc, player.inventory.equipped[shape.id()]);
+        console.log(fight.currPhase);
+        this._currSelectedSkill = this.inventory.equipped[shape.attrs.id];
+        fight.phaseUI['dialogueBox'].tipBox.visible(true);
+        fight.phaseUI['dialogueBox'].tipText.visible(true);
+        fight.updateFightPhases(player, npc);
+      }
+
+      if (shape.name() === 'dialogue' && fight.currPhase !== fight.phases[fight.phases.length-1]) {
+        // console.log('clicked ', shape);
+        fight.currPhase = fight.getNextPhase(fight.currPhase);
+        fight.updateFightPhases(player, npc);
       }
     });
-    this.fightLayer.add(
-        this.tooltips['fightTooltip'].renderBox,
-        this.tooltips['fightTooltip'].renderText,
-    );
 
     this.fightLayer.draw();
   }

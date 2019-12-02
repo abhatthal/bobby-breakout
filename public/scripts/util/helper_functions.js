@@ -78,7 +78,7 @@ export function isPremium() {
   return (url.searchParams.get('premium') === 'true');
 }
 
-export var keysHistory = [];
+export const keysHistory = [];
 // get an array of the last n keys pressed
 export function keysPressed(n) {
   return keysHistory.slice(-n);

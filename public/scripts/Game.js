@@ -22,6 +22,7 @@ export class Game {
     });
 
     this.player = new Player({
+      name: 'Bobby Chan',
       x: this.stage.width()/2 - 30,
       y: this.stage.height()/2 - 30,
       globalX: 5280.31,

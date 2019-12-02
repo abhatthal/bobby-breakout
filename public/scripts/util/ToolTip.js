@@ -6,7 +6,8 @@ export class Tooltip {
     this.shape_id = (data.shape_id) ? data.shape_id : null,
     this.x = data.x;
     this.y = data.y;
-    this.width = (data.width) ? data.width : 160; // default to 160 if not specified
+    this.width = data.width; // default to 160 if not specified
+    this.height = data.height;
     this.id = genID();
     this._text = data.text;
 
@@ -46,7 +47,7 @@ export class Tooltip {
       strokeWidth: 5,
       fill: this.secondaryColor,
       width: this.width,
-      height: this.tipText.height(),
+      height: this.height,
       shadowColor: this.tertiaryColor,
       shadowBlur: 10,
       shadowOffsetX: 10,
@@ -110,8 +111,8 @@ export class Tooltip {
   set text(val) {
     this._text = val;
     this.tipText.text(this.text);
-    this.tipBox.height(this.tipText.height());
-    this.tipBox.width(this.tipText.width());
+    // this.tipBox.height(this.tipText.height());
+    // this.tipBox.width(this.tipText.width());
   }
 
   get text() {

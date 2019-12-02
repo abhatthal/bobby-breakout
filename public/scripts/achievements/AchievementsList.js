@@ -20,7 +20,7 @@ export const lazy = new Item({
   name: 'Lazy',
   info: 'Don\'t move for 5 minutes',
   type: 'achievement',
-})
+});
 
 // babySteps - Finish the tutorial
 export const babySteps = new Item({

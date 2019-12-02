@@ -42,7 +42,9 @@ export class AchievementsScene extends Scene {
         equippedMenu.style.display = 'none';
         AchievementsMenu.style.display = 'initial';
         const containerRect = data.stage.container().getBoundingClientRect();
+        // eslint-disable-next-line max-len
         AchievementsMenu.style.top = containerRect.top + data.stage.getPointerPosition().y + 4 +'px';
+        // eslint-disable-next-line max-len
         AchievementsMenu.style.left = containerRect.left + data.stage.getPointerPosition().x+4 + 'px';
       } else if (e.target.name() === 'equipped') {
         currentShape = e.target;
