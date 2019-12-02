@@ -1,6 +1,5 @@
 import {Controls} from '../util/Controls.js';
 import {Game} from '../Game.js';
-import {Item} from '../Item.js';
 import {achievementsDown, inventoryDown} from '../globalCtrl.js';
 import {keysHistory} from '../util/helper_functions.js';
 import * as IL from './InventoryList.js';

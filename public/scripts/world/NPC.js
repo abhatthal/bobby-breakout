@@ -5,7 +5,6 @@ import {isColliding} from '../util/helper_functions.js';
 import {Game} from '../Game.js';
 // import {Skills} from './Skills.js';
 // import * as defaultskill from './skilldefault.js';
-import {Item} from '../Item.js';
 import * as IL from '../inventory/InventoryList.js';
 
 export class NPC extends Character {

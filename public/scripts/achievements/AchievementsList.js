@@ -1,4 +1,4 @@
-import {Item} from '../Item.js';
+import {Item} from '../item/Item.js';
 
 // For debugging purposes - key 'x' to add an item (achievement)
 export const testAchievement = new Item({

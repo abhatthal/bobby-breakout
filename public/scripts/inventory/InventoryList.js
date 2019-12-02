@@ -1,4 +1,4 @@
-import {Item} from '../Item.js';
+import {Item} from '../item/Item.js';
 
 export const plasticSword = new Item({
   name: 'Plastic Sword',
