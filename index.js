@@ -153,7 +153,6 @@ io.on('connection', function(client) {
               done();
               res = result.rows[0];
               fn({
-                msg: 'hi',
                 testAchievement: res.testachievement,
                 konamiCode: res.konamicode,
                 lazy: res.lazy,
