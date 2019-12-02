@@ -12,12 +12,12 @@ export class MapASB {
     const layer = data.layer;
     const height = data.stage.height();
     const width = data.stage.width();
-    console.log(width, height)
+    console.log(width, height);
     const initialDisplacement = {
       // x: 900,
       // y: 1000,
-      x: width * 0.85,
-      y: height * 1.55,
+      x: 327 + width/2,
+      y: 717 + height/2,
     };
 
     const item1 = new Item({
