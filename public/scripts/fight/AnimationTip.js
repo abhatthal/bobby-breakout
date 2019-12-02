@@ -34,17 +34,7 @@ export class AnimationTip {
     this.hexagon.x(pos.x);
     this.hexagon.y(pos.y);
   }
-/*
-  sildTo(pos, frame) {
-    this.hexagon.x = pos.x;
-    this.hexagon.y = pos.y;
-    let anim = new Konva.Animation(function(frame) {
-      hexagon.x(
-          Math.sin(frame));
-    });
-  }
-*/
-/*
+  /*
   animationTo(pos) {
     hexagon.x(
         amplitude * Math.sin((frame.time * 2 * Math.PI) / period) + centerX,

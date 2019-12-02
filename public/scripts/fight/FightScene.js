@@ -185,11 +185,31 @@ export class FightScene extends Scene {
     this.controls.addControlBindings();
   }
 
-  animation1(startpos, endpos, frame) {
-    this.animationtips['animationItem1'].moveTo(startpos);
-    this.animationtips['animationItem1'].renderhexagon.show();
-    this.animationtips['animationItem1'].slidTo(endpos, frame);
-    this.animationtips['animationItem1'].renderhexagon.hide();
+  animation1(obj, startpos, endpos, frame) {
+    this.fightLayer.draw();
+    obj.moveTo(startpos);
+    const speed = 30;
+    const diffx = endpos.x - startpos.x;
+    const diffy = endpos.y - startpos.y;
+    const magnitude = (diffx^2 + diffy^2)^0.5;
+    const unitvecx = diffx / magnitude;
+    const unitvecy = diffy / magnitude;
+
+    obj.x += unitvecx * speed;
+    obj.y += unitvecy * speed;
+
+    if (obj.x <= endpos.x || obj.y <= endpos.y) {
+      obj.hide();
+      return;
+    } else {
+      setTimeout(() => {
+        this.animation1(obj, {x: startpos.x + unitvecx * speed, y: startpos.y + unitvecy * speed},
+            endpos, frame);
+      }, 10);
+    }
+    // this.animationtips['animationItem1'].renderhexagon.show();
+    // this.animationtips['animationItem1'].slidTo(endpos, frame);
+    // this.animationtips['animationItem1'].renderhexagon.hide();
   }
 
   fightSceneLoad(player, npc) {
@@ -237,9 +257,11 @@ export class FightScene extends Scene {
     this.fightLayer.add(
         this.animationtips['animationItem1'].renderhexagon,
     );
-    this.animationtips['animationItem1'].moveTo({x: 500, y: 500});
+    this.animationtips['animationItem1'].moveTo({x: this.x, y: this.y});
+    this.animation1(this.animationtips['animationItem1'],
+        {x: this.CharacterLayout['playerLayout'].x, y: this.CharacterLayout['playerLayout'].y},
+        {x: this.CharacterLayout['enemyLayout'].x, y: this.CharacterLayout['enemyLayout'].y}, 10);
 
-    // this.animationtips['animationItem1'].renderhexagon.hide();
 
     this.fightLayer.add(
         this.CharacterLayout['playerLayout'].renderheadBox,
