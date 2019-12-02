@@ -160,7 +160,11 @@ export class FightScene extends Scene {
     if (player.hp >= 100) {
       return;
     }
-    player.hp += item.heal;
+    if (player.hp + item.heal >= 100) {
+      player.hp = 100;
+    } else {
+      player.hp += item.heal;
+    }
     this.updatePlayerHP(player);
   }
 
