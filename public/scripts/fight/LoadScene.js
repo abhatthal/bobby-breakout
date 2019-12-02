@@ -2,6 +2,7 @@ import {Scene} from '../Scene.js';
 import {Tooltip} from '../util/ToolTip.js';
 // import {CharacterLayout} from './CharacterLayout.js';
 // import {Dialogtip} from './DialogTip.js';
+import {AnimationTip} from './AnimationTip.js';
 
 export class LoadScene extends Scene {
   constructor(data) {
@@ -11,8 +12,8 @@ export class LoadScene extends Scene {
     // Tooltip for fight
     this.tooltips = {
       loadTooltip: new Tooltip({
-        x: 250,
-        y: 30,
+        x: 100,
+        y: 50,
         width: 1000,
         height: 1100,
         primaryColor: 'black',
@@ -21,9 +22,13 @@ export class LoadScene extends Scene {
         text: 'Enemy encountered! Be ready to fight!',
       }),
     };
-    this.counter = 0;
-    this.intervalID = null;
-    this.loadLayer.draw();
+
+    this.loadAnimationItem = {
+      animationRotate: new AnimationTip({
+        x: data.stage.width() * 0.5,
+        y: data.stage.height() * 0.5,
+      }),
+    };
   }
 
   // incomplete, can not continous show hide a tip
@@ -33,38 +38,18 @@ export class LoadScene extends Scene {
     this.loadLayer.add(
         this.tooltips['loadTooltip'].renderBox,
         this.tooltips['loadTooltip'].renderText,
+        this.loadAnimationItem['animationRotate'].renderhexagon,
     );
-
-    while (this.counter < 5) {
-      this.interval();
-    }
-    clearInterval(this.intervalID);
+    // this.rotate(this.loadAnimationItem['animationRotate'].renderhexagon, 10000, 10);
+    this.loadAnimationItem['animationRotate'].animationRotate(this.loadLayer,10000,10,5000);
     console.log('load scene end');
-    this.counter = 0;
+    this.loadLayer.draw();
   }
 
-  interval() {
-    this.intervalID = setInterval(this.flashLayer(), 400);
-  }
-
-  flashLayer() {
-    console.log('did' + this.counter);
-    if (this.counter % 2 === 0) {
-      this.loadLayer.show(
-          this.tooltips['loadTooltip'].renderBox,
-          this.tooltips['loadTooltip'].renderText,
-      );
+  rotate(obj, speed, frame) {
+    setTimeout(() => {
+      obj.rotate(speed);
       this.loadLayer.draw();
-      console.log('test' + this.counter);
-    } else {
-      this.loadLayer.hide(
-          this.tooltips['loadTooltip'].renderBox,
-          this.tooltips['loadTooltip'].renderText,
-      );
-      this.loadLayer.draw();
-      console.log('test222' + this.counter);
-    }
-    this.counter++;
+    }, frame);
   }
-
 }

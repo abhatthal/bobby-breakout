@@ -15,6 +15,8 @@ export class FightScene extends Scene {
       animationItem1: new AnimationTip({
         x: data.stage.width() * 0.3,
         y: data.stage.height() * 0.3,
+        side: 6,
+        raidus: 20,
       }),
     };
 
@@ -258,10 +260,13 @@ export class FightScene extends Scene {
         this.animationtips['animationItem1'].renderhexagon,
     );
     this.animationtips['animationItem1'].moveTo({x: this.x, y: this.y});
+    /*
     this.animation1(this.animationtips['animationItem1'],
         {x: this.CharacterLayout['playerLayout'].x, y: this.CharacterLayout['playerLayout'].y},
         {x: this.CharacterLayout['enemyLayout'].x, y: this.CharacterLayout['enemyLayout'].y}, 10);
-
+*/
+  this.animationtips['animationItem1'].animationMove(this.fightLayer, {x: this.CharacterLayout['playerLayout'].x, y: this.CharacterLayout['playerLayout'].y},
+  {x: this.CharacterLayout['enemyLayout'].x, y: this.CharacterLayout['enemyLayout'].y}, 10, 30);
 
     this.fightLayer.add(
         this.CharacterLayout['playerLayout'].renderheadBox,
