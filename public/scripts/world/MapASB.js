@@ -16,7 +16,7 @@ export class MapASB {
     const initialDisplacement = {
       // x: 900,
       // y: 1000,
-      x: width * 0.73,
+      x: width * 0.85,
       y: height * 1.55,
     };
 
