@@ -113,10 +113,10 @@ export class Inventory {
     this.equip(IL.coffee);
   }
 
-  add(item) {
+  add(item, scaleX=0.1, scaleY=0.1) {
     // Inventory is full --> do nothing
     if (this.inventory_num >= this.inventory_size) {
-      return;
+      return false;
     }
 
     let shape;
@@ -133,6 +133,8 @@ export class Inventory {
     // Placeholder before adding item icons
     // shape.fill(item.color);
     shape.fill(null);
+    shape.fillPatternScaleY(scaleY);
+    shape.fillPatternScaleX(scaleX);
 
     const self = this;
     Promise.resolve(item.img).then(function(imgValue) {
@@ -235,6 +237,8 @@ export class Inventory {
     this.layer.draw();
     this.inventory_num += 1;
     console.assert(this.inventory_num <= this.inventory_size);
+
+    return true;
   }
 
   drop(icon) {

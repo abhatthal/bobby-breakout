@@ -149,6 +149,15 @@ export class MapControls extends Controls {
         }
       });
 
+      // ITEMS: check collision
+      this.map.itemArray.forEach((node) => {
+        if (this.player.checkCollision(node, playerSim)) {
+          this.player.inventory.add(node.item, node.scaleX, node.scaleY);
+          node.x = 1000000000;
+          node.shape.hide();
+        }
+      });
+
       // NPCS: check collision among them
       this.map.npcArray.forEach((node) => {
         if (this.player.checkCollision(node, playerSim)) {

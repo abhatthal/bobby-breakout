@@ -2,6 +2,8 @@ import {MovingNPC, WeakNPC, StrongNPC, MiniBossNPC, BossNPC} from './NPC.js';
 // import {Environment} from './Environment.js'; // for spawn and end points?
 import {CsilCoords} from '../../assets/csil_coords.js';
 import {Wall} from './Wall.js';
+import {Item} from '../item/Item.js';
+import {ItemBox} from '../item/ItemBox.js';
 // import {CsilLabs} from '../../assets/csil_labs.js';
 
 export class MapASB {
@@ -10,12 +12,99 @@ export class MapASB {
 
     const initialDisplacement = {
       x: 1100,
-      y: 1100,
+      y: 1200,
     };
-    // initialDisplacement.x = 300;
-    // initialDisplacement.y = 2200;
-    // initialDisplacement.y = 700;
-
+    
+    const item1 = new Item({
+      name: 'Weird ENSC Project',
+      // eslint-disable-next-line max-len
+      info: 'ENSC students have some weird projects. Not sure what this is for but it might prove useful.',
+      type: 'weapon',
+      dmg: 8,
+      // eslint-disable-next-line max-len
+      flavourText: 'Here lie the remains of an ENSC student\'s hopes and dreams.',
+      icon: '../../assets/ensc-project.jpg',
+    });
+    const item1Box = new ItemBox({
+      item: item1,
+      x: -300 + initialDisplacement.x,
+      y: -600 + initialDisplacement.y,
+      width: 50,
+      height: 50,
+      scaleX: 0.17,
+      scaleY: 0.25,
+    });
+    const item2 = new Item({
+      name: 'Sacrificial Coke Zero',
+      // eslint-disable-next-line max-len
+      info: 'Some say you should sacrifice a coke zero to the CMPT 361 gods before any Shermer exam.',
+      type: 'heal',
+      heal: 20,
+      effect: 'increased average grade from students on exams',
+      // eslint-disable-next-line max-len
+      flavourText: 'How did this get here? CSSS vending machine is usually out of coke zeros by now...',
+      icon: '../../assets/coke-zero.png',
+    });
+    const item2Box = new ItemBox({
+      item: item2,
+      x: 800 + initialDisplacement.x,
+      y: -450 + initialDisplacement.y,
+      width: 50,
+      height: 50,
+      scaleX: 0.16,
+      scaleY: 0.09,
+    });
+    const item3 = new Item({
+      name: 'Old Memes',
+      // eslint-disable-next-line max-len
+      info: 'Who knew that outdated memes could be so effective in delivering emotional damage to students.',
+      type: 'weapon',
+      dmg: 18,
+      // eslint-disable-next-line max-len
+      flavourText: 'Le me just feeling like a sir eating my baguette. *Drops baguette* FUUUUUUUUUU',
+      icon: '../../assets/old-meme.png',
+    });
+    const item3Box = new ItemBox({
+      item: item3,
+      x: 200 + initialDisplacement.x,
+      y: -200 + initialDisplacement.y,
+      width: 50,
+      height: 50,
+    });
+    const item4 = new Item({
+      name: 'Plastic Poop Knife',
+      // eslint-disable-next-line max-len
+      info: 'It\'s a poop knife. For cutting poop. With a knife. Obviously.',
+      type: 'weapon',
+      dmg: 25,
+      // eslint-disable-next-line max-len
+      flavourText: 'A fecal cleaver? A Dung divider? A guano glaive?',
+      icon: '../../assets/knife.png',
+    });
+    const item4Box = new ItemBox({
+      item: item4,
+      x: -400 + initialDisplacement.x,
+      y: -1000 + initialDisplacement.y,
+      width: 50,
+      height: 50,
+    });
+    const bonusItem = new Item({
+      name: 'North Korean Missiles',
+      // eslint-disable-next-line max-len
+      info: 'A technological marvel developed by our glorious leader.',
+      type: 'weapon',
+      dmg: 1,
+      // eslint-disable-next-line max-len
+      flavourText: 'You know what\'s more destructive than a nuclear bomb?... Words. - Kimg Jong-Un',
+      icon: '../../assets/missile.png',
+    });
+    const bonusItemBox = new ItemBox({
+      item: bonusItem,
+      x: 1000 + initialDisplacement.x,
+      y: -1300 + initialDisplacement.y,
+      width: 50,
+      height: 50,
+    });
     const weakNpc = new WeakNPC({
       x: 20 + initialDisplacement.x,
       y: -40 + initialDisplacement.y,
@@ -79,12 +168,25 @@ export class MapASB {
     layer.add(bossNpc.render);
     layer.add(movingNpc.render);
 
+    layer.add(item1Box.render);
+    layer.add(item2Box.render);
+    layer.add(item3Box.render);
+    layer.add(item4Box.render);
+    layer.add(bonusItemBox.render);
+
     this.npcArray = [];
     this.npcArray.push(weakNpc);
     this.npcArray.push(strongNpc);
     this.npcArray.push(miniBossNpc);
     this.npcArray.push(bossNpc);
     this.npcArray.push(movingNpc);
+
+    this.itemArray = [];
+    this.itemArray.push(item1Box);
+    this.itemArray.push(item2Box);
+    this.itemArray.push(item3Box);
+    this.itemArray.push(item4Box);
+    this.itemArray.push(bonusItemBox);
 
     this.blockArray = [];
     // console.log(this.blockArray)
@@ -168,6 +270,7 @@ export class MapASB {
     this.mapArray.push(...this.blockArray);
     this.mapArray.push(...this.spawnArray);
     this.mapArray.push(...this.npcArray);
+    this.mapArray.push(...this.itemArray);
 
     layer.draw();
   }
