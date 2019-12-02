@@ -2,9 +2,8 @@ import {Controls} from '../util/Controls.js';
 import {Game} from '../Game.js';
 import {achievementsDown, inventoryDown} from '../globalCtrl.js';
 import {keysHistory} from '../util/helper_functions.js';
-import * as IL from './InventoryList.js';
 
-export class InventoryControls extends Controls {
+export class AchievementsControls extends Controls {
   constructor(data) {
     super(data);
     this.tooltips = data.tooltips;
@@ -53,20 +52,15 @@ export class InventoryControls extends Controls {
     // All global inventory
     inventoryDown(this);
 
-    // For debugging purposes
-    if (this.keys[89]) {
-      this.player.inventory.add(IL.plasticSword);
-    }
-
-    // i for inventory menu exit
-    if (this.keys[73]) {
+    // p for Achievements menu exit
+    if (this.keys[80]) {
       const game = Game.getInstance();
       game.switchToMap();
     }
-    // p for Achievements menu
-    if (this.keys[80]) {
+    // i to open inventory window
+    if (this.keys[73]) {
       const game = Game.getInstance();
-      game.switchToAchievements();
+      game.switchToInventory();
     }
   }
 }

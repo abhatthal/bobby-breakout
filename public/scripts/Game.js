@@ -3,6 +3,7 @@ import {MapScene} from './world/MapScene.js';
 import {FightScene} from './fight/FightScene.js';
 import {LoadScene} from './fight/LoadScene.js';
 import {InventoryScene} from './inventory/InventoryScene.js';
+import {AchievementsScene} from './achievements/AchievementsScene.js';
 
 export class Game {
   static initialize() {
@@ -22,8 +23,11 @@ export class Game {
     });
 
     this.player = new Player({
-      x: 30,
-      y: this.stage.height()-90,
+      name: 'Bobby Chan',
+      x: this.stage.width()/2 - 30,
+      y: this.stage.height()/2 - 30,
+      globalX: 5280.31,
+      globalY: 7207.55,
       width: 60,
       height: 60,
       image: 'assets/bobby.jpg',
@@ -39,11 +43,18 @@ export class Game {
 
   start() {
     this.mapScene = new MapScene({stage: this.stage, player: this.player});
-    this.fightScene = new FightScene({stage: this.stage, player: this.player});
-    this.LoadScene = new LoadScene({stage: this.stage, player: this.player});
     this.inventoryScene = new InventoryScene({stage: this.stage, player: this.player});
+    this.achievementsScene = new AchievementsScene({stage: this.stage, player: this.player});
+    this.LoadScene = new LoadScene({stage: this.stage, player: this.player});
+    this.fightScene = new FightScene({stage: this.stage, player: this.player});
 
     this.current_scene = this.mapScene;
+    this.current_scene.switchTo({stage: this.stage, player: this.player});
+  }
+
+  switchToInventory() {
+    this.current_scene.switchFrom({stage: this.stage, player: this.player});
+    this.current_scene = this.inventoryScene;
     this.current_scene.switchTo({stage: this.stage, player: this.player});
   }
 
@@ -71,6 +82,12 @@ export class Game {
   switchToInventory() {
     this.current_scene.switchFrom({stage: this.stage, player: this.player});
     this.current_scene = this.inventoryScene;
+    this.current_scene.switchTo({stage: this.stage, player: this.player});
+  }
+
+  switchToAchievements() {
+    this.current_scene.switchFrom({stage: this.stage, player: this.player});
+    this.current_scene = this.achievementsScene;
     this.current_scene.switchTo({stage: this.stage, player: this.player});
   }
 }

@@ -10,7 +10,12 @@ export class Entity {
     this.y = data.y;
     this.id = genID();
     this.hp = (data.hp) ? data.hp : null;
+    this.MAX_HP = this.hp;
     this.dmg = (data.dmg) ? data.dmg : null;
+    this.globalX = data.globalX;
+    this.globalY = data.globalY;
+    this.offsetX = 0;
+    this.offsetY = 0;
 
     let imageObj;
     if (data.image) {
@@ -24,30 +29,26 @@ export class Entity {
       x: this.x,
       y: this.y,
       id: this.id,
-      draggable: true,
     });
     this.shape = new Konva.Rect({
       width: data.width,
       height: data.height,
       fill: (data.colour) ? data.colour : null,
       fillPatternImage: (data.image) ? imageObj : null,
+      fillPatternScale: {
+        x: 0.1,
+        y: 0.1,
+      },
       name: data.name,
     });
 
-    this.bbox = new BoundingBox(this.group, this.shape, true);
+    this.bbox = new BoundingBox(this.group, this.shape, false);
     this.bboxArea = this.bbox.boundingBox;
 
     this.group.add(this.shape);
     this.group.add(this.bboxArea);
   } // end constructor
 
-  isColliding(obj) {
-    console.assert(obj != null);
-    return !(obj.x > this.x + this.width ||
-         obj.x + obj.width < this.x ||
-         obj.y > this.y + this.height ||
-         obj.y + obj.height < this.y);
-  }
 
   get render() {
     return this.group;

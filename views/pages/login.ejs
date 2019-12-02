@@ -1,27 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <% include ../partials/header.ejs %>
   <meta charset="utf-8">
   <title>Prepare to game with Bobby</title>
   <script src="scripts/login.js" defer type="module"></script>
 </head>
 <body>
-  <h2>Welcome To Bobby Breakout</h2>
-  <img src="assets/bobby.jpg" alt="Bobby Photograph">
-  <br><br><br>
-
-  <div class="loginbox">
-    <form class="form" method="POST" action="/login">
-        <label>Username</label>
-        <input type="text" placeholder="Enter Username" name="loginuname" required>
-
-        <label>Password</label>
-        <input type="password" placeholder="Enter Password" name="loginpsw" required>
-
-        <button type="submit" id="loginbtn">Login</button>
-    </form>
-    <p><b>Don't have an account yet?</b></p>
-    <button id="goregisterbtn">Go Register</button>
+  <div class="app">
+    <div class="header">
+      <h1 id="title">Bobby's Breakout</h1>
+    </div>
+    <div class="main">
+      <div id="info" class="info">
+        <h2>Login</h2>
+        <div class="loginbox">
+          <form class="form" method="POST" action="/login">
+              <label>Username     </label>
+              <input type="text" placeholder="Enter Username" name="loginuname" required>
+              <br>
+              <label>Password      </label>
+              <input type="password" placeholder="Enter Password" name="loginpsw" required>
+              <br>
+              <button type="submit" id="loginbtn">Login</button>
+          </form>
+          <br>
+          <b>Don't have an account yet?</b>
+          <br>
+          <button id="goregisterbtn">Go Register</button>
+        </div>
+      </div>
+      <img src="assets/bobby.jpg" class="portrait" alt="Bobby Photograph">
+    </div>
   </div>
 
 </body>

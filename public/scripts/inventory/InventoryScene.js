@@ -14,7 +14,7 @@ export class InventoryScene extends Scene {
       console.assert(this.playerInventory.inventory_icon[i].name() === 'empty');
     };
     for (let i = 0; i < this.playerInventory.equipped_num; i++) {
-      console.assert(this.playerInventory.equipped_icon[i].name() === 'empty');
+      console.assert(this.playerInventory.equipped_icon[i].name() === 'equipped');
     };
 
     // Tooltip for inventory
@@ -32,6 +32,11 @@ export class InventoryScene extends Scene {
     const equippedMenu = document.getElementById('equippedMenu');
     let currentShape;
 
+    document.getElementById('container').addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+
     document.getElementById('dropButton').addEventListener('click', () => {
       this.playerInventory.drop(currentShape);
     });
@@ -47,7 +52,6 @@ export class InventoryScene extends Scene {
     });
 
     data.stage.on('contextmenu', function(e) {
-      e.evt.preventDefault();
       if (e.target.name() === 'filled') {
         currentShape = e.target;
         equippedMenu.style.display = 'none';

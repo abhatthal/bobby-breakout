@@ -1,5 +1,5 @@
 import {Wall} from './Wall.js';
-import {NPC} from './Character.js';
+import {NPC} from './NPC.js';
 import {Environment} from './Environment.js';
 
 export class Map {
@@ -27,15 +27,15 @@ export class Map {
     });
     layer.add(endPoint.render);
 
-    const block = new Wall({
-      x: stage.width() / 2 - 70,
-      y: stage.height() / 2,
-      width: 300,
-      height: 30,
-      colour: 'orange',
-      name: 'wall',
-    });
-    layer.add(block.render);
+    // const block = new Wall({
+    //   x: stage.width() / 2 - 70,
+    //   y: stage.height() / 2,
+    //   width: 300,
+    //   height: 30,
+    //   colour: 'orange',
+    //   name: 'wall',
+    // });
+    // layer.add(block.render);
 
     const block2 = new Wall({
       x: stage.width() / 2,
@@ -47,7 +47,6 @@ export class Map {
       impassible: true,
     });
     layer.add(block2.render);
-
 
     // borders for stage
     const stageTop = new Wall({
@@ -90,7 +89,6 @@ export class Map {
     });
     layer.add(stageRight.render);
 
-
     const npc = new NPC({
       x: 400,
       y: 50,
@@ -108,7 +106,7 @@ export class Map {
     this.npcArray.push(npc);
 
     this.blockArray = [];
-    this.blockArray.push(block);
+    // this.blockArray.push(block);
     this.blockArray.push(block2);
     this.blockArray.push(stageTop);
     this.blockArray.push(stageBottom);
@@ -119,6 +117,11 @@ export class Map {
     this.spawnArray = [];
     this.spawnArray.push(startPoint);
     this.spawnArray.push(endPoint);
+
+    this.mapArray = [];
+    this.mapArray.push(...this.blockArray);
+    this.mapArray.push(...this.spawnArray);
+    this.mapArray.push(...this.npcArray);
 
     layer.draw();
   }

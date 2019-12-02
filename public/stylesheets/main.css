@@ -9,6 +9,10 @@ body {
   margin: 0;
 }
 
+label {
+  white-space: pre;
+}
+
 .app {
   display: flex;
   flex-direction: column;
@@ -32,6 +36,11 @@ body {
   border: 2px solid black;
 }
 
+.portrait {
+  width: 30%;
+  border: 2px solid black;
+}
+
 #logoutbtn {
   display: flex;
   justify-content: center;
@@ -47,8 +56,23 @@ body {
   padding-right: 0.5em;
 }
 
-#premium_benefits{
+#premium_benefits {
   list-style-type: none;
+}
+
+#achievement {
+  text-align: center;
+  font-style: bold;
+  font-size: 20px;
+  border: 2px solid #CDCDCD;
+  background-color: #F6F0E3;
+}
+#achievement img {
+  display: inline-block;
+  width: 50px;
+  height: auto;
+  position: relative;
+  top: 10px;
 }
 
 .controls {

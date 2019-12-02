@@ -41,3 +41,7 @@ export class Stats {
     return this._playTime;
   }
 }
+
+export const userStats = new Stats({
+  userID: 12,
+});

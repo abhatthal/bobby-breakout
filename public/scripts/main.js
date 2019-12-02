@@ -1,21 +1,16 @@
 // import { stringify } from 'querystring';
 // import {Skills} from './Skills.js';
 import {Game} from './Game.js';
-
-// TESTING USER STATS
-import {Stats} from './Stats.js';
-const userStats = new Stats({
-  userID: 12,
-});
-// TESTING USER STATS
+import {isPremium} from './util/helper_functions.js';
+import {userStats} from './Stats.js';
 
 // Set premium content visbility
 const premiumContainer = document.getElementById('premium_content');
 const url = new URL(window.location.href);
 const username = url.searchParams.get('username');
-const isPremium = url.searchParams.get('premium');
+// const isPremium = url.searchParams.get('premium');
 
-if (isPremium === 'true') {
+if (isPremium() === 'true') {
   premiumContainer.style.display = 'block';
 }
 // END premium content visbility
@@ -32,4 +27,4 @@ player.skillA1 = new Skills({
 Game.initialize();
 const game = Game.getInstance();
 game.start();
-userStats.updateStats({userID: username, walkedSteps: 100});
+userStats.updateStats({userID: username, walkedSteps: 0});

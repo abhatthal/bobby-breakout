@@ -1,10 +1,9 @@
 import {Entity} from './Entity.js';
-import {DIRECTION, httpGet} from '../util/helper_functions.js';
-import {VisionCone} from './BoundingBox.js';
-import {Wall} from './Wall.js';
+import {DIRECTION, httpGet, isColliding} from '../util/helper_functions.js';
 // import {Skills} from './Skills.js';
 // import * as defaultskill from './skilldefault.js';
 import {Inventory} from '../inventory/Inventory.js';
+import {Achievements} from '../achievements/Achievements.js';
 
 export class Character extends Entity {
   constructor(data) {
@@ -32,6 +31,7 @@ export class Character extends Entity {
     }
   }
 
+  // #region old movement code
   move(dir) {
     switch (dir) {
       case DIRECTION.LEFT:
@@ -51,6 +51,27 @@ export class Character extends Entity {
         this.group.y(this.y);
         break;
     }
+  }
+  // #endregion
+
+  simulateMove(dir, speed) {
+    let newX = this.x;
+    let newY = this.y;
+    switch (dir) {
+      case DIRECTION.LEFT:
+        newX = this.x + speed * DIRECTION.UNIT_LEFT;
+        break;
+      case DIRECTION.RIGHT:
+        newX = this.x + speed * DIRECTION.UNIT_RIGHT;
+        break;
+      case DIRECTION.UP:
+        newY = this.y + speed * DIRECTION.UNIT_UP;
+        break;
+      case DIRECTION.DOWN:
+        newY = this.y + speed * DIRECTION.UNIT_DOWN;
+        break;
+    }
+    return [newX, newY];
   }
 
   get speed() {
@@ -94,69 +115,19 @@ export class Player extends Character {
     return this._inventory;
   }
 
-  checkCollision(obj) { // block array of Environment objects
+  set achievements(ach) {
+    console.assert(ach instanceof Achievements);
+    this._achievements = ach;
+  }
+
+  get achievements() {
+    return this._achievements;
+  }
+
+  // checkCollision(obj) { // block array of Environment objects
+  checkCollision(obj, obj2) { // block array of Environment objects
     console.assert(obj != null);
-    if (this.isColliding(obj) ) {
-      if (obj instanceof Wall) {
-        // console.log('i am touching a Wall', obj.id);
-        // bruno add the wall stuff here
-        // ...
-      } else if (obj instanceof NPC) {
-        // console.log('i am touching an NPC', obj.id);
-      }
-      return true;
-    } else {
-      return false;
-    }
-  }
-}
-
-export class NPC extends Character {
-  constructor(data) {
-    super(data);
-    this.friendly = data.friendly; // bool
-    this.orientation = DIRECTION.LEFT;
-    this.impassible = data.impassible || false;
-
-    this.visionCone = new VisionCone(this.group, this.shape);
-    this.coneArea = this.visionCone.coneArea;
-    this.tempRectArea = this.visionCone.coneBindingArea;
-    this.visionConeAttr = this.coneArea.getAttrs();
-
-    this.group.add(this.coneArea);
-    this.group.add(this.tempRectArea);
-
-    this.feelers = this.visionCone.feelers;
-    this.feelers.forEach((feeler) => {
-      this.group.add(feeler);
-    });
-  }
-
-  get impassible() {
-    return this._impassible;
-  }
-
-  set impassible(val) {
-    console.assert(typeof val === 'boolean');
-    this._impassible = val;
-  }
-
-  isSeeing(obj) {
-    console.assert(obj != null);
-    // console.log(this.tempRectArea);
-    // console.log(this.tempRectArea.absolutePosition());
-
-    const tempRectGlobalPos = this.tempRectArea.absolutePosition();
-    return !(obj.x > tempRectGlobalPos.x + this.tempRectArea.attrs.width ||
-      obj.x + obj.width < tempRectGlobalPos.x ||
-      obj.y > tempRectGlobalPos.y + this.tempRectArea.attrs.height ||
-      obj.y + obj.height < tempRectGlobalPos.y);
-  }
-
-  checkPlayerDetection(player) {
-    console.assert(player instanceof Player);
-    if (this.isSeeing(player) && player instanceof Player) {
-      // console.log('i see the player');
+    if (isColliding(obj, obj2) ) {
       return true;
     } else {
       return false;
