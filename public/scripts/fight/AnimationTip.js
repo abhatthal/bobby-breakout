@@ -1,8 +1,8 @@
 
 export class AnimationTip {
   constructor(data) {
-    this.primaryColor = this.getRandomColor();
-    this.secondaryColor = this.getRandomColor();
+    this.primaryColor = data.primaryColor || this.getRandomColor();
+    this.secondaryColor = data.secondaryColor || this.getRandomColor();
     this.side = (data.side) ? data.side : 5;
     this.radius = (data.radius) ? data.radius : 30;
 
@@ -18,29 +18,45 @@ export class AnimationTip {
   }
 
   animationMove(layer, startpos, endpos, frame, speed) {
-    layer.draw();
-    this.moveTo(startpos);
     const diffx = endpos.x - startpos.x;
     const diffy = endpos.y - startpos.y;
-    const magnitude = (diffx^2 + diffy^2)^0.5;
+    const magnitude = Math.sqrt(diffx*diffx + diffy*diffy);
     const unitvecx = diffx / magnitude;
     const unitvecy = diffy / magnitude;
+    let dx = unitvecx * speed;
+    let dy = unitvecy * speed;
 
-    this.x += unitvecx * speed;
-    this.y += unitvecy * speed;
-
-    if (this.x <= endpos.x || this.y <= endpos.y) {
-      this.hexagon.hide();
-      return;
-    } else {
-      setTimeout(() => {
-        this.animationMove(layer, {x: startpos.x + unitvecx * speed,
-          y: startpos.y + unitvecy * speed}, endpos, frame, speed);
-      }, 10);
+    if (Math.abs(endpos.x - startpos.x) < Math.abs(dx)) {
+      dx = endpos.x - startpos.x;
     }
-    // this.animationtips['animationItem1'].renderhexagon.show();
-    // this.animationtips['animationItem1'].slidTo(endpos, frame);
-    // this.animationtips['animationItem1'].renderhexagon.hide();
+    if (Math.abs(endpos.y - startpos.y) < Math.abs(dy)) {
+      dy = endpos.y - startpos.y;
+    }
+
+    // eslint-disable-next-line max-len
+    if (Math.abs(endpos.x-startpos.x) < Math.abs(unitvecx*speed) && Math.abs(endpos.y-startpos.y) < Math.abs(unitvecy*speed)) {
+      // finished animation
+      this.hexagon.hide();
+      layer.draw();
+      return;
+    }
+
+    this.x = startpos.x + dx;
+    this.y = startpos.y + dy;
+    this.moveTo({x: this.x, y: this.y});
+
+    layer.draw();
+
+    setTimeout(() => {
+      this.animationMove(layer,
+          {
+            x: this.x,
+            y: this.y,
+          },
+          endpos,
+          frame,
+          speed);
+    }, 10);
   }
 
   animationRotate(layer, speed, frame, counter) {

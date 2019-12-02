@@ -19,7 +19,9 @@ export class FightScene extends Scene {
         x: data.stage.width() * 0.3,
         y: data.stage.height() * 0.3,
         side: 6,
-        raidus: 20,
+        radius: 10,
+        primaryColor: 'red',
+        secondaryColor: 'darkred',
       }),
     };
 
@@ -97,15 +99,17 @@ export class FightScene extends Scene {
           y: this.CharacterLayout['enemyLayout'].y
         }, 10);
     */
-    // this.animationtips['animationItem1'].animationMove(this.fightLayer,
-    //   {
-    //     x: this.CharacterLayout['playerLayout'].x,
-    //     y: this.CharacterLayout['playerLayout'].y,
-    //   },
-    //   {
-    //     x: this.CharacterLayout['enemyLayout'].x,
-    //     y: this.CharacterLayout['enemyLayout'].y
-    //   }, 10, 30);
+    this.animationtips['animationItem1'].renderhexagon.show();
+    this.animationtips['animationItem1'].renderhexagon.moveToTop();
+    this.animationtips['animationItem1'].animationMove(this.fightLayer,
+        {
+          x: this.CharacterLayout['playerLayout'].x + 50,
+          y: this.CharacterLayout['playerLayout'].y + 50,
+        },
+        {
+          x: this.CharacterLayout['enemyLayout'].x + 50,
+          y: this.CharacterLayout['enemyLayout'].y + 50,
+        }, 10, 25);
   }
 
   // Enemy attack on player
@@ -132,15 +136,17 @@ export class FightScene extends Scene {
           y: this.CharacterLayout['enemyLayout'].y
         }, 10);
     */
-    // this.animationtips['animationItem1'].animationMove(this.fightLayer,
-    //   {
-    //     x: this.CharacterLayout['playerLayout'].x,
-    //     y: this.CharacterLayout['playerLayout'].y,
-    //   },
-    //   {
-    //     x: this.CharacterLayout['enemyLayout'].x,
-    //     y: this.CharacterLayout['enemyLayout'].y
-    //   }, 10, 30);
+    this.animationtips['animationItem1'].renderhexagon.show();
+    this.animationtips['animationItem1'].renderhexagon.moveToTop();
+    this.animationtips['animationItem1'].animationMove(this.fightLayer,
+        {
+          x: this.CharacterLayout['enemyLayout'].x + 50,
+          y: this.CharacterLayout['enemyLayout'].y + 50,
+        },
+        {
+          x: this.CharacterLayout['playerLayout'].x + 50,
+          y: this.CharacterLayout['playerLayout'].y + 50,
+        }, 10, 25);
   }
 
   heal(player, item) {
@@ -195,6 +201,7 @@ export class FightScene extends Scene {
 
     if (npc.hp <= 0) {
       player.hp = player.MAX_HP;
+      this.currPhase = this.phases[0];
       const game = Game.getInstance();
       game.switchToMap();
     }
@@ -378,33 +385,6 @@ export class FightScene extends Scene {
     this.player.achievements.add(AL.warrior);
   }
 
-  animation1(obj, startpos, endpos, frame) {
-    this.fightLayer.draw();
-    obj.moveTo(startpos);
-    const speed = 30;
-    const diffx = endpos.x - startpos.x;
-    const diffy = endpos.y - startpos.y;
-    const magnitude = (diffx^2 + diffy^2)^0.5;
-    const unitvecx = diffx / magnitude;
-    const unitvecy = diffy / magnitude;
-
-    obj.x += unitvecx * speed;
-    obj.y += unitvecy * speed;
-
-    if (obj.x <= endpos.x || obj.y <= endpos.y) {
-      obj.hide();
-      return;
-    } else {
-      setTimeout(() => {
-        this.animation1(obj, {x: startpos.x + unitvecx * speed, y: startpos.y + unitvecy * speed},
-            endpos, frame);
-      }, 10);
-    }
-    // this.animationtips['animationItem1'].renderhexagon.show();
-    // this.animationtips['animationItem1'].slidTo(endpos, frame);
-    // this.animationtips['animationItem1'].renderhexagon.hide();
-  }
-
   fightSceneLoad(player, npc) {
     this.fightLayer.add(
         this.tooltips['skillA1Tooltip'].renderBox,
@@ -430,10 +410,10 @@ export class FightScene extends Scene {
     this.phaseUI['dialogueBox'].tipText.visible(false);
     console.assert(this.phaseUI['dialogueBox'] != null);
 
-    // this.fightLayer.add(
-    //   this.animationtips['animationItem1'].renderhexagon,
-    // );
-    // this.animationtips['animationItem1'].moveTo({x: this.x, y: this.y});
+    this.fightLayer.add(
+        this.animationtips['animationItem1'].renderhexagon,
+    );
+    this.animationtips['animationItem1'].renderhexagon.hide();
 
     this.fightLayer.add(
         this.CharacterLayout['playerLayout'].renderheadBox,
