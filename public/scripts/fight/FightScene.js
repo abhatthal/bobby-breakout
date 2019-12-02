@@ -278,7 +278,7 @@ export class FightScene extends Scene {
         shape_id: '0',
         x: data.stage.width()/6,
         y: data.stage.height() - 100,
-        width: 300,
+        width: 400,
         height: 50,
         item: this.inventory.equipped[0],
         // eslint-disable-next-line max-len
@@ -287,9 +287,9 @@ export class FightScene extends Scene {
       skillA2Tooltip: new Tooltip({
         name: 'skill',
         shape_id: '1',
-        x: data.stage.width()/6 + 300,
+        x: data.stage.width()/6 + 400,
         y: data.stage.height() - 100,
-        width: 300,
+        width: 400,
         height: 50,
         item: this.inventory.equipped[1],
         // eslint-disable-next-line max-len
@@ -300,7 +300,7 @@ export class FightScene extends Scene {
         shape_id: '2',
         x: data.stage.width()/6,
         y: data.stage.height() - 200,
-        width: 300,
+        width: 400,
         height: 50,
         item: this.inventory.equipped[2],
         // eslint-disable-next-line max-len
@@ -309,9 +309,9 @@ export class FightScene extends Scene {
       skillA4Tooltip: new Tooltip({
         name: 'skill',
         shape_id: '3',
-        x: data.stage.width()/6 + 300,
+        x: data.stage.width()/6 + 400,
         y: data.stage.height() - 200,
-        width: 300,
+        width: 400,
         height: 50,
         item: this.inventory.equipped[3],
         // eslint-disable-next-line max-len
