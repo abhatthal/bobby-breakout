@@ -78,6 +78,11 @@ export function isPremium() {
   return (url.searchParams.get('premium') === 'true');
 }
 
+export function getUsername() {
+  const url = new URL(window.location.href);
+  return url.searchParams.get('username');
+}
+
 export const keysHistory = [];
 // get an array of the last n keys pressed
 export function keysPressed(n) {

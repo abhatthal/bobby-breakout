@@ -53,7 +53,7 @@ function createlogin(req, res) {
           done();
           return;
         } else { // query success
-          if (result.rows.length<1 ) {
+          if (result.rows.length < 1) {
             console.log(' account is not used, creatable!');
             let premiumcheck = false;
             if (mgw === 'bobbyisgreat') {
@@ -129,16 +129,71 @@ function checklogin(req, res) {
 io.on('connection', function(client) {
   console.log('Client connected...');
 
-  client.on('statsSent', function(data) {
-    console.log(data);
-    const pool = new pg.Pool({connectionString: conString});
+  const pool = new pg.Pool({connectionString: conString});
+
+  client.on('achievementsReceived', function(username, fn) {
+    let res = {};
     pool.connect((isErr, client, done) => {
       if (isErr) {
         console.log('connect error:' + isErr.message);
         done();
         return;
       } else { // connected
-        console.log('db connected');
+        console.log('achievements connected');
+        const querycheck = `SELECT * FROM achievements WHERE username='${username}'`;
+        client.query(querycheck, function(err, result) {
+          if (err) {
+            console.log(err);
+            done();
+            return;
+          } else { // query success
+            if (result.rows.length < 1) {
+              console.log(`No achievements found for '${username}'`);
+            } else {
+              done();
+              res = result.rows[0];
+              fn({
+                testAchievement: res.testachievement,
+                konamiCode: res.konamicode,
+                lazy: res.lazy,
+                babySteps: res.babysteps,
+                warrior: res.warrior,
+                marathoner: res.marathoner,
+              });
+              console.log(res);
+              // console.log(`achievements sent to client`);
+              console.log(`achievements retrieved from db`);
+            }
+            // done();
+          }
+        }); // client.query
+      }
+    }); // pool
+
+    // client.emit('achievementsReceived', {msg: 'hi'});
+    // client.emit('achievementsReceived', {
+    //   msg: 'hi',
+    //   testAchievement: res.testachievement,
+    //   konamiCode: res.konamicode,
+    //   lazy: res.lazy,
+    //   babySteps: res.babysteps,
+    //   warrior: res.warrior,
+    //   marathoner: res.marathoner,
+    // }); // client.emit
+    // console.log(`achievements sent to client`);
+    // console.log(res);
+  }); // client.on
+
+
+  client.on('statsSent', (data) => {
+    console.log(data);
+    pool.connect((isErr, client, done) => {
+      if (isErr) {
+        console.log('connect error:' + isErr.message);
+        done();
+        return;
+      } else { // connected
+        console.log('stats connected');
         const querycheck = `SELECT * FROM stats WHERE userid='${data.username}'`;
         client.query(querycheck, function(err, result) {
           if (err) {
@@ -150,7 +205,7 @@ io.on('connection', function(client) {
               // User doesn't exist
               console.log('User doesnt exist');
               // eslint-disable-next-line max-len
-              const queryCreate = `INSERT INTO stats (userid, walkedsteps, playtime) VALUES ('${data.username}', ${data.value}, 0)`;
+              const queryCreate = `INSERT INTO stats (userid, walkedsteps, playtime) VALUES ('${data.username}', ${data.walkedSteps}, ${data.playTime})`;
               client.query(queryCreate, function(err, result) {
                 if (err) {
                   console.log(err + ' fail to create');
@@ -162,7 +217,7 @@ io.on('connection', function(client) {
             } else {
               // User exists
               // eslint-disable-next-line max-len
-              const queryUpdate = `UPDATE stats SET walkedsteps=${data.value} WHERE userID='${data.username}'`;
+              const queryUpdate = `UPDATE stats SET walkedsteps=${data.walkedSteps}, playtime=${data.playTime} WHERE userID='${data.username}'`;
               client.query(queryUpdate, function(err, result) {
                 if (err) {
                   console.log(err + ' fail to update');
@@ -175,8 +230,54 @@ io.on('connection', function(client) {
           }
         });
       }
-    });
-  });
-});
+    }); // pool
+  }); // statsSent
 
-
+  client.on('achievementsSent', (data) => {
+    console.log(data);
+    pool.connect((isErr, client, done) => {
+      if (isErr) {
+        console.log('connect error:' + isErr.message);
+        done();
+        return;
+      } else { // connected
+        console.log('achievements connected');
+        const querycheck = `SELECT * FROM achievements WHERE username='${data.username}'`;
+        client.query(querycheck, function(err, result) {
+          if (err) {
+            console.log(err);
+            done();
+            return;
+          } else { // query success
+            if (result.rows.length < 1) {
+              // User doesn't exist
+              console.log('User doesnt exist');
+              // eslint-disable-next-line max-len
+              const queryCreate = `INSERT INTO achievements (username, testachievement, konamicode, lazy, babysteps, warrior, marathoner) VALUES ('${data.username}', ${data.testAchievement}, ${data.konamiCode}, ${data.lazy}, ${data.babySteps}, ${data.warrior}, ${data.marathoner})`;
+              client.query(queryCreate, function(err, result) {
+                if (err) {
+                  console.log(err + ' fail to create');
+                } else {
+                  console.log('Achievements account created');
+                }
+                done();
+              });
+            } else {
+              // User exists
+              // eslint-disable-next-line max-len
+              const queryUpdate = `UPDATE achievements SET testachievement=${data.testAchievement}, konamicode=${data.konamiCode}, lazy=${data.lazy}, babysteps=${data.babySteps}, warrior=${data.warrior}, marathoner=${data.marathoner} WHERE username='${data.username}'`;
+              client.query(queryUpdate, function(err, result) {
+                if (err) {
+                  console.log(err + ' fail to update');
+                } else {
+                  console.log('achievements updated');
+                }
+                done();
+              });
+            }
+          }
+        });
+      }
+    }); // pool
+  }); // achievementsSent
+}); // socket io connection

@@ -1,10 +1,12 @@
-import {isPremium} from '../util/helper_functions.js';
+import {isPremium, getUsername} from '../util/helper_functions.js';
+import * as AL from './AchievementsList.js';
 
 export class Achievements {
   constructor() {
     this.Achievements = [];
     this.Achievements_num = 0;
     this.Achievements_size = 20;
+    const that = this;
 
     this.layer = new Konva.Layer();
     this.Achievements_icon = [];
@@ -22,34 +24,65 @@ export class Achievements {
     });
     this.layer.add(GamePaused);
 
-    const AchievementsTitle = new Konva.Text({
-      x: 0,
-      y: 50,
-      text: 'Achievements',
-      fontSize: 30,
-      fill: '#555',
-      padding: 20,
-      width: 1050,
-      align: 'center',
-      fill: 'black',
-    });
-    this.layer.add(AchievementsTitle);
-
-    for (let i = 0; i < this.Achievements_size; i++) {
-      const shape = new Konva.Rect({
-        x: 350 + (i % 5) * 80,
-        y: 120 + (parseInt(i / 5) * 80),
-        width: 50,
-        height: 50,
-        fill: 'gray',
-        stroke: 'black',
-        strokeWidth: 4,
-        name: 'empty',
+    // Freemium users should not be able to receive achievements
+    if (isPremium()) {
+      // get achievements from database
+      const socket = io.connect();
+      socket.on('connect', function() {
+        socket.emit('achievementsReceived', getUsername(), function(data) {
+          // console.log(data.msg);
+          // console.log(data);
+          Object.keys(data).forEach(function(key) {
+            if (data[key]) {
+              const item = AL[key];
+              item.fromDatabase = true;
+              that.add(item);
+            }
+          });
+        }); // emit
+      }); // on
+      // console.log(this.Achievements);
+      const AchievementsTitle = new Konva.Text({
+        x: 0,
+        y: 50,
+        text: 'Achievements',
+        fontSize: 30,
+        fill: '#555',
+        padding: 20,
+        width: 1050,
+        align: 'center',
+        fill: 'black',
       });
-      this.Achievements_icon.push(shape);
-      this.layer.add(shape);
-    }
+      this.layer.add(AchievementsTitle);
 
+      for (let i = 0; i < this.Achievements_size; i++) {
+        const shape = new Konva.Rect({
+          x: 350 + (i % 5) * 80,
+          y: 120 + (parseInt(i / 5) * 80),
+          width: 50,
+          height: 50,
+          fill: 'gray',
+          stroke: 'black',
+          strokeWidth: 4,
+          name: 'empty',
+        });
+        this.Achievements_icon.push(shape);
+        this.layer.add(shape);
+      }
+    } else {
+      const fremiumMsg = new Konva.Text({
+        x: 0,
+        y: 50,
+        text: 'Become Premium to Unlock Achievements',
+        fontSize: 30,
+        fill: '#555',
+        padding: 20,
+        width: 1050,
+        align: 'center',
+        fill: 'black',
+      });
+      this.layer.add(fremiumMsg);
+    }
     this.layer.draw();
   }
 
@@ -67,9 +100,10 @@ export class Achievements {
       }
     }
 
-    // Freemium users should not be able to see achievement details
+    // Freemium users should not be able to receive achievements
     if (!(isPremium())) {
-      item.info = '';
+      console.log('Achievement ignored, only for premium users');
+      return;
     }
 
     let shape;
@@ -134,14 +168,43 @@ export class Achievements {
     console.assert(this.Achievements_num <= this.Achievements_size);
 
     // Achievement Notification
-    const notificationContainer = document.getElementById('achievement');
-    notificationContainer.style.display = 'block';
-    notificationContainer.style.position = 'absolute';
-    notificationContainer.style.width = '100%';
-    // eslint-disable-next-line max-len
-    notificationContainer.innerHTML = '<img src = \'/assets/trophy.png\'><span>Achievement Unlocked: ' + item.name + '</span>';
-    setTimeout(function() {
-      notificationContainer.style.display = 'none';
-    }, 3000);
+    if (!(item.fromDatabase)) {
+      const notificationContainer = document.getElementById('achievement');
+      notificationContainer.style.display = 'block';
+      notificationContainer.innerHTML = '<img src = \'/assets/trophy.png\'>';
+      notificationContainer.innerHTML += '<span>Achievement Unlocked: ';
+      notificationContainer.innerHTML += item.name + '</span>';
+      setTimeout(function() {
+        notificationContainer.style.display = 'none';
+      }, 3000);
+    }
+
+    // tell if an achievement is present
+    const that = this;
+    function isThere(name) {
+      for (let i = 0; i < that.Achievements.length; i++) {
+        if (that.Achievements[i].name == name) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // collect achievements
+    const achievementsData = {
+      username: getUsername(),
+      testAchievement: isThere('Ya Nerd'),
+      konamiCode: isThere('Konami Code'),
+      lazy: isThere('Lazy'),
+      babySteps: isThere('Baby Steps'),
+      warrior: isThere('Warrior'),
+      marathoner: isThere('Marathoner'),
+    };
+
+    // persist to database
+    const socket = io.connect();
+    socket.on('connect', function() {
+      socket.emit('achievementsSent', achievementsData);
+    });
   }
 }

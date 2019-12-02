@@ -9,6 +9,7 @@ export class Item {
     this.effect = (data.effect) ? data.effect : '';
     this.icon = (data.icon) ? data.icon : null;
     this.flavourText = (data.flavourText) ? data.flavourText : '';
+    this.fromDatabase = (data.fromDatabase) ? data.fromDatabase : false;
     this.x = (data.x) ? data.x : null;
     this.y = (data.y) ? data.y : null;
 
@@ -19,5 +20,18 @@ export class Item {
     }
 
     this.img = loadImage(this.icon);
+  }
+
+  get name() {
+    return this._name;
+  }
+  set name(val) {
+    this._name = val;
+  }
+  get fromDatabase() {
+    return this._fromDatabase;
+  }
+  set fromDatabase(val) {
+    this._fromDatabase = val;
   }
 }
