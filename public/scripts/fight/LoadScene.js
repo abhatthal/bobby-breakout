@@ -12,10 +12,10 @@ export class LoadScene extends Scene {
     // Tooltip for fight
     this.tooltips = {
       loadTooltip: new Tooltip({
-        x: 100,
-        y: 50,
-        width: 1000,
-        height: 1100,
+        x: 0,
+        y: 0,
+        width: data.stage.width(),
+        height: data.stage.height(),
         primaryColor: 'black',
         secondaryColor: 'black',
         tertiaryColor: 'black',
@@ -41,7 +41,7 @@ export class LoadScene extends Scene {
         this.loadAnimationItem['animationRotate'].renderhexagon,
     );
     // this.rotate(this.loadAnimationItem['animationRotate'].renderhexagon, 10000, 10);
-    this.loadAnimationItem['animationRotate'].animationRotate(this.loadLayer,10000,10,5000);
+    this.loadAnimationItem['animationRotate'].animationRotate(this.loadLayer, 10000, 10, 5000);
     console.log('load scene end');
     this.loadLayer.draw();
   }
