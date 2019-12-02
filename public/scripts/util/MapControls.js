@@ -119,9 +119,9 @@ export class MapControls extends Controls {
 
     // Shift for sprinting
     let speedMultiplier = 1;
-    // if (this.keys[16]) {
-    //   speedMultiplier = 1;
-    // }
+    if (this.keys[16]) {
+      speedMultiplier = 2;
+    }
 
     // get simulated new player position
     [playerMoveDirX, playerMoveDirY].forEach((dir) => {
@@ -273,7 +273,7 @@ export class MapControls extends Controls {
       game.switchToInventory();
     }
     // Escape or P for pausing (to menu)
-    if (this.keys[27] || this.keys[80]) {
+    if (this.keys[80]) {
       // alert('Game Paused\nPress ok to continue');
       // Show achievements menu
       const game = Game.getInstance();
