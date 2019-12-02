@@ -130,7 +130,11 @@ io.on('connection', function(client) {
   console.log('Client connected...');
 
   const pool = new pg.Pool({connectionString: conString});
-      
+  
+    client.emit('achievementsReceived', {
+      msg: 'Achievements received from server!',
+    });
+
     client.on('statsSent', function(data) {
       console.log(data);
       pool.connect((isErr, client, done) => {
@@ -216,7 +220,7 @@ io.on('connection', function(client) {
                   if (err) {
                     console.log(err + ' fail to update');
                   } else {
-                    console.log('Achievements updated');
+                    console.log('achievements updated');
                   }
                   done();
                 });

@@ -1,4 +1,5 @@
 import {isPremium, getUsername} from '../util/helper_functions.js';
+import * as AL from './AchievementsList.js';
 
 export class Achievements {
   constructor() {
@@ -70,6 +71,14 @@ export class Achievements {
     }
 
     this.layer.draw();
+
+    // get achievements from database
+    const socket = io.connect();
+    socket.on('achievementsReceived', function(data) {
+      // socket.emit('achievementsReceived', achievementsData);
+      console.log(data.msg);
+    });
+
   }
 
   add(item) {
@@ -172,7 +181,7 @@ export class Achievements {
         return false;
       }
 
-      // collect achievements
+     // collect achievements
      const achievementsData = {
       username: getUsername(), 
       testAchievement: isThere('Ya Nerd'), 
@@ -183,7 +192,7 @@ export class Achievements {
       marathoner: isThere('Marathoner'),
     };
 
-     // persist to database
+    // persist to database
     const socket = io.connect();
     socket.on('connect', function() {
       socket.emit('achievementsSent', achievementsData);

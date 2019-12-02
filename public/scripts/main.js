@@ -25,4 +25,4 @@ player.skillA1 = new Skills({
 Game.initialize();
 const game = Game.getInstance();
 game.start();
-userStats.updateStats({userID: getUsername(), walkedSteps: 0});
+userStats.updateStats({userID: getUsername()});
