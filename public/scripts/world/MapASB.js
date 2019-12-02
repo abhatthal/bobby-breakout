@@ -4,6 +4,7 @@ import {CsilCoords} from '../../assets/csil_coords.js';
 import {Wall} from './Wall.js';
 import {Item} from '../item/Item.js';
 import {ItemBox} from '../item/ItemBox.js';
+import {Environment} from './Environment.js';
 // import {CsilLabs} from '../../assets/csil_labs.js';
 
 export class MapASB {
@@ -208,6 +209,57 @@ export class MapASB {
     });
     this.blockArray.push(this.lockedWall);
 
+    const enclosingWall1 = new Wall({
+      x: -495 + initialDisplacement.x,
+      y: 188 + initialDisplacement.y,
+      width: 2150,
+      height: 15,
+      colour: 'black',
+      name: 'enclosingwall',
+      impassible: true,
+    });
+    const enclosingWall2 = new Wall({
+      x: -499 + initialDisplacement.x,
+      y: -797 + initialDisplacement.y,
+      width: 15,
+      height: 1000,
+      colour: 'black',
+      name: 'enclosingwall',
+      impassible: true,
+    });
+    const enclosingWall3 = new Wall({
+      x: 1641 + initialDisplacement.x,
+      y: -1797 + initialDisplacement.y,
+      width: 15,
+      height: 2000,
+      colour: 'black',
+      name: 'enclosingwall',
+      impassible: true,
+    });
+    const enclosingWall4 = new Wall({
+      x: 1649 + initialDisplacement.x,
+      y: -2007 + initialDisplacement.y,
+      width: 15,
+      height: 180+1005,
+      colour: 'black',
+      name: 'enclosingwall',
+      impassible: true,
+    });
+    const enclosingWall5 = new Wall({
+      x: 930 + initialDisplacement.x,
+      y: -1845 + initialDisplacement.y,
+      width: 210,
+      height: 15,
+      colour: 'black',
+      name: 'enclosingwall',
+      impassible: true,
+    });
+    this.blockArray.push(enclosingWall1);
+    this.blockArray.push(enclosingWall2);
+    this.blockArray.push(enclosingWall3);
+    this.blockArray.push(enclosingWall4);
+    this.blockArray.push(enclosingWall5);
+
     for (let i = 0; i < CsilCoords.length; i++) {
       const curr = CsilCoords[i];
       // console.log(curr);
@@ -245,6 +297,16 @@ export class MapASB {
       }
     }
 
+    const endPoint = new Environment({
+      x: 465 + initialDisplacement.x,
+      y: -3145 + initialDisplacement.y,
+      width: 120,
+      height: 120,
+      colour: 'green',
+      name: 'end',
+    });
+    layer.add(endPoint.render);
+
     for (let i = 0; i < this.blockArray.length; i++) {
       const curr = this.blockArray[i];
       layer.add(curr.render);
@@ -269,7 +331,7 @@ export class MapASB {
 
     this.spawnArray = [];
     // this.spawnArray.push(startPoint);
-    // this.spawnArray.push(endPoint);
+    this.spawnArray.push(endPoint);
 
     this.mapArray = [];
     this.mapArray.push(...this.blockArray);

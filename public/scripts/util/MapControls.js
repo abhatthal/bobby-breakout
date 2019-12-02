@@ -4,7 +4,7 @@ import {Controls} from './Controls.js';
 import {achievementsDown, inventoryDown} from '../globalCtrl.js';
 import * as AL from '../achievements/AchievementsList.js';
 import {userStats} from '../Stats.js';
-import {MiniBossNPC} from '../world/NPC.js';
+import {MiniBossNPC, MovingNPC} from '../world/NPC.js';
 
 export class MapControls extends Controls {
   constructor(data) {
@@ -16,6 +16,7 @@ export class MapControls extends Controls {
     this._inInventoryWindow = false;
     this._scrollSpeed = 20;
     this._numberKeysDown = 0;
+    this._gameEnded = false;
   }
 
   addControlBindings() {
@@ -168,10 +169,12 @@ export class MapControls extends Controls {
         if (node.isSeeing(this.player)) {
           if (this._triggeredNPC == undefined && node.hp > 0) {
             this._triggeredNPC = node;
-            node.walkForwardsToPlayer(this.layer, this.player, () => {
-              const game = Game.getInstance();
-              game.switchToFight(this._triggeredNPC, this.map);
-            });
+            if (!(node instanceof MovingNPC)) {
+              node.walkForwardsToPlayer(this.layer, this.player, () => {
+                const game = Game.getInstance();
+                game.switchToFight(this._triggeredNPC, this.map);
+              });
+            }
           }
         } else {
           // NPCs should freeze when fight begins and resume after it ends
@@ -255,15 +258,12 @@ export class MapControls extends Controls {
       if (this._atEndPoint) {
         // babySteps - Finish the tutorial
         this.player.achievements.add(AL.babySteps);
-        setTimeout(function() {
-          alert('YOU WIN! Play again?');
-          location.reload();
-        }, 3500);
-      } else if (this._triggeredNPC) {
-        console.log('ready to interact with npc? ', this._triggeredNPC);
-        if (this._triggeredNPC.hp > 0) {
-          const game = Game.getInstance();
-          game.switchToFight(this._triggeredNPC, this.map);
+        if (!this._gameEnded) {
+          this._gameEnded = true;
+          setTimeout(function() {
+            alert('YOU WIN! Play again?');
+            location.reload();
+          }, 3500);
         }
       }
     }
