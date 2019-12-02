@@ -5,19 +5,29 @@ export const plasticSword = new Item({
   // eslint-disable-next-line max-len
   info: 'This is the mighty plastic sword that Bobby picked up from the ground in front of his office.',
   type: 'weapon',
-  dmg: 15,
+  dmg: 10,
   flavourText: 'It can\'t even cut paper...',
   icon: '../../assets/sword.png',
 });
 
-export const mightySword = new Item({
-  name: 'Mighty Sword',
+export const badStudentEvaluations = new Item({
+  name: 'Bad Student Evaluations',
   // eslint-disable-next-line max-len
-  info: 'placeholder hope nobody reads this.',
+  info: 'placeholder',
   type: 'weapon',
-  dmg: 20,
-  flavourText: 'placeholder hope nobody reads this.',
-  icon: '../../assets/sword.png',
+  dmg: 15,
+  flavourText: 'placeholder',
+  icon: '../../assets/bobby.jpg',
+})
+
+export const weirdQuestion = new Item({
+  name: 'Weird CMPT 276 Question',
+  // eslint-disable-next-line max-len
+  info: 'placeholder',
+  type: 'weapon',
+  dmg: 10,
+  flavourText: 'placeholder',
+  icon: '../../assets/bobby.jpg',
 });
 
 export const studentEvaluations = new Item({
@@ -53,31 +63,31 @@ export const coffee = new Item({
 });
 
 export const miniBossWeapon = new Item({
-  name: 'Mini Boss Item placeholder name',
+  name: 'Rejected Grant Proposal',
   // eslint-disable-next-line max-len
-  info: 'placeholder hope nobody reads this.',
+  info: 'placeholder',
   type: 'weapon',
-  dmg: 20,
-  flavourText: 'placeholder hope nobody reads this.',
-  icon: '../../assets/sword.png',
+  dmg: 25,
+  flavourText: 'placeholder',
+  icon: '../../assets/bobby.jpg',
 });
 
 export const bossWeapon = new Item({
-  name: 'Boss Item placeholder name',
+  name: 'Denied Tenure',
   // eslint-disable-next-line max-len
-  info: 'placeholder hope nobody reads this.',
+  info: 'placeholder',
   type: 'weapon',
   dmg: 40,
-  flavourText: 'placeholder hope nobody reads this.',
-  icon: '../../assets/sword.png',
+  flavourText: 'placeholder',
+  icon: '../../assets/bobby,jpg',
 });
 
 export const movingNPCItem = new Item({
-  name: 'Moving NPC Item placeholder name',
+  name: 'Traffic in AQ',
   // eslint-disable-next-line max-len
-  info: 'placeholder hope nobody reads this.',
+  info: 'placeholder',
   type: 'weapon',
   dmg: 15,
-  flavourText: 'placeholder hope nobody reads this.',
-  icon: '../../assets/sword.png',
+  flavourText: 'placeholder',
+  icon: '../../assets/bobby.jpg',
 });

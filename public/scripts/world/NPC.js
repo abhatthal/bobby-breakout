@@ -181,7 +181,7 @@ export class NPC extends Character {
 
 export class WeakNPC extends NPC {
   constructor(data) {
-    data.item = IL.plasticSword;
+    data.item = IL.weirdQuestion;
     data.visionWidth = data.width / 2;
     data.visionHeight = 150;
     super(data);
@@ -190,7 +190,7 @@ export class WeakNPC extends NPC {
 
 export class StrongNPC extends NPC {
   constructor(data) {
-    data.item = IL.mightySword;
+    data.item = IL.badStudentEvaluations;
     data.visionWidth = data.width / 2;
     data.visionHeight = 250;
     super(data);
