@@ -1,6 +1,8 @@
 import {Scene} from '../Scene.js';
-import {Tooltip} from '../util/ToolTip.js';
 import {FightControls} from './FightControls.js';
+import {CharacterLayout} from './CharacterLayout.js';
+import {Tooltip} from '../util/ToolTip.js';
+import {AnimationTip} from './AnimationTip.js';
 import {Game} from '../Game.js';
 import {Player} from '../world/Character.js';
 import * as AL from '../achievements/AchievementsList.js';
@@ -9,9 +11,35 @@ export class FightScene extends Scene {
   constructor(data) {
     super(data);
     this.fightLayer = new Konva.Layer();
-
     this.player = data.player;
     this.inventory = data.player._inventory; // get instance again when loaded in from switchTo
+
+    this.animationtips = {
+      animationItem1: new AnimationTip({
+        x: data.stage.width() * 0.3,
+        y: data.stage.height() * 0.3,
+        side: 6,
+        raidus: 20,
+      }),
+    };
+
+    this.CharacterLayout = {
+      playerLayout: new CharacterLayout({
+        x: data.stage.width()*2/10,
+        y: data.stage.height()*4.5/10-50,
+        primaryColor: '#EDB098',
+        secondaryColor: '#066F8C',
+        tertiaryColor: 'black',
+      }),
+
+      enemyLayout: new CharacterLayout({
+        x: data.stage.width()*5.5/10,
+        y: data.stage.height()*1/10,
+        primaryColor: '#CE8652',
+        secondaryColor: '#2B92D6',
+        tertiaryColor: '#563E75',
+      }),
+    };
 
     this.phases = ['e1Attack', 'e1AttackInfo', 'e2Attack', 'e2AttackInfo', 'await'];
     this.currPhase = this.phases[0];
@@ -53,15 +81,66 @@ export class FightScene extends Scene {
       opponent.hp -= item.dmg;
     }
     this.updateNpcHP(opponent);
+
+    /*
+     NOTE for Bruno: i commented out the layer.add in line 427
+    */
+
+    /*
+    this.animation1(this.animationtips['animationItem1'],
+        {
+          x: this.CharacterLayout['playerLayout'].x,
+          y: this.CharacterLayout['playerLayout'].y
+        },
+        {
+          x: this.CharacterLayout['enemyLayout'].x,
+          y: this.CharacterLayout['enemyLayout'].y
+        }, 10);
+    */
+    // this.animationtips['animationItem1'].animationMove(this.fightLayer,
+    //   {
+    //     x: this.CharacterLayout['playerLayout'].x,
+    //     y: this.CharacterLayout['playerLayout'].y,
+    //   },
+    //   {
+    //     x: this.CharacterLayout['enemyLayout'].x,
+    //     y: this.CharacterLayout['enemyLayout'].y
+    //   }, 10, 30);
   }
 
-  // Enemy fight strategy
+  // Enemy attack on player
   doEnemyAttack(player, item) {
     // console.log(item);
     if (player.hp >= 0) {
       player.hp -= item.dmg;
     }
     this.updatePlayerHP(player);
+
+    /*
+     NOTE for Bruno: i commented out the layer.add in line 427
+     animation should be reversed in this func, from enemy -> player
+    */
+
+    /*
+    this.animation1(this.animationtips['animationItem1'],
+        {
+          x: this.CharacterLayout['playerLayout'].x,
+          y: this.CharacterLayout['playerLayout'].y
+        },
+        {
+          x: this.CharacterLayout['enemyLayout'].x,
+          y: this.CharacterLayout['enemyLayout'].y
+        }, 10);
+    */
+    // this.animationtips['animationItem1'].animationMove(this.fightLayer,
+    //   {
+    //     x: this.CharacterLayout['playerLayout'].x,
+    //     y: this.CharacterLayout['playerLayout'].y,
+    //   },
+    //   {
+    //     x: this.CharacterLayout['enemyLayout'].x,
+    //     y: this.CharacterLayout['enemyLayout'].y
+    //   }, 10, 30);
   }
 
   heal(player, item) {
@@ -226,29 +305,29 @@ export class FightScene extends Scene {
         text: `${this.inventory.equipped[3].name} (${(this.inventory.equipped[3].type === 'weapon') ? (this.inventory.equipped[3].dmg + ' dmg'):('+' + this.inventory.equipped[3].heal + ' hp')})`,
       }),
       playerTooltip: new Tooltip({
-        x: data.stage.width()*2/10,
-        y: data.stage.height()*4.5/10,
+        x: data.stage.width()*2/10+100,
+        y: data.stage.height()*4.5/10+50,
         width: 200,
-        height: 120,
+        height: 50,
         text: 'Bobby Chan',
       }),
       playerHpTooltip: new Tooltip({
-        x: data.stage.width()*2/10,
-        y: data.stage.height()*4.5/10 - 50,
+        x: data.stage.width()*2/10+100,
+        y: data.stage.height()*4.5/10 - 50 + 50,
         width: 150,
         height: 50,
         text: '',
       }),
       enemyTooltip: new Tooltip({
-        x: data.stage.width()*5.5/10,
-        y: data.stage.height()*1/10,
+        x: data.stage.width()*5.5/10 - 200,
+        y: data.stage.height()*2/10 + 25,
         width: 200,
-        height: 120,
+        height: 50,
         text: 'Enemy',
       }),
       enemyHpTooltip: new Tooltip({
-        x: data.stage.width()*5.5/10,
-        y: data.stage.height()*1/10 - 50,
+        x: data.stage.width()*5.5/10 + 50 - 200,
+        y: data.stage.height()*2/10 - 50 + 25,
         width: 150,
         height: 50,
         text: '',
@@ -281,6 +360,8 @@ export class FightScene extends Scene {
       player: data.player,
       container: data.stage.container(),
       tooltips: this.tooltips,
+      dialogtips: this.dialogtips, // LANG'S stuff
+      ui: this.uiStuff, // LANG'S stuff
       map: data.map,
       npc: data.npc,
     });
@@ -295,6 +376,33 @@ export class FightScene extends Scene {
 
     // warrior - First fight with an NPC
     this.player.achievements.add(AL.warrior);
+  }
+
+  animation1(obj, startpos, endpos, frame) {
+    this.fightLayer.draw();
+    obj.moveTo(startpos);
+    const speed = 30;
+    const diffx = endpos.x - startpos.x;
+    const diffy = endpos.y - startpos.y;
+    const magnitude = (diffx^2 + diffy^2)^0.5;
+    const unitvecx = diffx / magnitude;
+    const unitvecy = diffy / magnitude;
+
+    obj.x += unitvecx * speed;
+    obj.y += unitvecy * speed;
+
+    if (obj.x <= endpos.x || obj.y <= endpos.y) {
+      obj.hide();
+      return;
+    } else {
+      setTimeout(() => {
+        this.animation1(obj, {x: startpos.x + unitvecx * speed, y: startpos.y + unitvecy * speed},
+            endpos, frame);
+      }, 10);
+    }
+    // this.animationtips['animationItem1'].renderhexagon.show();
+    // this.animationtips['animationItem1'].slidTo(endpos, frame);
+    // this.animationtips['animationItem1'].renderhexagon.hide();
   }
 
   fightSceneLoad(player, npc) {
@@ -321,6 +429,27 @@ export class FightScene extends Scene {
     this.phaseUI['dialogueBox'].tipBox.visible(false);
     this.phaseUI['dialogueBox'].tipText.visible(false);
     console.assert(this.phaseUI['dialogueBox'] != null);
+
+    // this.fightLayer.add(
+    //   this.animationtips['animationItem1'].renderhexagon,
+    // );
+    // this.animationtips['animationItem1'].moveTo({x: this.x, y: this.y});
+
+    this.fightLayer.add(
+        this.CharacterLayout['playerLayout'].renderheadBox,
+        this.CharacterLayout['playerLayout'].renderbodyBox,
+        this.CharacterLayout['playerLayout'].renderleftlegBox,
+        this.CharacterLayout['playerLayout'].renderrightlegBox,
+        this.CharacterLayout['playerLayout'].renderleftarmBox,
+        this.CharacterLayout['playerLayout'].renderrightarmBox,
+
+        this.CharacterLayout['enemyLayout'].renderheadBox,
+        this.CharacterLayout['enemyLayout'].renderbodyBox,
+        this.CharacterLayout['enemyLayout'].renderleftlegBox,
+        this.CharacterLayout['enemyLayout'].renderrightlegBox,
+        this.CharacterLayout['enemyLayout'].renderleftarmBox,
+        this.CharacterLayout['enemyLayout'].renderrightarmBox,
+    );
 
 
     this.updatePlayerHP(player);
