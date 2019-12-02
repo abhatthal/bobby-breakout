@@ -81,6 +81,9 @@ export class FightScene extends Scene {
   doDamage(opponent, item) {
     if (opponent.hp >= 0) {
       opponent.hp -= item.dmg;
+      if (opponent.hp < 0) {
+        opponent.hp = 0;
+      }
     }
     this.updateNpcHP(opponent);
 
@@ -117,6 +120,9 @@ export class FightScene extends Scene {
     // console.log(item);
     if (player.hp >= 0) {
       player.hp -= item.dmg;
+      if (player.hp < 0) {
+        player.hp = 0;
+      }
     }
     this.updatePlayerHP(player);
 
