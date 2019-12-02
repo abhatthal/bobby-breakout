@@ -208,6 +208,57 @@ export class MapASB {
     });
     this.blockArray.push(this.lockedWall);
 
+    const enclosingWall1 = new Wall({
+      x: -495 + initialDisplacement.x,
+      y: 188 + initialDisplacement.y,
+      width: 2150,
+      height: 15,
+      colour: 'black',
+      name: 'enclosingwall',
+      impassible: true,
+    });
+    const enclosingWall2 = new Wall({
+      x: -499 + initialDisplacement.x,
+      y: -797 + initialDisplacement.y,
+      width: 15,
+      height: 1000,
+      colour: 'black',
+      name: 'enclosingwall',
+      impassible: true,
+    });
+    const enclosingWall3 = new Wall({
+      x: 1641 + initialDisplacement.x,
+      y: -1797 + initialDisplacement.y,
+      width: 15,
+      height: 2000,
+      colour: 'black',
+      name: 'enclosingwall',
+      impassible: true,
+    });
+    const enclosingWall4 = new Wall({
+      x: 1649 + initialDisplacement.x,
+      y: -2007 + initialDisplacement.y,
+      width: 15,
+      height: 180+1005,
+      colour: 'black',
+      name: 'enclosingwall',
+      impassible: true,
+    });
+    const enclosingWall5 = new Wall({
+      x: 930 + initialDisplacement.x,
+      y: -1845 + initialDisplacement.y,
+      width: 210,
+      height: 15,
+      colour: 'black',
+      name: 'enclosingwall',
+      impassible: true,
+    });
+    this.blockArray.push(enclosingWall1);
+    this.blockArray.push(enclosingWall2);
+    this.blockArray.push(enclosingWall3);
+    this.blockArray.push(enclosingWall4);
+    this.blockArray.push(enclosingWall5);
+
     for (let i = 0; i < CsilCoords.length; i++) {
       const curr = CsilCoords[i];
       // console.log(curr);
