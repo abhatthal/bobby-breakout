@@ -26,7 +26,6 @@ export class Achievements {
 
     // Freemium users should not be able to receive achievements
     if (isPremium()) {
-
       // get achievements from database
       const socket = io.connect();
       socket.on('connect', function() {
@@ -70,7 +69,6 @@ export class Achievements {
         this.Achievements_icon.push(shape);
         this.layer.add(shape);
       }
-
     } else {
       const fremiumMsg = new Konva.Text({
         x: 0,
@@ -104,7 +102,7 @@ export class Achievements {
 
     // Freemium users should not be able to receive achievements
     if (!(isPremium())) {
-      console.log('Achievement ignored, only for premium users')
+      console.log('Achievement ignored, only for premium users');
       return;
     }
 
@@ -171,29 +169,31 @@ export class Achievements {
 
     // Achievement Notification
     if (!(item.fromDatabase)) {
-      let notificationContainer = document.getElementById('achievement');
+      const notificationContainer = document.getElementById('achievement');
       notificationContainer.style.display = 'block';
-      notificationContainer.innerHTML = '<img src = \'/assets/trophy.png\'><span>Achievement Unlocked: ' + item.name + '</span>';
+      notificationContainer.innerHTML = '<img src = \'/assets/trophy.png\'>';
+      notificationContainer.innerHTML += '<span>Achievement Unlocked: ';
+      notificationContainer.innerHTML += item.name + '</span>';
       setTimeout(function() {
         notificationContainer.style.display = 'none';
       }, 3000);
-  }
+    }
 
-      // tell if an achievement is present
-      const that = this;
-      function isThere(name) {
-        for (let i = 0; i < that.Achievements.length; i++) {
-          if (that.Achievements[i].name == name) {
-            return true;
-          }
+    // tell if an achievement is present
+    const that = this;
+    function isThere(name) {
+      for (let i = 0; i < that.Achievements.length; i++) {
+        if (that.Achievements[i].name == name) {
+          return true;
         }
-        return false;
       }
+      return false;
+    }
 
-     // collect achievements
-     const achievementsData = {
-      username: getUsername(), 
-      testAchievement: isThere('Ya Nerd'), 
+    // collect achievements
+    const achievementsData = {
+      username: getUsername(),
+      testAchievement: isThere('Ya Nerd'),
       konamiCode: isThere('Konami Code'),
       lazy: isThere('Lazy'),
       babySteps: isThere('Baby Steps'),
@@ -206,6 +206,5 @@ export class Achievements {
     socket.on('connect', function() {
       socket.emit('achievementsSent', achievementsData);
     });
-
   }
 }

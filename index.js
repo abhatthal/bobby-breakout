@@ -132,7 +132,7 @@ io.on('connection', function(client) {
   const pool = new pg.Pool({connectionString: conString});
 
   client.on('achievementsReceived', function(username, fn) {
-    var res = {};
+    let res = {};
     pool.connect((isErr, client, done) => {
       if (isErr) {
         console.log('connect error:' + isErr.message);
@@ -184,9 +184,8 @@ io.on('connection', function(client) {
     // console.log(res);
   }); // client.on
 
-  
 
-  client.on('statsSent', data => {
+  client.on('statsSent', (data) => {
     console.log(data);
     pool.connect((isErr, client, done) => {
       if (isErr) {
@@ -234,7 +233,7 @@ io.on('connection', function(client) {
     }); // pool
   }); // statsSent
 
-  client.on('achievementsSent', data => {
+  client.on('achievementsSent', (data) => {
     console.log(data);
     pool.connect((isErr, client, done) => {
       if (isErr) {

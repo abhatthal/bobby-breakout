@@ -42,15 +42,15 @@ export class AchievementsScene extends Scene {
         equippedMenu.style.display = 'none';
         AchievementsMenu.style.display = 'initial';
         const containerRect = data.stage.container().getBoundingClientRect();
-        AchievementsMenu.style.top = containerRect.top + data.stage.getPointerPosition().y + 4 +'px';
-        AchievementsMenu.style.left = containerRect.left + data.stage.getPointerPosition().x+4 + 'px';
+        AchievementsMenu.style.top = containerRect.top + data.stage.getPointerPosition().y+4+'px';
+        AchievementsMenu.style.left = containerRect.left + data.stage.getPointerPosition().x+4+'px';
       } else if (e.target.name() === 'equipped') {
         currentShape = e.target;
         AchievementsMenu.style.display = 'none';
         equippedMenu.style.display = 'initial';
         const containerRect = data.stage.container().getBoundingClientRect();
-        equippedMenu.style.top = containerRect.top + data.stage.getPointerPosition().y + 4 +'px';
-        equippedMenu.style.left = containerRect.left + data.stage.getPointerPosition().x + 4 + 'px';
+        equippedMenu.style.top = containerRect.top + data.stage.getPointerPosition().y+4+'px';
+        equippedMenu.style.left = containerRect.left + data.stage.getPointerPosition().x+4+'px';
       } else {
         return;
       }
