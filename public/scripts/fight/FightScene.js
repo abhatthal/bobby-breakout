@@ -237,7 +237,9 @@ export class FightScene extends Scene {
     this.fightLayer.add(
         this.animationtips['animationItem1'].renderhexagon,
     );
-    this.animationtips['animationItem1'].renderhexagon.hide();
+    this.animationtips['animationItem1'].moveTo({x: 500, y: 500});
+
+    // this.animationtips['animationItem1'].renderhexagon.hide();
 
     this.fightLayer.add(
         this.CharacterLayout['playerLayout'].renderheadBox,

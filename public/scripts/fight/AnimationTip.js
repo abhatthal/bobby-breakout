@@ -31,19 +31,20 @@ export class AnimationTip {
   }
 
   moveTo(pos) {
-    this.hexagon.x = pos.x;
-    this.hexagon.y = pos.y;
+    this.hexagon.x(pos.x);
+    this.hexagon.y(pos.y);
   }
-
+/*
   sildTo(pos, frame) {
     this.hexagon.x = pos.x;
     this.hexagon.y = pos.y;
-    var anim = new Konva.Animation(function(frame) {
-        hexagon.x(
-         Math.sin(frame.time);
-      });
+    let anim = new Konva.Animation(function(frame) {
+      hexagon.x(
+          Math.sin(frame));
+    });
   }
-
+*/
+/*
   animationTo(pos) {
     hexagon.x(
         amplitude * Math.sin((frame.time * 2 * Math.PI) / period) + centerX,
@@ -52,7 +53,7 @@ export class AnimationTip {
         amplitude * Math.sin((frame.time * 2 * Math.PI) / period) + centerX,
     );
   }
-
+*/
   get renderhexagon() {
     return this.hexagon;
   }

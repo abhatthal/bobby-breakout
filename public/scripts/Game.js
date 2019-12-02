@@ -53,7 +53,7 @@ export class Game {
     this.current_scene.loadSceneLoad({stage: this.stage});
     setTimeout(() => {
       this.fightLoad(npc, map);
-    }, 500);
+    }, 700);
   }
 
   fightLoad(npc, map) {
