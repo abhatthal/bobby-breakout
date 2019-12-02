@@ -14,7 +14,7 @@ export class MapControls extends Controls {
     this._triggeredNPC = undefined;
     this._atEndPoint = false;
     this._inInventoryWindow = false;
-    this._scrollSpeed = 20;
+    this._scrollSpeed = 5;
     this._numberKeysDown = 0;
     this._gameEnded = false;
   }
@@ -119,9 +119,9 @@ export class MapControls extends Controls {
 
     // Shift for sprinting
     let speedMultiplier = 1;
-    if (this.keys[16]) {
-      speedMultiplier = 2.5;
-    }
+    // if (this.keys[16]) {
+    //   speedMultiplier = 1;
+    // }
 
     // get simulated new player position
     [playerMoveDirX, playerMoveDirY].forEach((dir) => {

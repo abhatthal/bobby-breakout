@@ -12,8 +12,8 @@ export class MapASB {
     const layer = data.layer;
 
     const initialDisplacement = {
-      x: 1100,
-      y: 1200,
+      x: 900,
+      y: 1000,
     };
 
     const item1 = new Item({
