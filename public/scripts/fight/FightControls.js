@@ -66,11 +66,12 @@ export class FightControls extends Controls {
       this.keys[80] = false;
     }
 
+    // Inventory is disabled while fighting
     // I to open inventory window
-    if (this.keys[73]) {
-      const game = Game.getInstance();
-      game.switchToInventory();
-    }
+    // if (this.keys[73]) {
+    //   const game = Game.getInstance();
+    //   game.switchToInventory();
+    // }
 
   }
 }
