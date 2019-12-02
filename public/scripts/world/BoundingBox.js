@@ -39,7 +39,7 @@ export class VisionBox {
       height: height,
       stroke: 'black',
       // fill: 'magenta',
-      strokeWidth: 2,
+      strokeWidth: 0,
     });
 
     this.startPoints = {
