@@ -107,7 +107,7 @@ export class MapASB {
       height: 50,
     });
     const weakNpc = new WeakNPC({
-      name: 'weak npc',
+      name: 'CMPT 276 Student',
       x: 20 + initialDisplacement.x,
       y: -40 + initialDisplacement.y,
       width: 60,
@@ -119,7 +119,7 @@ export class MapASB {
     });
     weakNpc.group.rotate(90);
     const strongNpc = new StrongNPC({
-      name: 'strong npc',
+      name: 'Bad CMPT 276 Student',
       x: 280 + initialDisplacement.x,
       y: -550 + initialDisplacement.y,
       width: 60,
@@ -131,7 +131,7 @@ export class MapASB {
     });
     strongNpc.group.rotate(90);
     const miniBossNpc = new MiniBossNPC({
-      name: 'mini boss npc',
+      name: 'Grant Reviewer',
       x: 630 + initialDisplacement.x,
       y: -2095 + initialDisplacement.y,
       width: 60,
@@ -143,7 +143,7 @@ export class MapASB {
     });
     miniBossNpc.group.rotate(270);
     const bossNpc = new BossNPC({
-      name: 'boss npc',
+      name: 'Faculty',
       x: 285 + initialDisplacement.x,
       y: -2775 + initialDisplacement.y,
       width: 250,
@@ -155,7 +155,7 @@ export class MapASB {
     });
     bossNpc.group.rotate(0);
     const movingNpc = new MovingNPC({
-      name: 'moving npc',
+      name: 'Freshman',
       x: -200 + initialDisplacement.x,
       y: -1575 + initialDisplacement.y,
       width: 60,
