@@ -16,6 +16,7 @@ export class MapControls extends Controls {
     this._inInventoryWindow = false;
     this._scrollSpeed = 20;
     this._numberKeysDown = 0;
+    this._gameEnded = false;
   }
 
   addControlBindings() {
@@ -257,10 +258,13 @@ export class MapControls extends Controls {
       if (this._atEndPoint) {
         // babySteps - Finish the tutorial
         this.player.achievements.add(AL.babySteps);
-        setTimeout(function() {
-          alert('YOU WIN! Play again?');
-          location.reload();
-        }, 3500);
+        if (!this._gameEnded) {
+          this._gameEnded = true;
+          setTimeout(function() {
+            alert('YOU WIN! Play again?');
+            location.reload();
+          }, 3500);
+        }
       }
     }
     // I to open inventory window

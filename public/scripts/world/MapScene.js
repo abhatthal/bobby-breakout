@@ -18,8 +18,8 @@ export class MapScene extends Scene {
         text: 'E/SPACE\nTO INTERACT',
       }),
       completion: new Tooltip({
-        x: data.stage.width() - 400,
-        y: 0,
+        x: data.stage.width() / 2 - 240/2,
+        y: 200,
         width: 240,
         text: 'E/SPACE\nTO COMPLETE LEVEL',
       }),
