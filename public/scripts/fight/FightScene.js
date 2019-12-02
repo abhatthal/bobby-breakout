@@ -25,13 +25,19 @@ export class FightScene extends Scene {
 
     this.CharacterLayout = {
       playerLayout: new CharacterLayout({
-        x: data.stage.width() * 0.1,
-        y: data.stage.height() * 0.2,
+        x: data.stage.width()*2/10,
+        y: data.stage.height()*4.5/10-50,
+        primaryColor: '#EDB098',
+        secondaryColor: '#066F8C',
+        tertiaryColor: 'black',
       }),
 
       enemyLayout: new CharacterLayout({
-        x: data.stage.width() * 0.8,
-        y: data.stage.height() * 0.2,
+        x: data.stage.width()*5.5/10,
+        y: data.stage.height()*1/10,
+        primaryColor: '#CE8652',
+        secondaryColor: '#2B92D6',
+        tertiaryColor: '#563E75',
       }),
     };
 
@@ -75,15 +81,66 @@ export class FightScene extends Scene {
       opponent.hp -= item.dmg;
     }
     this.updateNpcHP(opponent);
+
+    /*
+     NOTE for Bruno: i commented out the layer.add in line 427
+    */
+
+    /*
+    this.animation1(this.animationtips['animationItem1'],
+        {
+          x: this.CharacterLayout['playerLayout'].x,
+          y: this.CharacterLayout['playerLayout'].y
+        },
+        {
+          x: this.CharacterLayout['enemyLayout'].x,
+          y: this.CharacterLayout['enemyLayout'].y
+        }, 10);
+    */
+    // this.animationtips['animationItem1'].animationMove(this.fightLayer,
+    //   {
+    //     x: this.CharacterLayout['playerLayout'].x,
+    //     y: this.CharacterLayout['playerLayout'].y,
+    //   },
+    //   {
+    //     x: this.CharacterLayout['enemyLayout'].x,
+    //     y: this.CharacterLayout['enemyLayout'].y
+    //   }, 10, 30);
   }
 
-  // Enemy fight strategy
+  // Enemy attack on player
   doEnemyAttack(player, item) {
     // console.log(item);
     if (player.hp >= 0) {
       player.hp -= item.dmg;
     }
     this.updatePlayerHP(player);
+
+    /*
+     NOTE for Bruno: i commented out the layer.add in line 427
+     animation should be reversed in this func, from enemy -> player
+    */
+
+    /*
+    this.animation1(this.animationtips['animationItem1'],
+        {
+          x: this.CharacterLayout['playerLayout'].x,
+          y: this.CharacterLayout['playerLayout'].y
+        },
+        {
+          x: this.CharacterLayout['enemyLayout'].x,
+          y: this.CharacterLayout['enemyLayout'].y
+        }, 10);
+    */
+    // this.animationtips['animationItem1'].animationMove(this.fightLayer,
+    //   {
+    //     x: this.CharacterLayout['playerLayout'].x,
+    //     y: this.CharacterLayout['playerLayout'].y,
+    //   },
+    //   {
+    //     x: this.CharacterLayout['enemyLayout'].x,
+    //     y: this.CharacterLayout['enemyLayout'].y
+    //   }, 10, 30);
   }
 
   heal(player, item) {
@@ -248,29 +305,29 @@ export class FightScene extends Scene {
         text: `${this.inventory.equipped[3].name} (${(this.inventory.equipped[3].type === 'weapon') ? (this.inventory.equipped[3].dmg + ' dmg'):('+' + this.inventory.equipped[3].heal + ' hp')})`,
       }),
       playerTooltip: new Tooltip({
-        x: data.stage.width()*2/10,
-        y: data.stage.height()*4.5/10,
+        x: data.stage.width()*2/10+100,
+        y: data.stage.height()*4.5/10+50,
         width: 200,
-        height: 120,
+        height: 50,
         text: 'Bobby Chan',
       }),
       playerHpTooltip: new Tooltip({
-        x: data.stage.width()*2/10,
-        y: data.stage.height()*4.5/10 - 50,
+        x: data.stage.width()*2/10+100,
+        y: data.stage.height()*4.5/10 - 50 + 50,
         width: 150,
         height: 50,
         text: '',
       }),
       enemyTooltip: new Tooltip({
-        x: data.stage.width()*5.5/10,
-        y: data.stage.height()*1/10,
+        x: data.stage.width()*5.5/10 - 200,
+        y: data.stage.height()*2/10 + 25,
         width: 200,
-        height: 120,
+        height: 50,
         text: 'Enemy',
       }),
       enemyHpTooltip: new Tooltip({
-        x: data.stage.width()*5.5/10,
-        y: data.stage.height()*1/10 - 50,
+        x: data.stage.width()*5.5/10 + 50 - 200,
+        y: data.stage.height()*2/10 - 50 + 25,
         width: 150,
         height: 50,
         text: '',
@@ -377,26 +434,6 @@ export class FightScene extends Scene {
     //   this.animationtips['animationItem1'].renderhexagon,
     // );
     // this.animationtips['animationItem1'].moveTo({x: this.x, y: this.y});
-    /*
-    this.animation1(this.animationtips['animationItem1'],
-        {
-          x: this.CharacterLayout['playerLayout'].x,
-          y: this.CharacterLayout['playerLayout'].y
-        },
-        {
-          x: this.CharacterLayout['enemyLayout'].x,
-          y: this.CharacterLayout['enemyLayout'].y
-        }, 10);
-    */
-    // this.animationtips['animationItem1'].animationMove(this.fightLayer,
-    //   {
-    //     x: this.CharacterLayout['playerLayout'].x,
-    //     y: this.CharacterLayout['playerLayout'].y,
-    //   },
-    //   {
-    //     x: this.CharacterLayout['enemyLayout'].x,
-    //     y: this.CharacterLayout['enemyLayout'].y
-    //   }, 10, 30);
 
     this.fightLayer.add(
         this.CharacterLayout['playerLayout'].renderheadBox,

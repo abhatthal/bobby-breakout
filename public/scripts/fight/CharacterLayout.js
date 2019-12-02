@@ -4,13 +4,13 @@ export class CharacterLayout {
   constructor(data) {
     this.x = data.x;
     this.y = data.y;
-    this.width = (data.width) ? data.width : 200; // default to 160 if not specified
-    this.height = (data.height) ? data.height : 400;
+    this.width = (data.width) ? data.width : 100; // default to 160 if not specified
+    this.height = (data.height) ? data.height : 150;
     this.id = genID();
 
-    this.primaryColor = '#b22222'; // firebrick
-    this.secondaryColor = '#0000ff'; // blue
-    this.tertiaryColor = 'black';
+    this.primaryColor = data.primaryColor; // firebrick '#b22222'
+    this.secondaryColor = data.secondaryColor; // blue '#0000ff'
+    this.tertiaryColor = data.tertiaryColor; // 'black'
 
     this.group = new Konva.Group({
       // x, y specific to text and box for now since we're not rendering by group
