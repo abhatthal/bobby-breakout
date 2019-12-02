@@ -2,7 +2,6 @@ import {Scene} from '../Scene.js';
 import {Tooltip} from '../util/ToolTip.js';
 import {FightControls} from './FightControls.js';
 import {Game} from '../Game.js';
-import * as skilldefault from '../skilldefault.js';
 import {Player} from '../world/Character.js';
 import * as AL from '../achievements/AchievementsList.js';
 
@@ -12,104 +11,14 @@ export class FightScene extends Scene {
     this.fightLayer = new Konva.Layer();
 
     this.player = data.player;
-    this.inventory = data.player._inventory;
-
-    // Tooltip for fight
-    this.tooltips = {
-      skillA1Tooltip: new Tooltip({
-        name: 'skill',
-        shape_id: '0',
-        x: data.stage.width()/6,
-        y: data.stage.height() - 100,
-        width: 300,
-        height: 50,
-        item: this.inventory.equipped[0],
-        // eslint-disable-next-line max-len
-        text: `${this.inventory.equipped[0].name} (${(this.inventory.equipped[0].type === 'weapon') ? (this.inventory.equipped[0].dmg + ' dmg'):('+' + this.inventory.equipped[0].heal + ' hp')})`,
-      }),
-      skillA2Tooltip: new Tooltip({
-        name: 'skill',
-        shape_id: '1',
-        x: data.stage.width()/6 + 300,
-        y: data.stage.height() - 100,
-        width: 300,
-        height: 50,
-        item: this.inventory.equipped[1],
-        // eslint-disable-next-line max-len
-        text: `${this.inventory.equipped[1].name} (${(this.inventory.equipped[1].type === 'weapon') ? (this.inventory.equipped[1].dmg + ' dmg'):('+' + this.inventory.equipped[1].heal + ' hp')})`,
-      }),
-      skillA3Tooltip: new Tooltip({
-        name: 'skill',
-        shape_id: '2',
-        x: data.stage.width()/6,
-        y: data.stage.height() - 200,
-        width: 300,
-        height: 50,
-        item: this.inventory.equipped[2],
-        // eslint-disable-next-line max-len
-        text: `${this.inventory.equipped[2].name} (${(this.inventory.equipped[2].type === 'weapon') ? (this.inventory.equipped[2].dmg + ' dmg'):('+' + this.inventory.equipped[2].heal + ' hp')})`,
-      }),
-      skillA4Tooltip: new Tooltip({
-        name: 'skill',
-        shape_id: '3',
-        x: data.stage.width()/6 + 300,
-        y: data.stage.height() - 200,
-        width: 300,
-        height: 50,
-        item: this.inventory.equipped[3],
-        // eslint-disable-next-line max-len
-        text: `${this.inventory.equipped[3].name} (${(this.inventory.equipped[3].type === 'weapon') ? (this.inventory.equipped[3].dmg + ' dmg'):('+' + this.inventory.equipped[3].heal + ' hp')})`,
-      }),
-      playerTooltip: new Tooltip({
-        x: data.stage.width()*2/10,
-        y: data.stage.height()*4.5/10,
-        width: 200,
-        height: 120,
-        text: 'Bobby Chan',
-      }),
-      playerHpTooltip: new Tooltip({
-        x: data.stage.width()*2/10,
-        y: data.stage.height()*4.5/10 - 50,
-        width: 150,
-        height: 50,
-        text: '',
-      }),
-      enemyTooltip: new Tooltip({
-        x: data.stage.width()*5.5/10,
-        y: data.stage.height()*1/10,
-        width: 200,
-        height: 120,
-        text: 'Enemy',
-      }),
-      enemyHpTooltip: new Tooltip({
-        x: data.stage.width()*5.5/10,
-        y: data.stage.height()*1/10 - 50,
-        width: 150,
-        height: 50,
-        text: '',
-      }),
-    };
-
-    this.phaseUI = {
-      dialogueBox: new Tooltip({
-        name: 'dialogue',
-        x: data.stage.width()/6,
-        y: data.stage.height() - 200,
-        width: 600,
-        height: 150,
-        text: '',
-      }),
-    };
+    this.inventory = data.player._inventory; // get instance again when loaded in from switchTo
 
     this.phases = ['e1Attack', 'e1AttackInfo', 'e2Attack', 'e2AttackInfo', 'await'];
     this.currPhase = this.phases[0];
     // console.log(this.phases[0]);
 
     this.controls;
-
     this.fightLayer.draw();
-
-    data.player.skillA1 = skilldefault.Skill1;
   }
 
   updatePlayerHP(player) {
@@ -241,7 +150,7 @@ export class FightScene extends Scene {
 
   getNextPhase(p) {
     let index = this.phases.indexOf(p);
-    console.log('old phase', index);
+    // console.log('old phase', index);
     index++;
     if (index >= this.phases.length-1) {
       index = 0;
@@ -249,13 +158,119 @@ export class FightScene extends Scene {
       this.phaseUI['dialogueBox'].tipBox.visible(false);
       this.phaseUI['dialogueBox'].tipText.visible(false);
     }
-    console.log('new phase', index, this.phases[index]);
+    // console.log('new phase', index, this.phases[index]);
     return this.phases[index];
+  }
+
+  removeUI() {
+    this.tooltips.skillA1Tooltip.remove();
+    this.tooltips.skillA2Tooltip.remove();
+    this.tooltips.skillA3Tooltip.remove();
+    this.tooltips.skillA4Tooltip.remove();
+    this.tooltips.playerTooltip.remove();
+    this.tooltips.playerHpTooltip.remove();
+    this.tooltips.enemyTooltip.remove();
+    this.tooltips.enemyHpTooltip.remove();
+
+    this.phaseUI.dialogueBox.remove();
+
+    this.fightLayer.draw();
+    // console.log(this.tooltips, this.phaseUI);
+  }
+
+  loadUI(data) {
+    // Tooltip for fight
+    this.tooltips = {
+      skillA1Tooltip: new Tooltip({
+        name: 'skill',
+        shape_id: '0',
+        x: data.stage.width()/6,
+        y: data.stage.height() - 100,
+        width: 300,
+        height: 50,
+        item: this.inventory.equipped[0],
+        // eslint-disable-next-line max-len
+        text: `${this.inventory.equipped[0].name} (${(this.inventory.equipped[0].type === 'weapon') ? (this.inventory.equipped[0].dmg + ' dmg'):('+' + this.inventory.equipped[0].heal + ' hp')})`,
+      }),
+      skillA2Tooltip: new Tooltip({
+        name: 'skill',
+        shape_id: '1',
+        x: data.stage.width()/6 + 300,
+        y: data.stage.height() - 100,
+        width: 300,
+        height: 50,
+        item: this.inventory.equipped[1],
+        // eslint-disable-next-line max-len
+        text: `${this.inventory.equipped[1].name} (${(this.inventory.equipped[1].type === 'weapon') ? (this.inventory.equipped[1].dmg + ' dmg'):('+' + this.inventory.equipped[1].heal + ' hp')})`,
+      }),
+      skillA3Tooltip: new Tooltip({
+        name: 'skill',
+        shape_id: '2',
+        x: data.stage.width()/6,
+        y: data.stage.height() - 200,
+        width: 300,
+        height: 50,
+        item: this.inventory.equipped[2],
+        // eslint-disable-next-line max-len
+        text: `${this.inventory.equipped[2].name} (${(this.inventory.equipped[2].type === 'weapon') ? (this.inventory.equipped[2].dmg + ' dmg'):('+' + this.inventory.equipped[2].heal + ' hp')})`,
+      }),
+      skillA4Tooltip: new Tooltip({
+        name: 'skill',
+        shape_id: '3',
+        x: data.stage.width()/6 + 300,
+        y: data.stage.height() - 200,
+        width: 300,
+        height: 50,
+        item: this.inventory.equipped[3],
+        // eslint-disable-next-line max-len
+        text: `${this.inventory.equipped[3].name} (${(this.inventory.equipped[3].type === 'weapon') ? (this.inventory.equipped[3].dmg + ' dmg'):('+' + this.inventory.equipped[3].heal + ' hp')})`,
+      }),
+      playerTooltip: new Tooltip({
+        x: data.stage.width()*2/10,
+        y: data.stage.height()*4.5/10,
+        width: 200,
+        height: 120,
+        text: 'Bobby Chan',
+      }),
+      playerHpTooltip: new Tooltip({
+        x: data.stage.width()*2/10,
+        y: data.stage.height()*4.5/10 - 50,
+        width: 150,
+        height: 50,
+        text: '',
+      }),
+      enemyTooltip: new Tooltip({
+        x: data.stage.width()*5.5/10,
+        y: data.stage.height()*1/10,
+        width: 200,
+        height: 120,
+        text: 'Enemy',
+      }),
+      enemyHpTooltip: new Tooltip({
+        x: data.stage.width()*5.5/10,
+        y: data.stage.height()*1/10 - 50,
+        width: 150,
+        height: 50,
+        text: '',
+      }),
+    };
+    this.phaseUI = {
+      dialogueBox: new Tooltip({
+        name: 'dialogue',
+        x: data.stage.width()/6,
+        y: data.stage.height() - 200,
+        width: 600,
+        height: 150,
+        text: '',
+      }),
+    };
+    this.fightLayer.draw();
   }
 
   switchFrom(data) {
     console.assert(data != null);
     this.controls.removeControlBindings();
+    this.removeUI();
     this.fightLayer.off();
     this.fightLayer.remove();
   }
@@ -271,6 +286,8 @@ export class FightScene extends Scene {
     });
     console.assert(data != null);
     data.stage.add(this.fightLayer);
+    this.loadUI(data);
+    this.inventory = data.player._inventory;
     this.fightSceneLoad(data.player, data.npc);
     // sets who attacks first, is used in updateFightPhases
     this.setFightOrder(data.player, data.npc);
@@ -326,7 +343,7 @@ export class FightScene extends Scene {
     this.fightLayer.on('click', (evt) => {
       const shape = evt.target;
       if (shape.name() === 'skill') {
-        console.log(fight.currPhase);
+        // console.log(fight.currPhase);
         this._currSelectedSkill = this.inventory.equipped[shape.attrs.id];
         fight.phaseUI['dialogueBox'].tipBox.visible(true);
         fight.phaseUI['dialogueBox'].tipText.visible(true);
