@@ -193,13 +193,18 @@ export class FightScene extends Scene {
       // console.log(this.fightOrder[attackerIndex].inventoryItem);
       this.doEnemyAttack(player, this.fightOrder[attackerIndex].inventoryItem);
       // eslint-disable-next-line max-len
-      txt = `${this.fightOrder[attackerIndex].name}'s ${this.fightOrder[attackerIndex].inventoryItem.name}`;
+      txt = `${this.fightOrder[attackerIndex].inventoryItem.name.toUpperCase()} did ${this.fightOrder[attackerIndex].inventoryItem.dmg} damage!`;
     }
     return txt;
   }
 
   updateFightPhases(player, npc) {
     let dialogueText = '';
+    if (player.hp <= 0) {
+      alert('YOU DIED.\nThe deans have deemed you unworthy... maybe in your next life.');
+      location.reload();
+    }
+
     if (npc.hp <= 0) {
       player.hp = player.MAX_HP;
       const game = Game.getInstance();

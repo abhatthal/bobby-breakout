@@ -39,7 +39,7 @@ export class MapASB {
       // eslint-disable-next-line max-len
       info: 'Some say you should sacrifice a coke zero to the CMPT 361 gods before any Shermer exam.',
       type: 'heal',
-      heal: 20,
+      heal: 55,
       effect: 'increased average grade from students on exams',
       // eslint-disable-next-line max-len
       flavourText: 'How did this get here? CSSS vending machine is usually out of coke zeros by now...',
@@ -59,7 +59,7 @@ export class MapASB {
       // eslint-disable-next-line max-len
       info: 'Who knew that outdated memes could be so effective in delivering emotional damage to students.',
       type: 'weapon',
-      dmg: 18,
+      dmg: 27,
       // eslint-disable-next-line max-len
       flavourText: 'Le me just feeling like a sir eating my baguette. *Drops baguette* FUUUUUUUUUU',
       icon: '../../assets/old-meme.png',
@@ -76,7 +76,7 @@ export class MapASB {
       // eslint-disable-next-line max-len
       info: 'It\'s a poop knife. For cutting poop. With a knife. Obviously.',
       type: 'weapon',
-      dmg: 25,
+      dmg: 38,
       // eslint-disable-next-line max-len
       flavourText: 'A fecal cleaver? A Dung divider? A guano glaive?',
       icon: '../../assets/knife.png',
