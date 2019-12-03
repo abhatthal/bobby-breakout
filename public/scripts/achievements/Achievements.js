@@ -171,6 +171,8 @@ export class Achievements {
     if (!(item.fromDatabase)) {
       const notificationContainer = document.getElementById('achievement');
       notificationContainer.style.display = 'block';
+      notificationContainer.style.width = '100%';
+      notificationContainer.style.position = 'absolute';
       notificationContainer.innerHTML = '<img src = \'/assets/trophy.png\'>';
       notificationContainer.innerHTML += '<span>Achievement Unlocked: ';
       notificationContainer.innerHTML += item.name + '</span>';
