@@ -1,4 +1,4 @@
-*{
+* {
   box-sizing: border-box;
 }
 
@@ -47,7 +47,7 @@ label {
   margin: 10px auto;
 }
 
-.info{
+.info {
   display: flex;
   flex-direction: column;
   background-color: rgb(218, 218, 218);

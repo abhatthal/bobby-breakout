@@ -1,7 +1,7 @@
 {
-  "name": "CMPT 276 App",
-  "description": "",
-  "repository": "https://github.com/abhatthal/CMPT276.git",
+  "name": "Bobby's Breakout",
+  "description": "CMPT 276 group project",
+  "repository": "https://github.com/abhatthal/Bobby-Breakout.git",
   "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/master/public/node.svg",
   "keywords": ["node", "express", "heroku"],
   "image": "heroku/nodejs"

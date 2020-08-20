@@ -31,7 +31,6 @@ app.get('/main', (req, res) => res.render('pages/levels/main'));
 app.post('/login', (req, res) => checklogin(req, res));
 app.post('/register', (req, res) => createlogin(req, res));
 
-// app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 server.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 function createlogin(req, res) {
@@ -119,9 +118,6 @@ function checklogin(req, res) {
         }
       });
     }
-
-
-  //  res.send(req.body);
   });
   return;
 }
@@ -183,7 +179,6 @@ io.on('connection', function(client) {
     // console.log(`achievements sent to client`);
     // console.log(res);
   }); // client.on
-
 
   client.on('statsSent', (data) => {
     console.log(data);
