@@ -13,8 +13,7 @@ export class Character extends Entity {
     this.skillA1 = null; // defaultskill.Skill1;
     this.enableFace = (data.enableFace) ? data.enableFace : false;
     // Draw a face using fork off cool-ascii-faces web service
-    // https://github.com/abhatthal/cool-face-service
-    const text = httpGet('https://fathomless-temple-39382.herokuapp.com/?max_face_length=6');
+    const text = httpGet('https://cool-ascii-faces.herokuapp.com/?max_face_length=6');
     this.face = new Konva.Text({
       x: -15,
       y: 0,
