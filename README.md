@@ -5,7 +5,7 @@
 ## Table of Contents
 [Target Audience](#target-audience)\
 [Synopsis](#synopsis)\
-[Game Features](#features)\
+[Game Features](#features)
 
 ---
 
