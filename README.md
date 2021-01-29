@@ -1,9 +1,4 @@
-<p align=center>
-  <img src="public/assets/bobby.jpg"
-       height="200"
-       width="200"
-       style="border-radius: 10px; -webkit-filter: grayscale(20%); filter: grayscale(20%);">
-</p>
+<p align=center><img src="public/assets/bobby.png" height="200" width="200"></p>
 
 # Bobby's Breakout
 
