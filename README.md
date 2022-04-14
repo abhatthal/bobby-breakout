@@ -1,5 +1,3 @@
-<p align=center><img src="public/assets/bobby.png" height="200" width="200"></p>
-
 # Bobby's Breakout
 
 <a href="https://bobby-breakout.herokuapp.com"><b>Play Now!</b></a>
