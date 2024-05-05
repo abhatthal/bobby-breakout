@@ -1,14 +1,10 @@
 # CMPT276
 CMPT 276 group project
 
-## Heroku
+## Render
 ⬢ bobby-breakout
 
-https://bobby-breakout.herokuapp.com | https://git.heroku.com/bobby-breakout.git
-
-* Make sure to add the Heroku Git URL to your git remote.
-```
-git remote add heroku https://git.heroku.com/bobby-breakout.git
+Monitor deployments at https://www.render.com
 ```
 
 ## How to Collaborate: Git Flow

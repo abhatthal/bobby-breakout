@@ -22,6 +22,7 @@ done
 
 ## Database setup
 
-1. change the connection string in main.js
-2. run `create table users(username varchar(255), password varchar(255), premium bool);`
+1. Initialize database with
+    `create table users(username varchar(255), password varchar(255), premium bool);`
+2. Set `DB_URL` environment variable on server
 

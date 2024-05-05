@@ -9,12 +9,9 @@ const PORT = process.env.PORT || 5000;
 const bodyParser = require('body-parser');
 
 // //////////////////
-// Lang: Have set conncetion on db inside function
-// lang local test
+// Connect to users database
 const pg = require('pg');
-// eslint-disable-next-line max-len
-const conString = 'postgres://vyqzrennssqgdm:5427cde89c19c7c04595851cca03f048cce351ed5ce02df1f19e4ff075effa20@ec2-174-129-253-162.compute-1.amazonaws.com:5432/dchmahd956dtm0?ssl=true';
-// const conString = app.DATABASE_URL;
+const database = process.env.DB_URL;
 // /////////////////
 
 
@@ -34,9 +31,7 @@ app.post('/register', (req, res) => createlogin(req, res));
 server.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 function createlogin(req, res) {
-  console.log('post login info');
-
-  const pool = new pg.Pool({connectionString: conString});
+  const pool = new pg.Pool({connectionString: database});
   pool.connect((isErr, client, done) => {
     if (isErr) {
       console.log('connect error:' + isErr.message);
@@ -80,9 +75,7 @@ function createlogin(req, res) {
 }
 
 function checklogin(req, res) {
-  console.log('post login info');
-
-  const pool = new pg.Pool({connectionString: conString});
+  const pool = new pg.Pool({connectionString: database});
   pool.connect((isErr, client, done) => {
     if (isErr) {
       console.log('connect error:' + isErr.message);
@@ -125,7 +118,7 @@ function checklogin(req, res) {
 io.on('connection', function(client) {
   console.log('Client connected...');
 
-  const pool = new pg.Pool({connectionString: conString});
+  const pool = new pg.Pool({connectionString: database});
 
   client.on('achievementsReceived', function(username, fn) {
     let res = {};
