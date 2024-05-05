@@ -26,3 +26,4 @@ Game.initialize();
 const game = Game.getInstance();
 game.start();
 userStats.updateStats({userID: getUsername()});
+

@@ -344,5 +344,6 @@ export class MapASB {
     this.mapArray.push(...this.itemArray);
 
     layer.draw();
+    console.log("MapASB loaded");
   }
 }

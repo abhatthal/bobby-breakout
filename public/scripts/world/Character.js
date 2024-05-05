@@ -11,9 +11,9 @@ export class Character extends Entity {
     this.speed = 5; // movement speed
     this.fightSpeed = 0; // for fight priority
     this.skillA1 = null; // defaultskill.Skill1;
-    this.enableFace = (data.enableFace) ? data.enableFace : false;
+    this.enableFace = data.enableFace;
     // Draw a face using fork off cool-ascii-faces web service
-    const text = httpGet('https://cool-ascii-faces.herokuapp.com/?max_face_length=6');
+    const text = httpGet('https://cool-ascii-faces.onrender.com?max_face_length=6');
     this.face = new Konva.Text({
       x: -15,
       y: 0,

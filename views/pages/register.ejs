@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <% include ../partials/header.ejs %>
+  <%- include ('../partials/header.ejs') %>
   <meta charset="utf-8">
   <title>Prepare to game with Bobby</title>
   <script src="scripts/register.js" defer type="module"></script>
@@ -23,7 +23,7 @@
               <input type="password" placeholder="Enter Password" name="psw" required>
               <br>
               <label>Premium Key</label>
-              <input type="text" value="bobbyisgreat" placeholder="Enter Magicword" name="mgw" >
+              <input type="text" placeholder="Enter Magicword" name="mgw" >
               <br>
               <button type="submit">Register</button>
           </form>

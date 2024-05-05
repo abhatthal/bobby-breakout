@@ -1,13 +1,9 @@
 export class Scene {
-  constructor(data) {
+  constructor(data) {}
 
-  }
+  // to be overridden
+  switchTo() {}
 
-  // to be overrode
-  switchTo() {
-  }
-
-  // to be overrode
-  switchFrom() {
-  }
+  // to be overridden
+  switchFrom() {}
 }

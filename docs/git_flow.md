@@ -5,10 +5,8 @@ CMPT 276 group project
 ⬢ bobby-breakout
 
 Monitor deployments at https://www.render.com
-```
 
 ## How to Collaborate: Git Flow
-
 <ol>
 <li>Check GitHub Projects for anyone working on a new or existing feature ("In progress")</li>
 <li>Let people know in GitHub Projects what feature you wish to work on (Update "In progress")</li>
